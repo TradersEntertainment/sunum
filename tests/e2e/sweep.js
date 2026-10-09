@@ -2,6 +2,7 @@
 //
 //   NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js
 //     [--only=id1,id2] [--langs=en,tr] [--themes=dark] [--shots=dir] [--speed=8] [--file=index.html]
+//     [--url=https://your-site.up.railway.app/]   test a running server instead of the local file
 //
 // For every slide × step it checks:
 //   1. no console errors / page errors;
@@ -22,7 +23,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((a) => {
 const LANGS = String(args.langs || 'en,tr').split(',');
 const THEMES = String(args.themes || 'dark').split(',');
 const SPEED = Number(args.speed || 8);
-const file = 'file://' + path.resolve(__dirname, '..', '..', args.file || 'index.html');
+const target = args.url ? String(args.url) : 'file://' + path.resolve(__dirname, '..', '..', args.file || 'index.html');
 if (args.shots) fs.mkdirSync(args.shots, { recursive: true });
 
 /* ---------- functions evaluated inside the page ---------- */
@@ -97,7 +98,9 @@ function pageLayout() {
       await page.addInitScript(([l, t]) => {
         try { localStorage.setItem('tc.lang', l); localStorage.setItem('tc.theme', t); } catch (e) { /* ignore */ }
       }, [lang, theme]);
-      await page.goto(file + '?speed=' + SPEED);
+      const entry = new URL(target);
+      entry.searchParams.set('speed', String(SPEED));
+      await page.goto(entry.href);
       await page.waitForFunction(() => window.Deck && Deck.current, null, { timeout: 20000 });
       const slides = await page.evaluate(() => Deck.slides.map((s) => ({ id: s.id, steps: s.steps })));
       const only = args.only ? String(args.only).split(',') : null;

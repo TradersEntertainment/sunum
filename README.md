@@ -58,10 +58,25 @@ Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki bası�
 - **GitHub Pages:** Repo'da *Settings → Pages → Build and deployment → Deploy from a branch* yolunu izle, bu dalı ve `/ (root)` klasörünü seç. Birkaç dakika sonra site `https://<kullanıcı>.github.io/<repo>/` adresinde açılır.
 - **Tek dosya:** `dist/transform-and-conquer.html` dosyasını herhangi bir yere yükleyebilir ya da e-postayla gönderebilirsin.
 
+## Railway'de yayınlamak
+
+Site tamamen statik: **veritabanı, Volume (kalıcı disk), ortam değişkeni ya da sunucu tarafı veri gerekmez.** Heapsort oyun alanı tarayıcıda çalışır; dil/tema tercihi sadece ziyaretçinin tarayıcısında (localStorage) tutulur. Ölçülen bellek kullanımı yaklaşık **55–65 MB**, bu yüzden kaynak sınırı ayarlamaya gerek yok.
+
+Repo Railway için hazır: `server.js` (sıfır bağımlılıklı küçük statik sunucu: `PORT`'u okur, `0.0.0.0`'a bağlanır, `/healthz` cevaplar), `package.json` içinde `npm start` ve `railway.json` (başlatma komutu + sağlık kontrolü).
+
+1. railway.com → **New Project → Deploy from GitHub repo** → `TradersEntertainment/sunum`. Repo bir organizasyondaysa Railway'in GitHub uygulamasına bu repo için erişim izni verilmiş olmalı. Branch olarak `claude/animated-presentation-website-59wtyv` seçili olsun (repo'nun varsayılan ve tek branch'i; değiştirmek için Settings → Source).
+2. Hiçbir şey eklemeyin: Database yok, Volume yok, Variables yok. `PORT`'u Railway kendisi verir.
+3. **Settings → Networking → Generate Domain**. Birkaç dakika sonra site `https://….up.railway.app` adresinde açılır.
+4. Kontrol: `https://….up.railway.app/healthz` → `ok`. Tüm slaytları denemek için: `NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js --url=https://….up.railway.app/ --langs=en --themes=dark`.
+
+Bu branch'e her push'ta Railway otomatik yeniden yayınlar. Yerelde denemek için: `npm start` → http://localhost:3000.
+
+Not: Yayınlanan sitede `js/notes.js` (konuşma metni) de herkese açık olur; kaynağı görüntüleyen herkes okuyabilir.
+
 ## Geliştirme
 
 ```bash
-node --test tests/*.test.js            # algoritma testleri (slaytlardaki tablolarla birebir)
+node --test tests/*.test.js            # algoritma testleri (slaytlardaki tablolarla birebir) + sunucu testleri
 NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js   # tüm slayt ve adımlar: hata, taşma, ileri/geri tutarlılığı
 NODE_PATH=/opt/node-tools/node_modules node tools/shots.js --ids=heap-build --steps=all --out=artifacts/shots
 NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js  # KONUSMA_METNI.md'yi js/notes.js'ten üretir
@@ -78,5 +93,6 @@ Yapı:
 - `js/slides/`: slaytlar, sunum sırasıyla.
 - `js/notes.js`: konuşma metni.
 - `docs/AUTHORING.md`: yeni slayt yazma kuralları.
+- `server.js`, `railway.json`: yayın (Railway) için statik sunucu ve ayarı.
 
 Kaynak: A. Levitin, *Introduction to the Design & Analysis of Algorithms*, Bölüm 6. Örnekler ve izleme tabloları ders slaytlarındakilerle aynıdır. Animasyonlar ve metinler bu proje için yeniden üretildi. Fontlar SIL Open Font License ile kullanılmaktadır.
