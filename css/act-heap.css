@@ -1,0 +1,167 @@
+/* Heaps & Heapsort act. Body area is 1700 × ~750 stage px. */
+
+/* ---------- section intro ---------- */
+.hi-wrap { position: absolute; inset: 0; }
+.hi-kicker {
+  position: absolute;
+  left: 0;
+  top: 120px;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--star);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hi-title {
+  position: absolute;
+  left: 0;
+  top: 170px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 150px;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.hi-title em { font-style: normal; color: var(--star); }
+.hi-sub { position: absolute; left: 0; top: 500px; width: 760px; }
+.hi-scene { position: absolute; right: 0; top: 60px; width: 860px; height: 760px; }
+.hi-tag {
+  position: absolute;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 40px;
+  color: var(--star);
+}
+
+/* ---------- heap definition ---------- */
+.hd-rules { position: absolute; left: 0; top: 10px; width: 700px; display: grid; gap: 26px; }
+.rule { padding: 26px 30px 28px 30px; display: grid; grid-template-columns: 88px 1fr; gap: 6px 24px; align-items: start; }
+.rule .num {
+  grid-row: span 2;
+  width: 88px;
+  height: 88px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--star) 16%, transparent);
+  color: var(--star);
+  border: 2px solid color-mix(in srgb, var(--star) 50%, transparent);
+}
+.rule h3 { font-size: 36px; color: var(--ink); }
+.rule p { font-size: 27px; line-height: 1.38; color: var(--ink-2); }
+.hd-scene { position: absolute; left: 760px; top: 0; width: 940px; height: 600px; }
+.hd-note { position: absolute; left: 760px; top: 600px; width: 940px; font-size: 30px; line-height: 1.35; }
+.hd-quiz { position: absolute; inset: 0; }
+.quiz-tree { position: absolute; top: 40px; width: 540px; height: 470px; }
+.quiz-tree .qt-label { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font-size: 30px; color: var(--ink-2); }
+.quiz-tree .stamp { position: absolute; right: 36px; top: -6px; }
+.hd-quiz-foot { position: absolute; left: 0; right: 0; top: 590px; text-align: center; font-size: 30px; color: var(--ink-2); }
+
+/* ---------- tree ⇄ array ---------- */
+.ha-scene { position: absolute; left: 0; top: 0; width: 1000px; height: 750px; }
+.ha-side { position: absolute; left: 1050px; top: 10px; width: 650px; display: grid; gap: 22px; }
+.fcard { padding: 22px 28px; }
+.fcard .f-head { font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--font-mono); color: var(--muted); margin-bottom: 8px; }
+.fcard .formula { font-size: 36px; }
+.fcard .formula .kid { color: var(--cmp); }
+.fcard .formula .par { color: var(--swap); }
+.fcard .f-ex { font-size: 24px; color: var(--ink-2); margin-top: 6px; font-family: var(--font-mono); }
+
+/* ---------- build / sort scenes ---------- */
+.hb-scene { position: absolute; left: 0; top: 0; width: 900px; height: 600px; }
+.hb-caption {
+  position: absolute;
+  left: 0;
+  top: 604px;
+  width: 900px;
+  min-height: 92px;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  border-left: 5px solid var(--star);
+  background: color-mix(in srgb, var(--star) 8%, transparent);
+  border-radius: 0 14px 14px 0;
+}
+.hb-legend { position: absolute; left: 0; top: 712px; }
+.hb-code { position: absolute; left: 950px; top: 0; width: 750px; }
+.hb-trace { position: absolute; left: 950px; width: 750px; }
+.hb-counters { position: absolute; right: 0; top: -58px; }
+.hb-badge { position: absolute; left: 640px; top: 4px; }
+
+/* ---------- analysis ---------- */
+.an-grid { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.an-card { padding: 24px 30px; position: relative; }
+.an-card h3 { font-size: 34px; display: flex; align-items: center; gap: 16px; }
+.an-card .badge-o { font-size: 28px; }
+.an-levels { margin-top: 14px; display: grid; gap: 10px; }
+.an-level { display: grid; grid-template-columns: 230px 1fr 90px; align-items: center; gap: 16px; font-size: 23px; color: var(--ink-2); }
+.an-level .bar { height: 26px; border-radius: 6px; background: var(--star); transform-origin: 0 50%; }
+.an-level b { font-family: var(--font-mono); text-align: right; }
+.an-total { margin-top: 14px; font-size: 27px; }
+.an-stab { display: flex; align-items: center; gap: 26px; margin-top: 16px; }
+.an-chip {
+  width: 92px;
+  height: 92px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 46px;
+  border: 4px solid var(--c);
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+  color: var(--ink);
+  position: relative;
+}
+.an-chip sub { position: absolute; right: 10px; bottom: 16px; font-size: 22px; color: var(--c); }
+
+/* ---------- priority queue ---------- */
+.pq-ops { position: absolute; left: 0; top: 0; width: 640px; display: grid; gap: 18px; }
+.pq-op { padding: 18px 24px; display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; }
+.pq-op .ico { width: 64px; height: 64px; }
+.pq-op h3 { font-size: 30px; }
+.pq-op p { font-size: 22px; color: var(--ink-2); margin-top: 2px; }
+.pq-queue { position: absolute; left: 0; top: 520px; width: 640px; }
+.pq-scene { position: absolute; left: 700px; top: 0; width: 1000px; height: 640px; }
+.pq-caption { position: absolute; left: 700px; top: 648px; width: 1000px; }
+
+/* ---------- playground ---------- */
+.pg-scene { position: absolute; left: 0; top: 60px; width: 1100px; height: 620px; }
+.pg-panel { position: absolute; left: 1150px; top: 0; width: 550px; padding: 24px; display: grid; gap: 18px; }
+.pg-panel label { font-size: 20px; color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.pg-panel input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-size: 26px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--panel-border);
+  background: var(--bg-lift);
+  color: var(--ink);
+}
+.pg-panel input[type="text"]:focus { outline: 3px solid var(--star); outline-offset: 1px; }
+.pg-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  appearance: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 22px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--panel-border);
+  background: var(--bg-lift);
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--star); }
+.btn:focus-visible { outline: 3px solid var(--star); outline-offset: 2px; }
+.btn.primary { background: var(--star); color: #1a1405; border-color: var(--star); }
+.pg-speed { display: flex; align-items: center; gap: 12px; font-size: 20px; color: var(--ink-2); }
+.pg-speed input { flex: 1; accent-color: var(--star); }
+.pg-caption { position: absolute; left: 0; top: 0; width: 1100px; font-size: 30px; }
+.pg-msg { font-size: 20px; color: var(--bad); min-height: 1.4em; }

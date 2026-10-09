@@ -1,0 +1,12 @@
+{
+  "name": "transform-and-conquer-presentation",
+  "private": true,
+  "description": "Animated presentation of Levitin Chapter 6 (Transform-and-Conquer) with a heaps & heapsort deep dive.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "shots": "node tools/shots.js",
+    "sweep": "node tests/e2e/sweep.js",
+    "speech": "node tools/build-speech.js",
+    "bundle": "node tools/bundle.js"
+  }
+}
