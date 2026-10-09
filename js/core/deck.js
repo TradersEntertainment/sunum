@@ -321,7 +321,25 @@
     );
     const toast = U.h('div', { class: 'toast', 'aria-live': 'polite' });
     stage.append(sharedDefs(), slidesHost, fxCanvas, scan, chip, tools, progress, counter, hint, toast);
-    viewport.append(ambient, stage);
+
+    /* Touch controls live outside the scaled stage, so the buttons stay big
+     * enough to tap on a phone (shown on coarse pointers / narrow windows). */
+    const svg = (d, extra) => '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"' + (extra || '') + '/></svg>';
+    const mbtn = (cmd, label, html, cls) => U.h('button', { class: 'mbtn' + (cls ? ' ' + cls : ''), type: 'button', 'data-cmd': cmd, 'aria-label': label, html });
+    const mbar = U.h('div', { class: 'mbar', 'data-interactive': '', role: 'toolbar', 'aria-label': 'Controls' },
+      mbtn('overview', 'Overview', svg('M4 4h6.5v6.5H4zM13.5 4H20v6.5h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z')),
+      mbtn('lang', 'English / Türkçe', '<span lang="en">TR</span><span lang="tr">EN</span>'),
+      mbtn('theme', 'Dark / light', svg('M20 14.5A8.5 8.5 0 1 1 9.5 4 7 7 0 0 0 20 14.5z')),
+      mbtn('fullscreen', 'Fullscreen', svg('M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5')),
+      mbtn('prev', 'Back', svg('M15 5l-7 7 7 7')),
+      mbtn('next', 'Next', svg('M9 5l7 7-7 7'), 'primary'));
+    if (!(document.fullscreenEnabled || document.webkitFullscreenEnabled)) mbar.querySelector('[data-cmd="fullscreen"]').hidden = true;
+    const mtip = U.h('div', { class: 'mtip', 'data-interactive': '' },
+      U.h('span', { class: 'mtip-ic', html: '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9a9 9 0 0 1 3-4M21 15a9 9 0 0 1-3 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' }),
+      U.h('span', { class: 'mtip-tx', html: L('Rotate your phone for a bigger slide. Tap = next, swipe = back / next.', 'Slayt daha büyük görünsün diye telefonu yatay çevirin. Dokun = ileri, kaydır = geri / ileri.') }),
+      U.h('button', { class: 'mtip-x', type: 'button', 'aria-label': 'Close', html: svg('M6 6l12 12M18 6L6 18') }));
+    const probe = U.h('div', { class: 'safe-probe', 'aria-hidden': 'true' });   // reads the notch / home-indicator insets
+    viewport.append(ambient, stage, mbar, mtip, probe);
 
     const overview = U.h('div', { class: 'overlay overview', hidden: true, role: 'dialog', 'aria-label': 'Overview' });
     const help = U.h('div', { class: 'overlay help', hidden: true, role: 'dialog', 'aria-label': 'Help' });
@@ -329,8 +347,9 @@
     const blackout = U.h('div', { class: 'blackout', hidden: true });
     rootEl.append(viewport, overview, help, notes, blackout);
 
-    dom = { viewport, stage, slides: slidesHost, scan, chip, progress, counter, hint, tools, toast, overview, help, notes, blackout, ambient, fx: fxCanvas };
+    dom = { viewport, stage, slides: slidesHost, scan, chip, progress, counter, hint, tools, toast, overview, help, notes, blackout, ambient, fx: fxCanvas, mbar, mtip, probe };
     root.addEventListener('resize', fit);
+    root.addEventListener('orientationchange', fit);
     fit();
   }
 
@@ -358,11 +377,34 @@
     toastTimer = setTimeout(() => dom.toast.classList.remove('on'), 1300);
   }
 
+  /* Notch / home-indicator insets, read through a probe element (env() has no JS API). */
+  function readInsets() {
+    const cs = getComputedStyle(dom.probe);
+    const n = (v) => parseFloat(v) || 0;
+    return { t: n(cs.paddingTop), r: n(cs.paddingRight), b: n(cs.paddingBottom), l: n(cs.paddingLeft) };
+  }
+
+  /* Scale the 1920×1080 stage into the free area. On touch screens the control
+   * bar sits at the side when the screen is wider than 16:9 (the stage is
+   * height-limited there, so the bar costs nothing) and at the bottom otherwise. */
   function fit() {
     const w = root.innerWidth, h = root.innerHeight;
-    const s = Math.min(w / 1920, h / 1080);
+    const side = w / h > 1920 / 1080;
+    dom.viewport.dataset.bar = side ? 'side' : 'bottom';
+    const barW = dom.mbar.offsetWidth, barH = dom.mbar.offsetHeight;   // 0 when the bar is hidden
+    const barOn = barW > 0 && barH > 0;
+    const ins = readInsets();
+    let aw = w - ins.l - ins.r, ah = h - ins.t - ins.b;
+    if (barOn) { if (side) aw = w - ins.l - barW; else ah = h - ins.t - barH; }
+    aw = Math.max(80, aw); ah = Math.max(45, ah);
+    const s = Math.min(aw / 1920, ah / 1080);
+    dom.stage.style.left = (ins.l + aw / 2).toFixed(1) + 'px';
+    dom.stage.style.top = (ins.t + ah / 2).toFixed(1) + 'px';
     dom.stage.style.setProperty('--scale', s.toFixed(5));
     dom.stage.style.transform = 'translate(-50%, -50%) scale(' + s.toFixed(5) + ')';
+    // portrait phone: suggest rotating (until dismissed)
+    const tip = barOn && !side && w < 700 && h > w && U.store.get('mtip', '') !== '1';
+    dom.viewport.dataset.tip = tip ? 'on' : 'off';
   }
 
   function buildProgress() {
@@ -402,7 +444,7 @@
     const open = force == null ? ov.hidden : force;
     if (!open) { ov.hidden = true; return; }
     closeOverlays();
-    ov.innerHTML = '<div class="ov-grid">' + slides.map((s, i) => {
+    ov.innerHTML = '<button type="button" class="ov-close" aria-label="Close"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button><div class="ov-grid">' + slides.map((s, i) => {
       const act = ACTS[s.act] || ACTS.opening;
       const t = s.title || { en: s.id, tr: s.id };
       return '<button type="button" class="ov-card' + (i === idx ? ' cur' : '') + '" data-i="' + i + '" style="--c:' + act.color + '">'
@@ -550,6 +592,18 @@
       ({ lang: () => I18n.toggle(), theme: toggleTheme, overview: () => toggleOverview(), fullscreen: toggleFullscreen })[b.dataset.cmd]();
       b.blur();
     });
+    dom.mbar.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-cmd]');
+      if (!b) return;
+      e.stopPropagation();
+      ({ prev, next, lang: () => I18n.toggle(), theme: toggleTheme, overview: () => toggleOverview(), fullscreen: toggleFullscreen })[b.dataset.cmd]();
+      b.blur();
+    });
+    dom.mtip.addEventListener('click', (e) => {
+      if (!e.target.closest('.mtip-x')) return;
+      U.store.set('mtip', '1');
+      fit();
+    });
     dom.overview.addEventListener('click', (e) => {
       const c = e.target.closest('.ov-card');
       if (c) { toggleOverview(false); goto(Number(c.dataset.i), 0); }
@@ -557,13 +611,19 @@
     });
     dom.help.addEventListener('click', () => toggleHelp(false));
     dom.blackout.addEventListener('click', () => { dom.blackout.hidden = true; });
-    let tx = null;
-    dom.viewport.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+    // Swipe left = next, right = back. Ignored on controls (sliders, inputs), for
+    // pinch gestures, while pinch-zoomed in, and for mostly vertical drags.
+    let tx = null, ty = null;
+    dom.viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1 || isInteractive(e.target)) { tx = null; return; }
+      tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+    }, { passive: true });
     dom.viewport.addEventListener('touchend', (e) => {
       if (tx == null) return;
-      const dx = e.changedTouches[0].clientX - tx;
+      const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
       tx = null;
-      if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+      if (root.visualViewport && root.visualViewport.scale > 1.05) return;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(dy)) { if (dx < 0) next(); else prev(); }
     }, { passive: true });
     root.addEventListener('message', (e) => {
       const m = e.data;

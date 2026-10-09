@@ -613,3 +613,144 @@ html.presenter-mode .pv [lang] { display: block !important; }
 .clk.next { background: var(--star); color: #1a1405; }
 .clk.done { opacity: 0.45; }
 .nd-en p, .nd-tr p { margin: 0 0 0.5em; }
+
+/* ---------- touch & small screens ---------- */
+html, body { overscroll-behavior: none; }               /* no pull-to-refresh / edge navigation while swiping slides */
+#viewport { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+.safe-probe {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  pointer-events: none;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+
+/* Controls outside the scaled stage: real tap targets (≥ 44 px). */
+.mbar, .mtip { display: none; }
+@media (pointer: coarse), (max-width: 700px) {
+  .mbar { display: flex; }
+  .tools, .key-hint { display: none; }                   /* the tiny scaled versions */
+}
+.mbar {
+  position: fixed;
+  z-index: 60;
+  box-sizing: border-box;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--panel-solid) 94%, transparent);
+  border: 0 solid var(--panel-border);
+  backdrop-filter: blur(10px);
+}
+#viewport[data-bar="bottom"] .mbar {
+  left: 0; right: 0; bottom: 0;
+  flex-direction: row;
+  border-top-width: 1.5px;
+  padding: 8px calc(10px + env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) calc(10px + env(safe-area-inset-left, 0px));
+}
+#viewport[data-bar="side"] .mbar {
+  top: 0; right: 0; bottom: 0;
+  flex-direction: column;
+  border-left-width: 1.5px;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) calc(8px + env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) 8px;
+}
+.mbtn {
+  appearance: none;
+  flex: 0 1 auto;                        /* may shrink to 44 px on very narrow phones */
+  min-width: 44px;
+  min-height: 44px;
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  border: 1.5px solid var(--panel-border);
+  background: var(--bg-lift);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font: 600 16px var(--font-mono);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.mbtn[hidden] { display: none; }
+.mbtn:active { transform: scale(0.93); }
+.mbtn:focus-visible { outline: 3px solid var(--line); outline-offset: 2px; }
+.mbtn.primary { background: var(--star); color: #1a1405; border-color: var(--star); }
+#viewport[data-bar="bottom"] .mbtn.primary { width: 76px; min-width: 56px; }
+@media (max-width: 380px) {
+  #viewport[data-bar="bottom"] .mbar { gap: 4px; padding-left: calc(8px + env(safe-area-inset-left, 0px)); padding-right: calc(8px + env(safe-area-inset-right, 0px)); }
+}
+#viewport[data-bar="side"] .mbtn.primary { height: 72px; }
+/* short landscape phones: keep six buttons in the column */
+@media (max-height: 430px) {
+  #viewport[data-bar="side"] .mbar { gap: 5px; padding-top: calc(5px + env(safe-area-inset-top, 0px)); padding-bottom: calc(5px + env(safe-area-inset-bottom, 0px)); }
+  #viewport[data-bar="side"] .mbtn { width: 44px; height: 44px; }
+  #viewport[data-bar="side"] .mbtn.primary { height: 56px; }
+}
+
+/* Portrait phone: the slide is a thin strip, so say how to get a bigger one. */
+.mtip {
+  position: fixed;
+  z-index: 55;
+  left: 12px;
+  right: 12px;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  gap: 12px;
+  align-items: center;
+  padding: 10px 8px 10px 14px;
+  border-radius: 14px;
+  background: var(--panel-solid);
+  border: 1.5px solid var(--panel-border);
+  box-shadow: var(--shadow);
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+#viewport[data-tip="on"] .mtip { display: flex; }
+.mtip-ic { flex: none; color: var(--star); animation: tipTurn 3.2s ease-in-out infinite; }
+@keyframes tipTurn { 0%, 55% { transform: rotate(0); } 80%, 100% { transform: rotate(-90deg); } }
+@media (prefers-reduced-motion: reduce) { .mtip-ic { animation: none; } }
+.mtip-tx { flex: 1; min-width: 0; }
+.mtip-x {
+  appearance: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+/* Overlays on small screens: top-aligned so a tall overview can scroll to its first card. */
+.overlay { place-items: start center; }
+.overlay > .ov-grid, .overlay > .help-card { margin-block: auto; }
+.ov-close {
+  appearance: none;
+  position: fixed;
+  z-index: 101;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  right: calc(10px + env(safe-area-inset-right, 0px));
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  border: 1.5px solid var(--panel-border);
+  background: var(--panel-solid);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.ov-close:focus-visible { outline: 3px solid var(--line); outline-offset: 2px; }
+@media (max-width: 700px) {
+  .overlay { padding: 68px 14px 24px; }
+  .ov-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ov-card { min-height: 92px; padding: 10px 12px 12px; }
+  .ov-title { font-size: 16px; }
+}

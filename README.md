@@ -53,6 +53,14 @@ Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki bası�
 - Sondaki **Ek** slaytlarında, soru gelirse kullanabileceğin interaktif bir **heapsort oyun alanı** var: kendi sayılarını yazıp adım adım izleyebilirsin.
 - Başlık slaytında adının görünmesi için `js/config.js` içindeki `presenter: ''` satırına adını yaz.
 
+## Telefon ve tablet
+
+Site telefonda ve tablette de açılır. Dokunmatik ekranlarda altta (geniş ekranlarda sağda) büyük düğmeler çıkar: genel bakış, dil, tema, tam ekran, geri, ileri. Slayta dokunmak ileri gider, sağa/sola kaydırmak geri/ileri götürür. Parmakla yakınlaştırma çalışır; yakınlaştırılmışken kaydırma slayt değiştirmez.
+
+- **Telefonu yatay tutun.** Slayt, 16:9 sabit bir tuvaldir. Dikey telefonda dar bir şerit olarak görünür; site bunu hatırlatan bir ipucu gösterir. Yatayda da yazılar küçüktür (gövde yazısı yaklaşık 9–10 px, iPad yatayda yaklaşık 16 px). Animasyonlar rahat izlenir, ama ayrıntılı yazıları okumak için tablet veya bilgisayar daha iyidir.
+- Tam ekran düğmesi, tarayıcı desteklemiyorsa (iPhone Safari) görünmez.
+- Test: `NODE_PATH=/opt/node-tools/node_modules node tests/e2e/mobile.js` (8 cihaz boyutunda gerçek dokunma olaylarıyla dener).
+
 ## İnternette yayınlamak (isteğe bağlı)
 
 - **GitHub Pages:** Repo'da *Settings → Pages → Build and deployment → Deploy from a branch* yolunu izle, bu dalı ve `/ (root)` klasörünü seç. Birkaç dakika sonra site `https://<kullanıcı>.github.io/<repo>/` adresinde açılır.
