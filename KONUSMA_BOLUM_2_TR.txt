@@ -1,0 +1,290 @@
+==========================================================================================
+KONUŞMA METNİ - BÖLÜM 2/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
+==========================================================================================
+Slaytlar    : 8-21  (Heap ve Heapsort  ...  Teşekkürler! Sorular?)
+Süre        : yaklaşık 7:09 (planlanan)  |  tüm sunumda 3:15 -> 10:24
+Kelime      : 925 (İngilizce metindeki)
+Diğer bölüm : 1-7 (arkadaşın)  - bu dosyada yok
+Eş dosya    : KONUSMA_BOLUM_2_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
+
+NASIL KULLANILIR
+- Bu dosya, İngilizce metnin Türkçe anlamıdır: slayt sırası ve tıklama işaretleri
+  İngilizce dosyayla aynı. Sesli söyleyeceğin metin İngilizce dosyada.
+- [[TIKLA]] işareti, İngilizce metindeki [[CLICK]] anıdır: o noktada ileri tuşuna (->) bir
+  kez bas. Ekranda bir animasyon oynar.
+- Animasyon oynarken tekrar basarsan hemen tamamlanır. Yanlışlıkla ileri gittiysen <- ile
+  bir adım geri dön.
+- Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre
+  sayacı), L = dil.
+- Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
+  etme.
+
+ZAMAN PLANI
+ No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
+ 8   Heap ve Heapsort                               0   0:12   0:00         3:15
+ 9   Heap nedir? İki kural                          4   0:40   0:12         3:27
+ 10  Heap aslında bir dizidir                       4   0:36   0:52         4:07
+ 11  Heap’i aşağıdan yukarı kurmak                  5   0:50   1:28         4:43
+ 12  Heapsort: en büyüğü tekrar tekrar çıkar        4   0:50   2:18         5:33
+ 13  Heapsort ne kadar hızlı?                       4   0:36   3:08         6:23
+ 14  Öncelik kuyruklarının motoru: heap             3   0:28   3:44         6:59
+ 15  Gerçek hayatta heap’i kim kullanıyor?          3   0:45   4:12         7:27
+ 16  Horner kuralı: daha az çarpma                  4   0:28   4:57         8:12
+ 17  İkili üs alma: kare alarak aⁿ                  3   0:26   5:25         8:40
+ 18  Zaten çözebildiğin bir probleme indirge        4   0:28   5:51         9:06
+ 19  Yol saymak = matris çarpmak                    4   0:25   6:19         9:34
+ 20  Dönüştürmenin üç yolu, sonra fethet            2   0:20   6:44         9:59
+ 21  Teşekkürler! Sorular?                          0   0:05   7:04         10:19
+     TOPLAM                                             7:09  
+
+******************************************************************************************
+BAŞLANGIÇ - 8. slayt ekrana gelince önce şunu söyle:
+******************************************************************************************
+ANLAMI: Teşekkürler! Buradan ben devam ediyorum.
+
+------------------------------------------------------------------------------------------
+SLAYT 8 / 21  -  Heap ve Heapsort
+[Heap ve Heapsort]
+Süre 0:12  |  bölüm saati 0:00 -> 0:12  |  0 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Şimdi bölümün yıldızı: heap ve heapsort. Anahtarları bir ağaç gibi düşünüyor, ama basit
+  bir dizide saklıyoruz.
+
+------------------------------------------------------------------------------------------
+SLAYT 9 / 21  -  Heap nedir? İki kural
+[Heap ve Heapsort]
+Süre 0:40  |  bölüm saati 0:12 -> 0:52  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Heap, iki kurala uyan bir ikili ağaçtır. [[TIKLA]] Birinci kural, şekil: ağacı seviye
+  seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.
+
+  [[TIKLA]] İkinci kural, sıra: her ebeveyn çocuklarından büyük ya da eşittir. Buna
+  max-heap denir.
+
+  [[TIKLA]] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra
+  yoktur: 8 daha aşağıda, ama 4’ten büyük.
+
+  [[TIKLA]] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü
+  sırayı bozuyor: 6, ebeveyni 5’ten büyük.
+
+------------------------------------------------------------------------------------------
+SLAYT 10 / 21  -  Heap aslında bir dizidir
+[Heap ve Heapsort]
+Süre 0:36  |  bölüm saati 0:52 -> 1:28  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  İşin püf noktası şu. [[TIKLA]] Düğümleri yukarıdan aşağı, soldan sağa numaralandırıp
+  doğrudan bir diziye koyuyoruz. Hiç işaretçi (pointer) yok.
+
+  [[TIKLA]] j konumundaki düğümün çocukları 2j ve 2j + 1 konumlarındadır. j = 2 için
+  bunlar 4 ve 5.
+
+  [[TIKLA]] j’nin ebeveyni ise j bölü 2’nin aşağı yuvarlanmışıdır. 5 bölü 2, 2 eder.
+
+  [[TIKLA]] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman
+  1. konumdadır.
+
+------------------------------------------------------------------------------------------
+SLAYT 11 / 21  -  Heap’i aşağıdan yukarı kurmak
+[Heap ve Heapsort]
+Süre 0:50  |  bölüm saati 1:28 -> 2:18  |  5 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Heap’i kurmak için aşağıdan yukarı gideriz: son ebeveynden başla, alt ağacını düzelt ve
+  köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.
+
+  [[TIKLA]] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [[TIKLA]] Sırada 9
+  var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.
+
+  [[TIKLA]] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [[TIKLA]] 2 hâlâ çok küçük,
+  batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.
+
+  [[TIKLA]] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle
+  aynı.
+
+------------------------------------------------------------------------------------------
+SLAYT 12 / 21  -  Heapsort: en büyüğü tekrar tekrar çıkar
+[Heap ve Heapsort]
+Süre 0:50  |  bölüm saati 2:18 -> 3:08  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Heapsort: birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı
+  tekrar tekrar çıkarır.
+
+  [[TIKLA]] Kökü son anahtarla değiştir. Artık 9 son yerinde, onu kilitliyoruz ve heap bir
+  eleman küçülüyor.
+
+  [[TIKLA]] Yeni kök 7 çok küçük, onu aşağı itiyoruz: büyük çocuğu 8 ile yer değiştiriyor.
+  Heap yine düzgün.
+
+  [[TIKLA]] Aynı iki hamleyi tekrarlıyoruz: en büyüğü sona taşı, sonra aşağı it. Sağda
+  sıralı kısmın büyüdüğüne bakın.
+
+  [[TIKLA]] Ve dizi sıralandı: 2, 5, 6, 7, 8, 9. Dikkat edin, hiç ikinci bir diziye
+  ihtiyacımız olmadı.
+
+------------------------------------------------------------------------------------------
+SLAYT 13 / 21  -  Heapsort ne kadar hızlı?
+[Heap ve Heapsort]
+Süre 0:36  |  bölüm saati 3:08 -> 3:44  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Peki ne kadar hızlı? [[TIKLA]] Heap’i kurmak doğrusal zaman alır. Düğümlerin çoğu en
+  altta ve sadece biraz batabilir. 15 anahtar için en fazla 22 karşılaştırma, yani 2n’den
+  az.
+
+  [[TIKLA]] Sıralama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n
+  karşılaştırma. Yani bu kısım n log n.
+
+  [[TIKLA]] Toplamda heapsort hem en kötü hem ortalama durumda n log n’dir ve yerinde
+  (in-place) çalışır.
+
+  [[TIKLA]] Bir zayıflığı var: kararlı (stable) değil. Eşit iki anahtarın sırası
+  değişebilir.
+
+------------------------------------------------------------------------------------------
+SLAYT 14 / 21  -  Öncelik kuyruklarının motoru: heap
+[Heap ve Heapsort]
+Süre 0:28  |  bölüm saati 3:44 -> 4:12  |  3 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Heap sadece sıralama için değil. [[TIKLA]] Öncelik kuyrukları için mükemmeldir: en
+  büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil
+  hasta önce.
+
+  [[TIKLA]] 10’u eklemek için onu sona koyuyoruz. [[TIKLA]] Sonra ebeveyninden büyük
+  oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
+
+------------------------------------------------------------------------------------------
+SLAYT 15 / 21  -  Gerçek hayatta heap’i kim kullanıyor?
+[Heap ve Heapsort]
+Süre 0:45  |  bölüm saati 4:12 -> 4:57  |  3 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [[TIKLA]] Sıralama: Linux
+  çekirdeğinin sort() fonksiyonu doğrudan heapsort’tur, çünkü ek bellek olmadan n log n
+  garanti eder. C++ ve .NET, quicksort’un şansı kötü giderse heapsort’a geçer. PostgreSQL,
+  LIMIT’li ORDER BY için “top-N heapsort” çalıştırır.
+
+  [[TIKLA]] Öncelik kuyrukları: Node.js ve Go zamanlayıcılarını bir heap’te tutar,
+  yönlendiriciler Dijkstra’yı öncelik kuyruğuyla çalıştırır, Elasticsearch en iyi
+  sonuçları bir öncelik kuyruğunda toplar, ZIP ve PNG de Huffman kodlarını bir heap ile
+  kurar.
+
+  [[TIKLA]] Çekirdekler, veritabanları, sunucular, ağlar, sıkıştırma: heap her yerde.
+
+------------------------------------------------------------------------------------------
+SLAYT 16 / 21  -  Horner kuralı: daha az çarpma
+[Gösterimi değiştirme]
+Süre 0:28  |  bölüm saati 4:57 -> 5:25  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Gösterimi değiştirmeye geri dönelim. [[TIKLA]] Horner kuralı bir polinomu tekrar tekrar
+  x parantezine alarak yeniden yazar. [[TIKLA]] x = 3 için: 3 ile çarp, sonraki katsayıyı
+  ekle: 2, 5, 18, 55 ve p(3) = 160.
+
+  [[TIKLA]] Yaklaşık n²/2 yerine sadece n çarpma. [[TIKLA]] Gerçek hayatta Java’nın
+  String.hashCode() fonksiyonu Horner kuralıdır; her parseInt da öyle.
+
+------------------------------------------------------------------------------------------
+SLAYT 17 / 21  -  İkili üs alma: kare alarak aⁿ
+[Gösterimi değiştirme]
+Süre 0:26  |  bölüm saati 5:25 -> 5:51  |  3 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  İkili üs alma: a¹³’ü hesaplamak için 13’ü ikilik tabanda yaz: 1101. [[TIKLA]] Soldan
+  sağa: her bitte kare al, bit 1 ise a ile de çarp. a, a³, a⁶, a¹³: 12 yerine 5 çarpma.
+
+  [[TIKLA]] Ya da sağdan sola: a, a⁴ ve a⁸ kuvvetlerini çarp. [[TIKLA]] Gerçek hayatta RSA
+  kullanan her HTTPS bağlantısı dev üsleri tam olarak böyle hesaplar.
+
+------------------------------------------------------------------------------------------
+SLAYT 18 / 21  -  Zaten çözebildiğin bir probleme indirge
+[Probleme indirgeme]
+Süre 0:28  |  bölüm saati 5:51 -> 6:19  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  [[TIKLA]] Probleme indirgeme: A problemini, zaten çözebildiğimiz bir B problemine çevir,
+  sonra cevabı geri çevir; tabii bu dolambaç daha ucuzsa.
+
+  [[TIKLA]] 24 ve 60’ın lcm’i (EKOK): Öklid gcd’yi (EBOB) 12 bulur, yani lcm = 24·60/12 =
+  120. [[TIKLA]] Bir maksimumu bulmak için −f’nin minimumunu bul.
+
+  [[TIKLA]] Gerçek hayatta bir yapay zekâ modelini eğitmek, bir kaybı (loss) en aza
+  indirerek olabilirliği en büyütmektir.
+
+------------------------------------------------------------------------------------------
+SLAYT 19 / 21  -  Yol saymak = matris çarpmak
+[Probleme indirgeme]
+Süre 0:25  |  bölüm saati 6:19 -> 6:44  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Bir indirgeme daha: yol saymak. [[TIKLA]] Grafı bir komşuluk matrisi A olarak yaz.
+  [[TIKLA]] Karesini al. [[TIKLA]] A²’nin (2, 4) elemanı 2: tam olarak 2’den 4’e giden iki
+  yol. Yol saymak sadece matris çarpımıdır.
+
+  [[TIKLA]] Gerçek hayatta: sosyal ağlardaki “arkadaşın arkadaşı” ve Google’ın PageRank’i.
+
+------------------------------------------------------------------------------------------
+SLAYT 20 / 21  -  Dönüştürmenin üç yolu, sonra fethet
+[Kapanış]
+Süre 0:20  |  bölüm saati 6:44 -> 7:04  |  2 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Özetle: [[TIKLA]] dönüştürmenin üç yolu var. Örneği basitleştir, gösterimi değiştir ya
+  da başka bir probleme indirge; ve her biri bugün gerçek sistemlerde çalışıyor.
+
+  [[TIKLA]] Problemi değiştir, sonra fethet.
+
+------------------------------------------------------------------------------------------
+SLAYT 21 / 21  -  Teşekkürler! Sorular?
+[Kapanış]
+Süre 0:05  |  bölüm saati 7:04 -> 7:09  |  0 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Dinlediğiniz için teşekkürler. Sorularınızı memnuniyetle cevaplarım.
+
+==========================================================================================
+OLASI SORULAR (senin konuların)
+==========================================================================================
+1) Heapsort pratikte tam olarak nerede kullanılıyor?
+   Linux çekirdeğinin lib/sort.c içindeki genel sort() fonksiyonu heapsort’tur (garanti n
+   log n, ek bellek yok, özyineleme yok). C++ std::sort ve .NET Array.Sort introsort
+   kullanır; introsort gerektiğinde heapsort’a geçer. PostgreSQL küçük bir LIMIT ile ORDER
+   BY için top-N heapsort kullanır.
+
+2) Heap kurmak neden O(n log n) değil de O(n)?
+   Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir. Sadece
+   kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az karşılaştırma
+   çıkar.
+
+3) Heapsort mu, quicksort mu, mergesort mu?
+   Üçü de ortalamada n log n. Heapsort yerinde çalışır ve kötü bir en kötü durumu yoktur,
+   ama pratikte quicksort genelde daha hızlıdır. Mergesort kararlıdır ama ek bir dizi
+   ister.
+
+4) Heapsort neden kararlı değil?
+   Kök, heap’in son anahtarıyla yer değiştirir ve bu hamle diğer anahtarların üzerinden
+   atlar. Slayttaki 1a ve 1b gibi iki eşit anahtar ters sırada kalabilir.
+
+5) Min-heap nedir?
+   Aynı yapı, ters kuralla: her ebeveyn çocuklarından küçük ya da eşittir, bu yüzden en
+   küçük eleman köktedir. Küçük sayının yüksek öncelik anlamına geldiği durumlarda
+   kullanılır.
+
+6) Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?
+   n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı kurmak
+   sadece O(n) tutar.
+
+==========================================================================================
+EK SLAYTLAR (sadece soru gelirse göster)
+==========================================================================================
+EK A1  -  Deneyin: heapsort oyun alanı
+  Soru-cevap için: kendi sayılarınızı yazın (en fazla 15), Oynat ya da Adım’a basın ve iki
+  aşamayı canlı karşılaştırma ve takas sayaçlarıyla izleyin. "Zaten sıralı" ile kurmanın
+  yine doğrusal olduğunu gösterebilirsiniz.
+
+------------------------------------------------------------------------------------------
+"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-intro).

@@ -10,7 +10,7 @@
 - `S`: sunucu penceresi. Bu metin, süre sayacı ve "sonraki tıklama" ipucu orada görünür; ikinci ekranda (laptop) aç, sunum projeksiyonda kalsın. Tek ekranda `N` notları altta gösterir.
 - `L`: ekrandaki yazıları Türkçe ⇄ İngilizce yapar. Soru-cevapta Türkçe açıklamak istersen kullan.
 - Konuşma yavaş ve net olsun: dakikada ~120 kelime. Animasyonlar zaten anlatıyor, acele etme.
-- İki kişi sunuyorsanız her birinin kendi dosyası var: `KONUSMA_BOLUM_1.txt` ve `KONUSMA_BOLUM_2.txt` (devir teslim cümleleri ve kendi soruları dahil).
+- İki kişi sunuyorsanız her birinin kendi dosyaları var, dil dil ayrı: `KONUSMA_BOLUM_1_EN.txt` / `KONUSMA_BOLUM_1_TR.txt` ve `KONUSMA_BOLUM_2_EN.txt` / `KONUSMA_BOLUM_2_TR.txt` (devir teslim cümleleri ve kendi soruları dahil).
 
 ## Zaman planı
 
@@ -76,7 +76,7 @@ Hello everyone. Today’s topic is Chapter 6: **Transform and Conquer**. The ide
 ## 3 · Presorting: are all elements distinct?
 *Ön sıralama: tüm elemanlar farklı mı?* · Instance simplification / Örneği basitleştirme · **0:43 → 1:17** · 4 tıklama
 
-**Tıklamalar:** (1) Brute force: compare every pair · (2) Presort, then compare neighbours · (3) n = 1 000 000: 5·10¹¹ vs 2·10⁷ · (4) Real world: sort | uniq, databases
+**Tıklamalar:** (1) Brute force: compare every pair · (2) Presort, then compare neighbours · (3) n = 1,000,000: 5·10¹¹ vs 2·10⁷ · (4) Real world: sort | uniq, databases
 
 **EN — söyleyeceğin:**
 

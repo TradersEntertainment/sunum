@@ -55,12 +55,14 @@ Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki bası�
 
 ## İki kişi sunuyorsanız
 
-Konuşma metni ikiye bölünmüş durumda (düz metin, UTF-8; telefonda da açılır):
+Konuşma metni hem iki kişiye hem iki dile ayrılmış durumda (düz metin, UTF-8; telefonda da açılır). İngilizce dosya sesli söyleyeceğin metindir, Türkçe dosya aynı metnin anlamıdır; slayt sırası ve tıklama işaretleri ikisinde de aynıdır.
 
-- **`KONUSMA_BOLUM_1.txt`**: 1–7. slaytlar (başlık, ana fikir, presorting, Gauss, ikili arama ağacı, AVL, 2-3 ağacı). Yaklaşık 3:15.
-- **`KONUSMA_BOLUM_2.txt`**: 8–21. slaytlar (heap ve heapsort, Horner, üs alma, indirgeme, özet, teşekkür). Yaklaşık 7:09.
+| Kişi | Slaytlar | İngilizce (söyleyeceğin) | Türkçe (anlamı) | Süre |
+|---|---|---|---|---|
+| 1. kişi | 1–7: başlık, ana fikir, presorting, Gauss, ikili arama ağacı, AVL, 2-3 ağacı | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~3:15 |
+| 2. kişi | 8–21: heap ve heapsort, Horner, üs alma, indirgeme, özet, teşekkür | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~7:09 |
 
-Her dosyada kendi zaman planı, devir teslim cümleleri ve kendi konularına ait olası sorular ile ek slaytlar var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar.
+Her dosyada kendi zaman planı, devir teslim cümleleri ve kendi konularına ait olası sorular ile ek slaytlar var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
 
 Bölme noktasını değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin ilk 9 slaytı birinci kişiye vermek için:
 

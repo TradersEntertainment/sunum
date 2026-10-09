@@ -1,0 +1,321 @@
+==========================================================================================
+SPEECH SCRIPT - PART 2/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
+==========================================================================================
+Slides      : 8-21  (Heaps & Heapsort  ...  Thank you! Questions?)
+Time        : about 7:09 (planned)  |  in the whole talk 3:15 -> 10:24
+Words       : 925 (English)
+Other part  : 1-7 (your friend)  - not in this file
+Companion   : KONUSMA_BOLUM_2_TR.txt = the same text in Turkish (what it means)
+
+HOW TO USE
+- Say the text below out loud, slowly and clearly (about 125 words a minute). The
+  animations do half of the explaining.
+- When you see [[CLICK]], press the forward key (->) once. An animation plays on screen.
+- If you press again while it plays, it finishes at once. Press <- to go back one step.
+- Presentation: double-click index.html. F = full screen, S = presenter window (notes +
+  timer), L = language.
+- The Turkish meaning of every paragraph is in KONUSMA_BOLUM_2_TR.txt, in the same order.
+
+TIME PLAN
+ No  Slide                                         Clk  Time   Part time    Overall
+ 8   Heaps & Heapsort                               0   0:12   0:00         3:15
+ 9   What is a heap? Two rules                      4   0:40   0:12         3:27
+ 10  A heap is secretly an array                    4   0:36   0:52         4:07
+ 11  Building a heap bottom-up                      5   0:50   1:28         4:43
+ 12  Heapsort: remove the max, again and again      4   0:50   2:18         5:33
+ 13  How fast is heapsort?                          4   0:36   3:08         6:23
+ 14  Heaps power priority queues                    3   0:28   3:44         6:59
+ 15  Real world: who uses heaps?                    3   0:45   4:12         7:27
+ 16  Horner’s rule: fewer multiplications           4   0:28   4:57         8:12
+ 17  Binary exponentiation: aⁿ by squaring          3   0:26   5:25         8:40
+ 18  Reduce to a problem you can already solve      4   0:28   5:51         9:06
+ 19  Counting paths = multiplying matrices          4   0:25   6:19         9:34
+ 20  Three ways to transform, then conquer          2   0:20   6:44         9:59
+ 21  Thank you! Questions?                          0   0:05   7:04         10:19
+     TOTAL                                              7:09  
+
+******************************************************************************************
+START - when slide 8 is on the screen, first say:
+******************************************************************************************
+SAY: Thank you! I will continue from here.
+
+------------------------------------------------------------------------------------------
+SLIDE 8 / 21  -  Heaps & Heapsort
+[Heaps & Heapsort]
+Time 0:12  |  part time 0:00 -> 0:12  |  0 clicks
+------------------------------------------------------------------------------------------
+SAY (English):
+  Now the star of this chapter: heaps and heapsort. We think of the keys as a tree, but
+  store them in a simple array.
+
+------------------------------------------------------------------------------------------
+SLIDE 9 / 21  -  What is a heap? Two rules
+[Heaps & Heapsort]
+Time 0:40  |  part time 0:12 -> 0:52  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Rule 1: shape (slots fill in order) (2) Rule 2: parent ≥ children (3) Paths go
+        down; no left-right order (4) Heap or not? ✓ ✗ ✗
+
+SAY (English):
+  A heap is a binary tree with two rules. [[CLICK]] Rule one, shape: we fill the tree
+  level by level, left to right. Only the last level can have gaps, and only on the right.
+
+  [[CLICK]] Rule two, order: every parent is greater than or equal to its children. That
+  is a max-heap.
+
+  [[CLICK]] So keys decrease along every path down. But there is no left-to-right order: 8
+  is lower, yet bigger than 4.
+
+  [[CLICK]] Quick check: the first tree is a heap. The second has a hole in its shape. The
+  third breaks the order: 6 is bigger than its parent 5.
+
+------------------------------------------------------------------------------------------
+SLIDE 10 / 21  -  A heap is secretly an array
+[Heaps & Heapsort]
+Time 0:36  |  part time 0:52 -> 1:28  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Number the nodes, fly them into the array (2) Children of j: 2j, 2j+1 (3)
+        Parent of j: ⌊j/2⌋ (4) Parents first, max at H[1]
+
+SAY (English):
+  Here is the trick. [[CLICK]] We number the nodes top-down, left to right, and simply put
+  them into an array. No pointers at all.
+
+  [[CLICK]] For the node at position j, the children are at 2j and 2j + 1. For j = 2, that
+  is 4 and 5.
+
+  [[CLICK]] And the parent of j is at j divided by 2, rounded down. Five divided by two is
+  two.
+
+  [[CLICK]] So the parents fill the first half of the array, and the maximum is always at
+  position one.
+
+------------------------------------------------------------------------------------------
+SLIDE 11 / 21  -  Building a heap bottom-up
+[Heaps & Heapsort]
+Time 0:50  |  part time 1:28 -> 2:18  |  5 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Parent 7: swap with 8 (2) Parent 9: already OK ✓ (3) Root 2: swap with 9 (4) 2
+        keeps sinking: swap with 6 (5) Done: heap 9 6 8 2 5 7
+
+SAY (English):
+  To build a heap, we go bottom-up: start at the last parent, fix its subtree, and move
+  back toward the root. Our list: 2, 9, 7, 6, 5, 8.
+
+  [[CLICK]] The last parent is 7. Its bigger child is 8, so they swap. [[CLICK]] Next is
+  9. It is already bigger than its children: nothing to do.
+
+  [[CLICK]] Now the root, 2. Its bigger child is 9: swap. [[CLICK]] 2 is still too small,
+  so it keeps sinking: it swaps with 6 and reaches a leaf.
+
+  [[CLICK]] Done: a heap, with the maximum, 9, at the root. The table matches our lecture
+  slides.
+
+------------------------------------------------------------------------------------------
+SLIDE 12 / 21  -  Heapsort: remove the max, again and again
+[Heaps & Heapsort]
+Time 0:50  |  part time 2:18 -> 3:08  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Swap root 9 with last; lock 9 (2) Sift 7 down (swap with 8) (3) Autoplay the
+        remaining removals (4) Sorted: 2 5 6 7 8 9
+
+SAY (English):
+  Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum
+  again and again.
+
+  [[CLICK]] Swap the root with the last key. Now 9 is in its final place, so we lock it,
+  and the heap shrinks by one.
+
+  [[CLICK]] The new root, 7, is too small, so we sift it down: it swaps with its bigger
+  child, 8. The heap is fixed again.
+
+  [[CLICK]] We repeat the same two moves: swap the max to the end, then sift down. Watch
+  the sorted part grow on the right.
+
+  [[CLICK]] And the array is sorted: 2, 5, 6, 7, 8, 9. Notice that we never needed a
+  second array.
+
+------------------------------------------------------------------------------------------
+SLIDE 13 / 21  -  How fast is heapsort?
+[Heaps & Heapsort]
+Time 0:36  |  part time 3:08 -> 3:44  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Build = Θ(n): work per level (2) Sort = Θ(n log n) (3) Total Θ(n log n),
+        in-place ✓ (4) Not stable ✗ (1a 1b → 1b 1a)
+
+SAY (English):
+  How fast is it? [[CLICK]] Building the heap is linear. Most nodes are near the bottom
+  and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.
+
+  [[CLICK]] Sorting does n − 1 removals, and each costs at most about 2 log n comparisons.
+  So that part is n log n.
+
+  [[CLICK]] In total, heapsort is n log n in the worst case and on average, and it works
+  in place.
+
+  [[CLICK]] One weakness: it is not stable. Two equal keys can change their order.
+
+------------------------------------------------------------------------------------------
+SLIDE 14 / 21  -  Heaps power priority queues
+[Heaps & Heapsort]
+Time 0:28  |  part time 3:44 -> 4:12  |  3 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Priority queue operations (2) Insert 10 at the end (3) 10 bubbles up to the
+        root
+
+SAY (English):
+  Heaps are not only for sorting. [[CLICK]] They are perfect for priority queues: find the
+  max in constant time, insert or delete in log n. Like an emergency room: the most urgent
+  patient goes first.
+
+  [[CLICK]] To insert 10, we put it at the end. [[CLICK]] Then it bubbles up while it
+  beats its parent: past 8, past 9, up to the root. At most log n steps.
+
+------------------------------------------------------------------------------------------
+SLIDE 15 / 21  -  Real world: who uses heaps?
+[Heaps & Heapsort]
+Time 0:45  |  part time 4:12 -> 4:57  |  3 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Sorting: Linux, C++/.NET, PostgreSQL, std libraries (2) Priority queues:
+        timers, routers, search, ZIP/PNG (3) Heaps are everywhere
+
+SAY (English):
+  Who uses this in real life? Almost everyone. [[CLICK]] Sorting: the Linux kernel’s
+  sort() is heapsort, because it guarantees n log n with no extra memory. C++ and .NET
+  switch to heapsort when quicksort gets unlucky. PostgreSQL runs a “top-N heapsort” for
+  ORDER BY with LIMIT.
+
+  [[CLICK]] Priority queues: Node.js and Go keep their timers in a heap, routers run
+  Dijkstra with a priority queue, Elasticsearch collects its top results in one, and ZIP
+  and PNG build their Huffman codes with a heap.
+
+  [[CLICK]] Kernels, databases, servers, networks, compression: heaps are everywhere.
+
+------------------------------------------------------------------------------------------
+SLIDE 16 / 21  -  Horner’s rule: fewer multiplications
+[Representation change]
+Time 0:28  |  part time 4:57 -> 5:25  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Factor out x again and again (2) Table at x = 3: 2, 5, 18, 55, 160 (3) n
+        multiplications instead of ~n²/2 (4) Real world: hashCode, parseInt
+
+SAY (English):
+  Back to representation change. [[CLICK]] Horner’s rule rewrites a polynomial by
+  factoring out x again and again. [[CLICK]] At x = 3: multiply by 3, add the next
+  coefficient: 2, 5, 18, 55, and p(3) = 160.
+
+  [[CLICK]] Only n multiplications instead of about n²/2. [[CLICK]] In real life, Java’s
+  String.hashCode() is Horner’s rule, and so is every parseInt.
+
+------------------------------------------------------------------------------------------
+SLIDE 17 / 21  -  Binary exponentiation: aⁿ by squaring
+[Representation change]
+Time 0:26  |  part time 5:25 -> 5:51  |  3 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Left to right: square, multiply on 1 (2) Right to left: a · a⁴ · a⁸ (3) Real
+        world: HTTPS / RSA
+
+SAY (English):
+  Binary exponentiation: to compute a¹³, write 13 in binary: 1101. [[CLICK]] Left to
+  right: square at every bit, and multiply by a when the bit is 1. a, a³, a⁶, a¹³: 5
+  multiplications instead of 12.
+
+  [[CLICK]] Or right to left: multiply the powers a, a⁴ and a⁸. [[CLICK]] In real life,
+  every HTTPS connection that uses RSA computes huge powers exactly this way.
+
+------------------------------------------------------------------------------------------
+SLIDE 18 / 21  -  Reduce to a problem you can already solve
+[Problem reduction]
+Time 0:28  |  part time 5:51 -> 6:19  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Idea: A → B (already solvable) → answer (2) lcm(24, 60) via gcd = 12 → 120 (3)
+        max f = −min(−f); LP, graph search (4) Real world: machine learning, airlines
+
+SAY (English):
+  [[CLICK]] Problem reduction: turn problem A into a problem B that we can already solve,
+  then translate the answer back, if the detour is cheaper.
+
+  [[CLICK]] lcm of 24 and 60: Euclid gives gcd = 12, so lcm = 24·60/12 = 120. [[CLICK]] To
+  find a maximum, find the minimum of −f.
+
+  [[CLICK]] In real life, training an AI model maximizes likelihood by minimizing a loss.
+
+------------------------------------------------------------------------------------------
+SLIDE 19 / 21  -  Counting paths = multiplying matrices
+[Problem reduction]
+Time 0:25  |  part time 6:19 -> 6:44  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Graph → adjacency matrix A (2) A² = A · A (3) (2, 4) = 2: the two paths (4)
+        Real world: social networks, PageRank
+
+SAY (English):
+  One more reduction: counting paths. [[CLICK]] Write the graph as an adjacency matrix A.
+  [[CLICK]] Square it. [[CLICK]] Entry (2, 4) of A² is 2: exactly the two paths from 2 to
+  4. Counting paths is just matrix multiplication.
+
+  [[CLICK]] In real life: “friends of friends” in social networks, and Google’s PageRank.
+
+------------------------------------------------------------------------------------------
+SLIDE 20 / 21  -  Three ways to transform, then conquer
+[Wrap-up]
+Time 0:20  |  part time 6:44 -> 7:04  |  2 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Three buckets, with where each is used (2) Change the problem, then conquer it
+
+SAY (English):
+  To sum up: [[CLICK]] three ways to transform. Simplify the instance, change the
+  representation, or reduce to another problem, and every one of them runs in real systems
+  today.
+
+  [[CLICK]] Change the problem, then conquer it.
+
+------------------------------------------------------------------------------------------
+SLIDE 21 / 21  -  Thank you! Questions?
+[Wrap-up]
+Time 0:05  |  part time 7:04 -> 7:09  |  0 clicks
+------------------------------------------------------------------------------------------
+SAY (English):
+  Thank you for listening. I’m happy to take your questions.
+
+==========================================================================================
+LIKELY QUESTIONS (your topics)
+==========================================================================================
+1) Where exactly is heapsort used in practice?
+   The Linux kernel’s generic sort() in lib/sort.c is a heapsort (guaranteed n log n, no
+   extra memory, no recursion). C++ std::sort and .NET Array.Sort use introsort, which
+   falls back to heapsort. PostgreSQL uses a top-N heapsort for ORDER BY with a small
+   LIMIT.
+
+2) Why is building a heap only O(n), not O(n log n)?
+   Most nodes are leaves or near the leaves, and they can sink only a few levels. Only the
+   root can sink log n levels. If you add up the work level by level, it is less than 2n
+   comparisons.
+
+3) Heapsort, quicksort or mergesort?
+   All three are n log n on average. Heapsort is in place and has no bad worst case, but
+   quicksort is usually faster in practice. Mergesort is stable, but it needs an extra
+   array.
+
+4) Why is heapsort not stable?
+   The root is swapped with the last key of the heap, which jumps over other keys. Two
+   equal keys can end up in the opposite order, like 1a and 1b on the slide.
+
+5) What is a min-heap?
+   The same structure with the opposite rule: every parent is smaller than or equal to its
+   children, so the minimum is at the root. It is used when a smaller number means a
+   higher priority.
+
+6) Why build bottom-up instead of inserting the keys one by one?
+   Inserting n keys one by one (top-down) can cost n log n. Bottom-up construction costs
+   only O(n).
+
+==========================================================================================
+EXTRA SLIDES (show them only if someone asks)
+==========================================================================================
+EXTRA A1  -  Try it: heapsort playground
+  For questions: type your own numbers (up to 15), press Play or Step, and watch both
+  stages with live comparison and swap counters. Try "Already sorted" to see that the
+  build is still linear.
+
+------------------------------------------------------------------------------------------
+Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heap-intro).

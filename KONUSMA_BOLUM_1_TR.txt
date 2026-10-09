@@ -1,0 +1,161 @@
+==========================================================================================
+KONUŞMA METNİ - BÖLÜM 1/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
+==========================================================================================
+Slaytlar    : 1-7  (Dönüştür ve Fethet  ...  2-3 ağaçları: dolan düğüm ikiye bölünür)
+Süre        : yaklaşık 3:15 (planlanan)  |  tüm sunumda 0:00 -> 3:15
+Kelime      : 417 (İngilizce metindeki)
+Diğer bölüm : 8-21 (arkadaşın)  - bu dosyada yok
+Eş dosya    : KONUSMA_BOLUM_1_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
+
+NASIL KULLANILIR
+- Bu dosya, İngilizce metnin Türkçe anlamıdır: slayt sırası ve tıklama işaretleri
+  İngilizce dosyayla aynı. Sesli söyleyeceğin metin İngilizce dosyada.
+- [[TIKLA]] işareti, İngilizce metindeki [[CLICK]] anıdır: o noktada ileri tuşuna (->) bir
+  kez bas. Ekranda bir animasyon oynar.
+- Animasyon oynarken tekrar basarsan hemen tamamlanır. Yanlışlıkla ileri gittiysen <- ile
+  bir adım geri dön.
+- Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre
+  sayacı), L = dil.
+- Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
+  etme.
+
+ZAMAN PLANI
+ No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
+ 1   Dönüştür ve Fethet                             0   0:13   0:00         0:00
+ 2   Fikir: önce dönüştür, sonra fethet             4   0:30   0:13         0:13
+ 3   Ön sıralama: tüm elemanlar farklı mı?          4   0:34   0:43         0:43
+ 4   Gauss eliminasyonu: üçgen hâline getir         6   0:34   1:17         1:17
+ 5   İkili arama ağacı: hızı şekil belirler         3   0:22   1:51         1:51
+ 6   AVL ağaçları: dengede kalmak için döndür       5   0:32   2:13         2:13
+ 7   2-3 ağaçları: dolan düğüm ikiye bölünür        5   0:30   2:45         2:45
+     TOPLAM                                             3:15  
+
+------------------------------------------------------------------------------------------
+SLAYT 1 / 21  -  Dönüştür ve Fethet
+[Dönüştür ve Fethet]
+Süre 0:13  |  bölüm saati 0:00 -> 0:13  |  0 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Herkese merhaba. Bugünkü konum Bölüm 6: Dönüştür ve Fethet. Fikir şu: bir problem zorsa
+  önce onu daha kolay bir probleme dönüştür, sonra çöz.
+
+------------------------------------------------------------------------------------------
+SLAYT 2 / 21  -  Fikir: önce dönüştür, sonra fethet
+[Dönüştür ve Fethet]
+Süre 0:30  |  bölüm saati 0:13 -> 0:43  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  [[TIKLA]] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.
+
+  [[TIKLA]] Bunun üç yolu var. Bir: örneği basitleştirme; aynı problem, daha basit bir
+  örnek, mesela sıralı bir liste. [[TIKLA]] İki: gösterimi değiştirme; aynı veri, farklı
+  bir biçimde, mesela ağaç gibi okunan bir dizi. [[TIKLA]] Üç: probleme indirgeme; onu
+  zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.
+
+------------------------------------------------------------------------------------------
+SLAYT 3 / 21  -  Ön sıralama: tüm elemanlar farklı mı?
+[Örneği basitleştirme]
+Süre 0:34  |  bölüm saati 0:43 -> 1:17  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Birinci örnek: tüm elemanlar farklı mı? [[TIKLA]] Kaba kuvvet her çifti karşılaştırır,
+  n²/2’ye kadar karşılaştırma. [[TIKLA]] Önceden sıralama: önce sırala, sonra sadece
+  komşuları karşılaştır, çünkü tekrarlar yan yana gelir. Bu n log n.
+
+  [[TIKLA]] Bir milyon eleman için: 500 milyar karşılaştırmaya karşı 20 milyon. Dakikalar
+  ve göz açıp kapayıncaya kadar.
+
+  [[TIKLA]] Gerçek hayatta Unix’teki sort | uniq tam olarak böyle çalışır; veritabanları
+  da DISTINCT ve GROUP BY için aynısını yapar.
+
+------------------------------------------------------------------------------------------
+SLAYT 4 / 21  -  Gauss eliminasyonu: üçgen hâline getir
+[Örneği basitleştirme]
+Süre 0:34  |  bölüm saati 1:17 -> 1:51  |  6 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  İkinci örnek: Gauss eliminasyonu bir denklem sistemini üçgene çevirir. [[TIKLA]] İkinci
+  satırdan birinci satırın 3/2’si çıkar: bir sıfır. [[TIKLA]] Üçüncü satıra da aynısı.
+  [[TIKLA]] Bir adım daha ve matris üst üçgen oldu. Bunun maliyeti n³.
+
+  [[TIKLA]] Şimdi aşağıdan yukarı çözüyoruz: x₃ = 6, x₂ = 1, x₁ = 2. [[TIKLA]] Yerine
+  koyunca hepsi tutuyor.
+
+  [[TIKLA]] Gerçek hayatta NumPy ve MATLAB sistemleri böyle çözer; TOP500 listesindeki
+  süper bilgisayarlar da bunu ne kadar hızlı yaptıklarına göre sıralanır.
+
+------------------------------------------------------------------------------------------
+SLAYT 5 / 21  -  İkili arama ağacı: hızı şekil belirler
+[Örneği basitleştirme]
+Süre 0:22  |  bölüm saati 1:51 -> 2:13  |  3 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Şimdi arama ağaçları. [[TIKLA]] İkili arama ağacı gür olduğunda hızlıdır. [[TIKLA]] Ama
+  anahtarlar zaten sıralı gelirse bir çubuğa dönüşür: arama O(n) olur.
+
+  [[TIKLA]] İki çözüm var: ağacı dengeli tutmak, AVL ağaçları gibi, ya da bir düğüme daha
+  çok anahtar koymak, 2-3 ağaçları gibi.
+
+------------------------------------------------------------------------------------------
+SLAYT 6 / 21  -  AVL ağaçları: dengede kalmak için döndür
+[Örneği basitleştirme]
+Süre 0:32  |  bölüm saati 2:13 -> 2:45  |  5 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  AVL ağacı her düğümün denge faktörünü −1, 0 veya 1’de tutar. 5, 6, 8, 3, 2, 4, 7
+  ekliyoruz. [[TIKLA]] 8’den sonra 5 dengesini kaybediyor: bir sola döndürme. [[TIKLA]]
+  2’den sonra: sağa döndürme. [[TIKLA]] 4’ten sonra: çift döndürme. [[TIKLA]] 7’den sonra
+  bir çift döndürme daha. Dengeli ve hâlâ sıralı.
+
+  [[TIKLA]] Gerçek hayatta Linux’un işlemci zamanlayıcısı ve Java’nın TreeMap’i, AVL’nin
+  kuzeni olan red-black ağaçlarını kullanır.
+
+------------------------------------------------------------------------------------------
+SLAYT 7 / 21  -  2-3 ağaçları: dolan düğüm ikiye bölünür
+[Gösterimi değiştirme]
+Süre 0:30  |  bölüm saati 2:45 -> 3:15  |  5 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  2-3 ağaçları diğer yolu seçer: bir düğüm bir ya da iki anahtar tutar. [[TIKLA]] Üç
+  anahtar mı oldu? Düğüm bölünür, ortadaki anahtar yukarı çıkar. [[TIKLA]] Küçük düğümler
+  anahtarları kolayca alır. [[TIKLA]] Bölünmeler köke kadar tırmanabilir: ağaç sadece
+  tepeden büyür. [[TIKLA]] Böylece tüm yapraklar aynı seviyede kalır: log n.
+
+  [[TIKLA]] Gerçek hayatta MySQL, PostgreSQL ve SQLite’taki her indeks bir B-ağacıdır:
+  düğüm başına yüzlerce anahtar tutan bir 2-3 ağacı.
+
+******************************************************************************************
+DEVİR TESLİM - 7. slaytın son tıklamasından sonra söyle, sonra -> ile 8. slayta geç:
+******************************************************************************************
+ANLAMI: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heap ve Heapsort.
+
+==========================================================================================
+OLASI SORULAR (senin konuların)
+==========================================================================================
+1) AVL ağacı mı, 2-3 ağacı mı?
+   İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi döndürmelerle
+   (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir ve taşmayı
+   bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.
+
+2) Gauss eliminasyonu neden Θ(n³)?
+   İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da
+   yaklaşık n³/3 çarpma eder.
+
+==========================================================================================
+EK SLAYTLAR (sadece soru gelirse göster)
+==========================================================================================
+EK A2  -  Ne kadar hızlı sıralayabiliriz?
+  Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en
+  kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının
+  yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [[TIKLA]] Önceden sıralama çok
+  sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp
+  ikili arama yapmak kazanır. [[TIKLA]]
+
+EK A3  -  Dört AVL döndürmesi
+  Dengeli ağaçlarla ilgili sorular için: [[TIKLA]] bir AVL ağacının yüksekliği en fazla
+  yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme ister;
+  döndürme sadece birkaç işaretçiyi yeniden bağlar. [[TIKLA]] 2-3 ağacının yüksekliği log₃
+  n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).
+
+------------------------------------------------------------------------------------------
+"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-intro).

@@ -1,0 +1,175 @@
+==========================================================================================
+SPEECH SCRIPT - PART 1/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
+==========================================================================================
+Slides      : 1-7  (Transform & Conquer  ...  2-3 trees: a full node splits in two)
+Time        : about 3:15 (planned)  |  in the whole talk 0:00 -> 3:15
+Words       : 417 (English)
+Other part  : 8-21 (your friend)  - not in this file
+Companion   : KONUSMA_BOLUM_1_TR.txt = the same text in Turkish (what it means)
+
+HOW TO USE
+- Say the text below out loud, slowly and clearly (about 125 words a minute). The
+  animations do half of the explaining.
+- When you see [[CLICK]], press the forward key (->) once. An animation plays on screen.
+- If you press again while it plays, it finishes at once. Press <- to go back one step.
+- Presentation: double-click index.html. F = full screen, S = presenter window (notes +
+  timer), L = language.
+- The Turkish meaning of every paragraph is in KONUSMA_BOLUM_1_TR.txt, in the same order.
+
+TIME PLAN
+ No  Slide                                         Clk  Time   Part time    Overall
+ 1   Transform & Conquer                            0   0:13   0:00         0:00
+ 2   The idea: transform, then conquer              4   0:30   0:13         0:13
+ 3   Presorting: are all elements distinct?         4   0:34   0:43         0:43
+ 4   Gaussian elimination: make it triangular       6   0:34   1:17         1:17
+ 5   Binary search trees: shape decides speed       3   0:22   1:51         1:51
+ 6   AVL trees: rotate to stay balanced             5   0:32   2:13         2:13
+ 7   2-3 trees: a full node splits in two           5   0:30   2:45         2:45
+     TOTAL                                              3:15  
+
+------------------------------------------------------------------------------------------
+SLIDE 1 / 21  -  Transform & Conquer
+[Transform & Conquer]
+Time 0:13  |  part time 0:00 -> 0:13  |  0 clicks
+------------------------------------------------------------------------------------------
+SAY (English):
+  Hello everyone. Today’s topic is Chapter 6: Transform and Conquer. The idea: when a
+  problem is hard, first change it into an easier one, then solve it.
+
+------------------------------------------------------------------------------------------
+SLIDE 2 / 21  -  The idea: transform, then conquer
+[Transform & Conquer]
+Time 0:30  |  part time 0:13 -> 0:43  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Pipeline: transform → conquer (2) Way 1: instance simplification (3) Way 2:
+        representation change (4) Way 3: problem reduction
+
+SAY (English):
+  [[CLICK]] We transform the problem into an easier one, then conquer it.
+
+  [[CLICK]] There are three ways. One: instance simplification, the same problem with a
+  simpler instance, like a sorted list. [[CLICK]] Two: representation change, the same
+  data in a different form, like an array seen as a tree. [[CLICK]] Three: problem
+  reduction, turning it into a problem we can already solve, like lcm through gcd.
+
+------------------------------------------------------------------------------------------
+SLIDE 3 / 21  -  Presorting: are all elements distinct?
+[Instance simplification]
+Time 0:34  |  part time 0:43 -> 1:17  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Brute force: compare every pair (2) Presort, then compare neighbours (3) n =
+        1,000,000: 5·10¹¹ vs 2·10⁷ (4) Real world: sort | uniq, databases
+
+SAY (English):
+  Example one: are all elements distinct? [[CLICK]] Brute force compares every pair, up to
+  n²/2 comparisons. [[CLICK]] Presorting: sort first, then compare only neighbours,
+  because duplicates end up side by side. That is n log n.
+
+  [[CLICK]] For a million elements: 500 billion comparisons versus 20 million. Minutes
+  versus a blink.
+
+  [[CLICK]] In real life, the Unix pipeline sort | uniq works exactly like this, and so do
+  databases for DISTINCT and GROUP BY.
+
+------------------------------------------------------------------------------------------
+SLIDE 4 / 21  -  Gaussian elimination: make it triangular
+[Instance simplification]
+Time 0:34  |  part time 1:17 -> 1:51  |  6 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) R₂ − 3/2·R₁ (2) R₃ − 1/2·R₁ (3) R₃ − 3/5·R₂ → triangle, Θ(n³) (4) Back
+        substitution: x = 2, 1, 6 (5) Check ✓ (6) Real world: NumPy/MATLAB, TOP500
+
+SAY (English):
+  Example two: Gaussian elimination turns a system of equations into a triangle. [[CLICK]]
+  Row two minus 3/2 of row one: a zero. [[CLICK]] Row three, the same. [[CLICK]] One more
+  step, and the matrix is triangular. This costs n³.
+
+  [[CLICK]] Now we solve bottom-up: x₃ = 6, x₂ = 1, x₁ = 2. [[CLICK]] They check out.
+
+  [[CLICK]] In real life, NumPy and MATLAB solve systems this way, and the TOP500
+  supercomputers are ranked by how fast they do it.
+
+------------------------------------------------------------------------------------------
+SLIDE 5 / 21  -  Binary search trees: shape decides speed
+[Instance simplification]
+Time 0:22  |  part time 1:51 -> 2:13  |  3 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) A bushy BST: fast (2) Sorted keys → a stick, O(n) (3) Two fixes: balance (AVL)
+        / more keys per node (2-3)
+
+SAY (English):
+  Now search trees. [[CLICK]] A binary search tree is fast when it is bushy. [[CLICK]] But
+  if the keys arrive already sorted, it becomes a stick: search costs O(n).
+
+  [[CLICK]] Two fixes: keep it balanced, like AVL trees, or put more keys in a node, like
+  2-3 trees.
+
+------------------------------------------------------------------------------------------
+SLIDE 6 / 21  -  AVL trees: rotate to stay balanced
+[Instance simplification]
+Time 0:32  |  part time 2:13 -> 2:45  |  5 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Insert 5, 6, 8 → L(5) (2) Insert 3, 2 → R(5) (3) Insert 4 → LR(6) (4) Insert 7
+        → RL(6): balanced and sorted (5) Real world: Linux scheduler, TreeMap
+
+SAY (English):
+  An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2, 4, 7.
+  [[CLICK]] After 8, node 5 tips over: one left rotation. [[CLICK]] After 2: a right
+  rotation. [[CLICK]] After 4: a double rotation. [[CLICK]] After 7: another double one.
+  Balanced, and still sorted.
+
+  [[CLICK]] In real life, the Linux CPU scheduler and Java’s TreeMap use red-black trees,
+  the AVL tree’s cousin.
+
+------------------------------------------------------------------------------------------
+SLIDE 7 / 21  -  2-3 trees: a full node splits in two
+[Representation change]
+Time 0:30  |  part time 2:45 -> 3:15  |  5 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) 9, 5, 8 → split, 8 moves up (2) Small nodes absorb keys (3) Splits climb to
+        the root (4) All leaves on one level: Θ(log n) (5) Real world: database indexes,
+        file systems
+
+SAY (English):
+  2-3 trees take the other road: a node holds one or two keys. [[CLICK]] Three keys? The
+  node splits, and the middle key moves up. [[CLICK]] Small nodes just absorb keys.
+  [[CLICK]] Splits can climb to the root: the tree grows only at the top. [[CLICK]] So all
+  leaves stay on one level: log n.
+
+  [[CLICK]] In real life, every index in MySQL, PostgreSQL and SQLite is a B-tree: a 2-3
+  tree with hundreds of keys per node.
+
+******************************************************************************************
+HAND-OVER - after the last click of slide 7, say this, then press -> to go to slide 8:
+******************************************************************************************
+SAY: That was the first part. Now my friend continues with: Heaps & Heapsort.
+
+==========================================================================================
+LIKELY QUESTIONS (your topics)
+==========================================================================================
+1) AVL tree or 2-3 tree?
+   Both keep the height at O(log n). AVL trees stay binary and fix the balance with
+   rotations. 2-3 trees allow two keys in a node and fix overflows by splitting, so all
+   leaves stay on the same level.
+
+2) Why is Gaussian elimination Θ(n³)?
+   There are three nested loops: one over the pivot rows, one over the rows below, and one
+   over the columns. That gives about n³/3 multiplications.
+
+==========================================================================================
+EXTRA SLIDES (show them only if someone asks)
+==========================================================================================
+EXTRA A2  -  How fast can we sort?
+  If someone asks how fast sorting can be: every comparison sort needs about n log₂ n
+  comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉), and
+  mergesort reaches that bound. [[CLICK]] Presorting pays off when you search many times:
+  after about log₂ n searches, sorting once and using binary search wins. [[CLICK]]
+
+EXTRA A3  -  The four AVL rotations
+  For questions about balanced trees: [[CLICK]] an AVL tree’s height is at most about 1.44
+  log₂ n, and one insertion needs at most one single or double rotation, which only
+  re-links a few pointers. [[CLICK]] A 2-3 tree’s height is between log₃ n and log₂ n;
+  search, insert and delete are Θ(log n) in both.
+
+------------------------------------------------------------------------------------------
+Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heap-intro).
