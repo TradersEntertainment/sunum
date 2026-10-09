@@ -114,6 +114,21 @@ window.NOTES = {
     ],
   },
 
+  'heap-real': {
+    time: 45,
+    cues: ['Sorting: Linux, C++/.NET, PostgreSQL, std libraries', 'Priority queues: timers, routers, search, ZIP/PNG', 'Heaps are everywhere'],
+    en: [
+      'Who uses this in real life? Almost everyone. [click] Sorting: the Linux kernel’s <code>sort()</code> <b>is</b> heapsort, because it guarantees n log n with no extra memory. C++ and .NET switch to heapsort when quicksort gets unlucky. PostgreSQL runs a “top-N heapsort” for <code>ORDER BY</code> with <code>LIMIT</code>.',
+      '[click] Priority queues: Node.js and Go keep their timers in a heap, routers run Dijkstra with a priority queue, Elasticsearch collects its top results in one, and ZIP and PNG build their Huffman codes with a heap.',
+      '[click] Kernels, databases, servers, networks, compression: heaps are everywhere.',
+    ],
+    tr: [
+      'Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [click] Sıralama: Linux çekirdeğinin <code>sort()</code> fonksiyonu doğrudan heapsort’tur, çünkü ek bellek olmadan n log n garanti eder. C++ ve .NET, quicksort’un şansı kötü giderse heapsort’a geçer. PostgreSQL, <code>LIMIT</code>’li <code>ORDER BY</code> için “top-N heapsort” çalıştırır.',
+      '[click] Öncelik kuyrukları: Node.js ve Go zamanlayıcılarını bir heap’te tutar, yönlendiriciler Dijkstra’yı öncelik kuyruğuyla çalıştırır, Elasticsearch en iyi sonuçları bir öncelik kuyruğunda toplar, ZIP ve PNG de Huffman kodlarını bir heap ile kurar.',
+      '[click] Çekirdekler, veritabanları, sunucular, ağlar, sıkıştırma: heap her yerde.',
+    ],
+  },
+
   /* ---------------- appendix ---------------- */
 
   'playground': {
@@ -123,6 +138,12 @@ window.NOTES = {
 
   /* ---------------- likely questions (for KONUSMA_METNI.md) ---------------- */
   __qa: [
+    {
+      q: 'Where exactly is heapsort used in practice?',
+      qtr: 'Heapsort pratikte tam olarak nerede kullanılıyor?',
+      a: 'The Linux kernel’s generic sort() in lib/sort.c is a heapsort (guaranteed n log n, no extra memory, no recursion). C++ std::sort and .NET Array.Sort use introsort, which falls back to heapsort. PostgreSQL uses a top-N heapsort for ORDER BY with a small LIMIT.',
+      atr: 'Linux çekirdeğinin lib/sort.c içindeki genel sort() fonksiyonu heapsort’tur (garanti n log n, ek bellek yok, özyineleme yok). C++ std::sort ve .NET Array.Sort introsort kullanır; introsort gerektiğinde heapsort’a geçer. PostgreSQL küçük bir LIMIT ile ORDER BY için top-N heapsort kullanır.',
+    },
     {
       q: 'Why is building a heap only O(n), not O(n log n)?',
       qtr: 'Heap kurmak neden O(n log n) değil de O(n)?',

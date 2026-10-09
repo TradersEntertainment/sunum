@@ -231,3 +231,46 @@
   fill: var(--ink-2);
 }
 .svg-mono { font-family: var(--font-mono); font-size: 22px; fill: var(--ink-2); }
+
+/* ---------- real-world strip (Viz.real) ---------- */
+.real {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 16px 22px 18px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--act) 9%, var(--panel-solid));
+  border: 1.5px solid color-mix(in srgb, var(--act) 45%, transparent);
+  box-shadow: var(--shadow);
+  z-index: 5;
+}
+.real-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--act);
+  margin-bottom: 12px;
+}
+.real-head .ricon { stroke: var(--act); }
+.real-items { display: grid; gap: 12px 22px; }
+.real.row .real-items { grid-auto-flow: column; grid-auto-columns: 1fr; }
+.real.col .real-items { grid-auto-flow: row; }
+.real-item { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+.real-ic {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--act) 16%, transparent);
+}
+.ricon { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.real-ic .ricon { stroke: var(--act); }
+.real-txt { font-size: 21px; line-height: 1.32; color: var(--ink-2); min-width: 0; }
+.real-who { display: block; font-family: var(--font-display); font-size: 23px; font-weight: 700; color: var(--ink); margin-bottom: 1px; }
+.real-txt code, .real-who code { font-family: var(--font-mono); font-size: 0.92em; color: var(--ink); }

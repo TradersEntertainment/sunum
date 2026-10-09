@@ -648,6 +648,96 @@
     },
   });
 
+  /* ======================================================================
+   * 15 · Real world: who uses heaps?  (every claim verified against sources)
+   * ==================================================================== */
+  const USERS = {
+    left: [
+      { icon: 'terminal', who: { en: 'Linux kernel', tr: 'Linux çekirdeği' },
+        en: 'Its <code>sort()</code> is heapsort: n log n guaranteed, no extra memory.',
+        tr: 'Çekirdeğin <code>sort()</code> fonksiyonu heapsort: garanti n log n, ek bellek yok.' },
+      { icon: 'code', who: 'C++ std::sort · .NET Array.Sort',
+        en: 'Introsort: a quicksort that switches to heapsort when it gets unlucky.',
+        tr: 'Introsort: işler kötü gidince heapsort’a geçen bir quicksort.' },
+      { icon: 'database', who: 'PostgreSQL',
+        en: '<code>ORDER BY … LIMIT 10</code> runs a “top-N heapsort”: 10 rows in a tiny heap.',
+        tr: '<code>ORDER BY … LIMIT 10</code> “top-N heapsort” yapar: küçük bir heap’te 10 satır.' },
+      { icon: 'hash', who: 'Python heapq · Java PriorityQueue',
+        en: 'Every standard library ships a ready-made binary heap.',
+        tr: 'Her standart kütüphanede hazır bir ikili heap var.' },
+    ],
+    right: [
+      { icon: 'clock', who: 'Node.js · Go',
+        en: 'Timers wait in a heap; the root is the next one to fire.',
+        tr: 'Zamanlayıcılar bir heap’te bekler; kök, ilk çalacak olandır.' },
+      { icon: 'route', who: { en: 'Internet routers (OSPF) · maps', tr: 'İnternet yönlendiricileri (OSPF) · haritalar' },
+        en: 'Dijkstra’s shortest path takes the nearest node from a priority queue.',
+        tr: 'Dijkstra en kısa yol algoritması en yakın düğümü öncelik kuyruğundan alır.' },
+      { icon: 'search', who: 'Elasticsearch (Lucene)',
+        en: 'The top-10 search results are collected in a priority queue.',
+        tr: 'En iyi 10 arama sonucu bir öncelik kuyruğunda toplanır.' },
+      { icon: 'zip', who: 'ZIP · gzip · PNG (zlib)',
+        en: 'Huffman codes are built from a heap of symbol counts.',
+        tr: 'Huffman kodları, sembol sayılarından kurulan bir heap ile üretilir.' },
+    ],
+  };
+  const HUB = { x: 850, y: 300 };
+  const CARD = { w: 480, h: 164, gap: 26 };
+  const cardY = (i) => i * (CARD.h + CARD.gap);
+
+  function userCard(u, side, i, step) {
+    return '<div class="hr-card panel" data-step="' + step + '" data-anim="' + (side === 'left' ? 'left' : 'right') + '" style="'
+      + (side === 'left' ? 'left:0' : 'right:0') + ';top:' + cardY(i) + 'px;--d:' + (i * 140) + 'ms">'
+      + '<span class="hr-ic">' + Viz.ricon(u.icon, 34) + '</span>'
+      + '<div class="hr-txt"><b>' + Viz.whoText(u.who) + '</b>' + L(u.en, u.tr) + '</div></div>';
+  }
+
+  Deck.add({
+    id: 'heap-real', act: 'heap', steps: 3,
+    title: { en: 'Real world: who uses heaps?', tr: 'Gerçek hayatta heap’i kim kullanıyor?' },
+    html: `
+      <svg class="hr-spokes" width="1700" height="750" viewBox="0 0 1700 750" aria-hidden="true"></svg>
+      <div class="hr-hub"></div>
+      <div class="hr-hub-label" data-in="zoom">${L('one data structure', 'tek bir veri yapısı')}</div>
+      ${USERS.left.map((u, i) => userCard(u, 'left', i, 1)).join('')}
+      ${USERS.right.map((u, i) => userCard(u, 'right', i, 2)).join('')}
+      <div class="hr-banner" data-step="3" data-anim="pop">${L(
+        'Kernel · databases · servers · networks · compression: <b>heaps are everywhere.</b>',
+        'Çekirdek · veritabanları · sunucular · ağlar · sıkıştırma: <b>heap her yerde.</b>')}</div>`,
+    init(ctx) {
+      const d = ctx.data;
+      d.hub = new HeapScene(ctx.$('.hr-hub'), {
+        width: 560, height: 330, values: [9, 7, 8, 3, 5, 6, 4],
+        tree: { x: 40, y: 56, w: 480, gap: 104, r: 30 },
+      });
+      d.hub.mark(1, 'max');
+      const svg = ctx.$('.hr-spokes');
+      d.spokes = { left: [], right: [] };
+      ['left', 'right'].forEach((side) => {
+        USERS[side].forEach((u, i) => {
+          // from the card edge to just outside the hub tree (never through it)
+          const x = side === 'left' ? CARD.w : 1700 - CARD.w;
+          const y = cardY(i) + CARD.h / 2;
+          const ex = side === 'left' ? HUB.x - 262 : HUB.x + 262;
+          const ey = HUB.y + 30 + (y - HUB.y) * 0.3;
+          const cx = (x + ex) / 2;
+          const p = Viz.hiddenPath({ class: 'hr-spoke', d: 'M' + ex + ',' + ey + ' C' + cx + ',' + ey + ' ' + cx + ',' + y + ' ' + x + ',' + y });
+          svg.appendChild(p);
+          d.spokes[side].push(p);
+        });
+      });
+    },
+    async step(n, ctx) {
+      const d = ctx.data;
+      if (n === 1 || n === 2) {
+        const side = n === 1 ? 'left' : 'right';
+        await Promise.all(d.spokes[side].map((p, i) => Viz.draw(p, { dur: 650, delay: i * 140 })));
+      } else if (n === 3 && !Anim.isInstant()) {
+        FX.burst(960, 560, { count: 90, spread: Math.PI * 1.1 });
+      }
+    },
+  });
+
   // exported for the playground slide
   window.HeapSlides = { clickGroups, playGroup, BUILD_CODE };
 })();

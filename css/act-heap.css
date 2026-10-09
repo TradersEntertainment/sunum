@@ -180,3 +180,72 @@
 .pg-speed input { flex: 1; accent-color: var(--star); }
 .pg-caption { position: absolute; left: 0; top: 0; width: 1100px; font-size: 30px; }
 .pg-msg { font-size: 20px; color: var(--bad); min-height: 1.4em; }
+
+/* ---------- real world: who uses heaps? ---------- */
+.hr-spokes { position: absolute; left: 0; top: 0; overflow: visible; }
+.hr-spoke { fill: none; stroke: var(--star); stroke-width: 3; stroke-linecap: round; opacity: 0.85; }
+.hr-hub { position: absolute; left: 570px; top: 120px; width: 560px; height: 330px; }
+.hr-hub .node .key { font-size: 28px; }
+.hr-hub::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 470px;
+  height: 470px;
+  margin: -235px 0 0 -235px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--star) 16%, transparent) 0%, transparent 68%);
+  pointer-events: none;
+}
+.hr-hub-label {
+  position: absolute;
+  left: 570px;
+  width: 560px;
+  top: 440px;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 40px;
+  color: var(--star);
+}
+.hr-card {
+  position: absolute;
+  width: 480px;
+  height: 164px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.hr-ic {
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--star) 16%, transparent);
+}
+.hr-ic .ricon { stroke: var(--star); }
+.hr-txt { font-size: 21px; line-height: 1.34; color: var(--ink-2); min-width: 0; }
+.hr-txt b { display: block; font-family: var(--font-display); font-size: 25px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.hr-txt code { font-family: var(--font-mono); font-size: 0.9em; color: var(--ink); }
+.hr-banner {
+  position: absolute;
+  left: 530px;
+  width: 640px;
+  top: 540px;
+  text-align: center;
+  padding: 20px 26px;
+  border-radius: 16px;
+  font-size: 28px;
+  line-height: 1.35;
+  color: var(--ink-2);
+  border: 2px solid var(--star);
+  background: color-mix(in srgb, var(--star) 10%, var(--panel-solid));
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+}
+.hr-banner b { color: var(--star); }

@@ -124,5 +124,49 @@
   /* Highlight a key inside a caption: K(9, 'cmp'). */
   function K(v, cls) { return '<span class="k ' + (cls || '') + '">' + U.num(v) + '</span>'; }
 
-  root.Viz = { ICONS, svg, text, draw, undraw, hiddenPath, stamp, fade, Caption, TraceTable, legend, K };
+  /* Generic line icons for the real-world strips (24×24, stroke = currentColor). */
+  const RICONS = {
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+    terminal: '<rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M6 9l3 3-3 3M11 15h6"/>',
+    database: '<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+    server: '<rect x="3" y="3.5" width="18" height="7" rx="1.5"/><rect x="3" y="13.5" width="18" height="7" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+    route: '<circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="6" r="2.5"/><path d="M7.5 18h6a3.5 3.5 0 0 0 0-7h-3a3.5 3.5 0 0 1 0-7h6"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/>',
+    zip: '<path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M10 5h2M10 8h2M10 11h2M10 14h2v3h-2z"/>',
+    code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+    chip: '<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2.5v3.5M15 2.5v3.5M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/>',
+    lock: '<rect x="4.5" y="10.5" width="15" height="11" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>',
+    folder: '<path d="M3 6.5a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+    chart: '<path d="M4 20V4M4 20h16"/><path d="M7 16l4-5 3 3 5-7"/>',
+    people: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M14 20a4 4 0 0 1 7.5-1.5"/>',
+    plane: '<path d="M2.5 14.5l8-2.5 4-8.5 2 .5-1.5 8 5.5 1.5 1 2-6.5-.5-4 5-2-.5 1-4.5-7 .5z"/>',
+    brain: '<path d="M9 4.5a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 2.5V4.5zM15 4.5a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 2.5V4.5z"/>',
+    calc: '<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6.5h8M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h7"/>',
+    hash: '<path d="M9 3L7 21M17 3l-2 18M3.5 8.5h18M2.5 15.5h18"/>',
+    bolt: '<path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"/>',
+  };
+
+  /* A system name: plain string, or {en, tr} when it reads differently in Turkish. */
+  function whoText(w) { return w && typeof w === 'object' ? L(w.en, w.tr) : w; }
+
+  function ricon(name, size) {
+    return '<svg class="ricon" viewBox="0 0 24 24" width="' + (size || 30) + '" height="' + (size || 30) + '" aria-hidden="true">'
+      + (RICONS[name] || RICONS.globe) + '</svg>';
+  }
+
+  /* "Real world" strip: who uses this idea, and where.
+   *   Viz.real([{icon: 'terminal', who: 'Linux kernel', en: '…', tr: '…'}, …],
+   *            {layout: 'row' | 'col', attrs: ' data-step="3"'})          */
+  function real(items, opts) {
+    const o = opts || {};
+    return '<div class="real ' + (o.layout || 'row') + (o.cls ? ' ' + o.cls : '') + '"' + (o.attrs || '') + '>'
+      + '<div class="real-head">' + ricon('globe', 26) + L('Real world · who uses it?', 'Gerçek hayatta · kim kullanıyor?') + '</div>'
+      + '<div class="real-items">' + items.map((it) => '<div class="real-item">'
+        + '<span class="real-ic">' + ricon(it.icon, 30) + '</span>'
+        + '<div class="real-txt"><b class="real-who">' + whoText(it.who) + '</b>' + L(it.en, it.tr) + '</div></div>').join('')
+      + '</div></div>';
+  }
+
+  root.Viz = { ICONS, RICONS, ricon, real, whoText, svg, text, draw, undraw, hiddenPath, stamp, fade, Caption, TraceTable, legend, K };
 })(window);

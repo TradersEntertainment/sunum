@@ -49,14 +49,16 @@
       }
       const path = [];
       let id = t.root;
+      let dup = false;
       for (;;) {
         path.push(id);
         const n = t.nodes[id];
+        if (n.keys.includes(key)) { dup = true; break; }
         if (!n.kids.length) break;
         id = n.kids[childIndex(n, key)];
       }
+      if (dup) continue;                              // already present
       const leaf = t.nodes[id];
-      if (leaf.keys.includes(key)) continue;          // already present
       leaf.keys.splice(childIndex(leaf, key), 0, key);
       events.push({ t: 'insert', key, path, leaf: id, snap: snap() });
 
