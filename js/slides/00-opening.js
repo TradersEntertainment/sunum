@@ -18,7 +18,7 @@
   const T_DEPTH = [2, 1, 2, 0, 2, 1, 2];            // depth of sorted position p
   const T_PARENT = [1, 3, 1, null, 5, 3, 5];        // parent of sorted position p
   const T_FIND = 50;                                // search path 41 → 63 → 50
-  const TG = { x0: 74, pitch: 112, base: 716, bw: 80, r: 42, levels: [92, 226, 360] };
+  const TG = { x0: 74, pitch: 112, base: 716, bw: 80, r: 42, levels: [196, 336, 476] };
 
   const tX = (p) => TG.x0 + p * TG.pitch;
   const barH = (v) => 64 + v * 3.2;
@@ -153,17 +153,14 @@
         // 3 · conquer: search 50 → 41 → 63 → 50 in three steps
         phase(ctx, 2);
         const path = [3, 5, 4];
-        const at = (p) => ({ x: tX(p) + 112, y: TG.levels[T_DEPTH[p]] - 52 });
-        Anim.set(S.probe, Object.assign(at(3), { y: at(3).y - 30, opacity: 0 }));
-        await A.to(S.probe, Object.assign(at(3), { opacity: 1 }), { dur: 380, ease: 'out' });
+        const above = { x: tX(3), y: TG.levels[0] - 92 };
+        Anim.set(S.probe, { x: above.x, y: above.y - 30, opacity: 0 });
+        await A.to(S.probe, { x: above.x, y: above.y, opacity: 1 }, { dur: 380, ease: 'out' });
         for (let k = 0; k < path.length; k++) {
           const p = path[k];
-          if (k > 0) {
-            S.edges[p].classList.add('hit');
-            await A.to(S.probe, at(p), { dur: 520, ease: 'inOut' });
-          }
+          if (k > 0) S.edges[p].classList.add('hit');
           S.bySorted[p].g.classList.add(k === path.length - 1 ? 'found' : 'hit');
-          await A.wait(380);
+          await A.wait(560);
         }
         const f = { x: tX(4) + 44, y: TG.levels[2] + 42 };
         Anim.set(S.stamp, Object.assign({}, f, { scale: 0.4, opacity: 0 }));
@@ -201,8 +198,8 @@
     for (let i = 0; i <= KNOT_N; i++) {
       const t = (i / KNOT_N) * Math.PI * 2;
       pts.push({
-        x: 50 * Math.sin(2 * t + 0.6) + 17 * Math.sin(5 * t) + 7 * Math.cos(9 * t),
-        y: 34 * Math.sin(3 * t) + 13 * Math.cos(4 * t + 0.3) + 5 * Math.sin(11 * t),
+        x: 56 * Math.sin(2 * t + 0.6) + 19 * Math.sin(5 * t) + 8 * Math.cos(9 * t),
+        y: 38 * Math.sin(3 * t) + 15 * Math.cos(4 * t + 0.3) + 6 * Math.sin(11 * t),
       });
     }
     return pts;
@@ -341,7 +338,7 @@
       <text class="bi-q" x="101" y="112">= ?</text>
       <text class="bi-ans" x="101" y="112">= 120</text>
       <text class="bi-ans b" x="387" y="112">= 12</text>
-      <g class="bi-known" transform="translate(470,22)"><circle r="16"/><path d="${Viz.ICONS.check}" transform="scale(0.6)"/></g>
+      <g class="bi-known" transform="translate(462,26)"><circle r="16"/><path d="${Viz.ICONS.check}" transform="scale(0.6)"/></g>
       <text class="bi-f" x="244" y="182">lcm(m, n) = m·n / gcd(m, n)</text>`;
     const q = svg.querySelector('.bi-q');
     const ans = svg.querySelectorAll('.bi-ans');
@@ -388,7 +385,7 @@
       // station 1: the tangled problem
       const knot = knotPoints();
       d.knotPts = knot;
-      d.knot = Viz.hiddenPath({ class: 'bi-knot', d: ptsD(knot.map((q) => ({ x: q.x + ST[0], y: q.y + SY }))) });
+      d.knot = U.s('path', { class: 'bi-knot', d: ptsD(knot.map((q) => ({ x: q.x + ST[0], y: q.y + SY }))), pathLength: 1, 'data-draw': '' });
       svg.appendChild(d.knot);
       // arrows between stations
       d.arrows = [0, 1, 2, 3].map((k) => {
@@ -427,17 +424,20 @@
       Anim.set(d.sol, { x: ST[4], y: SY, scale: 0.3, opacity: 0 });
       svg.appendChild(d.sol);
       // labels
-      const LBL = [['problem', 'problem', ''], ['transform', 'dönüştür', 'act'], ['easier problem', 'daha kolay problem', ''], ['conquer', 'fethet', 'act'], ['solution', 'çözüm', '']];
+      const LBL = [['problem', 'problem', ''], ['TRANSFORM', 'DÖNÜŞTÜR', 'act'], ['easier problem', 'daha kolay problem', ''], ['CONQUER', 'FETHET', 'act'], ['solution', 'çözüm', '']];
       d.labels = LBL.map((l, k) => {
         const t = Viz.text(svg, ST[k], 172, l[0], l[1], { class: 'bi-lbl' + (l[2] ? ' ' + l[2] : ''), 'text-anchor': 'middle' });
-        Anim.set(t, { opacity: 0 });
+        if (k > 0) Anim.set(t, { opacity: 0 });
+        else t.setAttribute('data-in', 'fade');
         return t;
       });
-      // "three ways to transform" bracket from the gear to the cards
-      const cx = [270, 850, 1430];
-      d.bracket = Viz.hiddenPath({ class: 'bi-bracket', d: 'M' + ST[1] + ',190 V212 M' + cx[0] + ',236 V212 H' + cx[2] + ' V236 M' + cx[1] + ',212 V236' });
+      // "three ways to transform" bracket from the gear to the cards; the
+      // label sits in a gap of the line, between cards 2 and 3
+      const cx = [270, 850, 1430], BY = 222, gap = [1010, 1270];
+      d.bracket = Viz.hiddenPath({ class: 'bi-bracket', d: 'M' + ST[1] + ',190 V' + BY + ' M' + cx[0] + ',' + (BY + 24) + ' V' + BY + ' H' + gap[0]
+        + ' M' + gap[1] + ',' + BY + ' H' + cx[2] + ' V' + (BY + 24) + ' M' + cx[1] + ',' + BY + ' V' + (BY + 24) });
       svg.appendChild(d.bracket);
-      d.bracketLbl = Viz.text(svg, ST[1] + 16, 207, '3 ways to transform', 'dönüştürmenin 3 yolu', { class: 'bi-blbl' });
+      d.bracketLbl = Viz.text(svg, (gap[0] + gap[1]) / 2, BY, '3 ways to transform', 'dönüştürmenin 3 yolu', { class: 'bi-blbl', 'text-anchor': 'middle', 'dominant-baseline': 'central' });
       Anim.set(d.bracketLbl, { opacity: 0 });
       // micro-demos
       const demos = [demoSimplify, demoRepresent, demoReduce];
@@ -447,11 +447,9 @@
       const d = ctx.data;
       if (n === 1) {
         const at = (k) => Anim.to(d.labels[k], { opacity: 1 }, { dur: 350 });
-        at(0);
-        await Viz.draw(d.knot, { dur: 560 });
         await Viz.draw(d.arrows[0], { dur: 220 });
         at(1);
-        await Anim.to(d.gearWrap, { scale: 1, opacity: 1 }, { dur: 320, ease: 'outBack' });
+        await Anim.to(d.gearWrap, { scale: 1, opacity: 1 }, { dur: 280, ease: 'outBack' });
         // the knot is pulled through the gear and comes out as a straight line
         d.knot.classList.add('ghost');
         const K = d.knotPts, Ln = linePoints();
@@ -466,16 +464,16 @@
           });
           d.morph.setAttribute('d', ptsD(pts));
           d.morph.classList.toggle('clean', p >= 0.55);
-        }, { dur: 860, ease: 'linear' });
+        }, { dur: 800, ease: 'linear' });
         at(2);
-        await Promise.all(d.ends.map((c) => Anim.to(c, { scale: 1, opacity: 1 }, { dur: 200, ease: 'outBack' })));
-        await Viz.draw(d.arrows[1], { dur: 220 });
+        await Promise.all(d.ends.map((c) => Anim.to(c, { scale: 1, opacity: 1 }, { dur: 180, ease: 'outBack' })));
+        await Viz.draw(d.arrows[1], { dur: 180 });
         at(3);
         Anim.set(d.flag, { opacity: 1 });
-        await Anim.to(d.cloth, { y: 0, opacity: 1 }, { dur: 360, ease: 'out' });
-        await Viz.draw(d.arrows[2], { dur: 220 });
+        await Anim.to(d.cloth, { y: 0, opacity: 1 }, { dur: 300, ease: 'out' });
+        await Viz.draw(d.arrows[2], { dur: 180 });
         at(4);
-        await Anim.to(d.sol, { scale: 1, opacity: 1 }, { dur: 380, ease: 'outBack' });
+        await Anim.to(d.sol, { scale: 1, opacity: 1 }, { dur: 340, ease: 'outBack' });
         if (!Anim.isInstant()) {
           const c = FX.center(d.sol);
           FX.ripple(c.x, c.y, '--ok', { r0: 40, r1: 120 });

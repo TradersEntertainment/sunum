@@ -5,6 +5,60 @@
  * KONUSMA_METNI.md is generated from this file: node tools/build-speech.js */
 window.NOTES = {
 
+  /* ---------------- opening ---------------- */
+
+  'title': {
+    time: 13,
+    cues: [],
+    en: ['Hello everyone. Today’s topic is Chapter 6: <b>Transform and Conquer</b>. The idea: when a problem is hard, first change it into an easier one, then solve it.'],
+    tr: ['Herkese merhaba. Bugünkü konum Bölüm 6: <b>Dönüştür ve Fethet</b>. Fikir şu: bir problem zorsa önce onu daha kolay bir probleme dönüştür, sonra çöz.'],
+  },
+
+  'big-idea': {
+    time: 30,
+    cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change', 'Way 3: problem reduction'],
+    en: [
+      '[click] We transform the problem into an easier one, then conquer it.',
+      '[click] There are three ways. One: <b>instance simplification</b>, the same problem with a simpler instance, like a sorted list. [click] Two: <b>representation change</b>, the same data in a different form, like an array seen as a tree. [click] Three: <b>problem reduction</b>, turning it into a problem we can already solve, like lcm through gcd.',
+    ],
+    tr: [
+      '[click] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.',
+      '[click] Bunun üç yolu var. Bir: <b>örneği basitleştirme</b>; aynı problem, daha basit bir örnek, mesela sıralı bir liste. [click] İki: <b>gösterimi değiştirme</b>; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. [click] Üç: <b>probleme indirgeme</b>; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.',
+    ],
+  },
+
+  /* ---------------- instance simplification ---------------- */
+
+  'presorting': {
+    time: 34,
+    cues: ['Brute force: compare every pair', 'Presort, then compare neighbours', 'n = 1 000 000: 5·10¹¹ vs 2·10⁷', 'Real world: sort | uniq, databases'],
+    en: [
+      'Example one: are all elements distinct? [click] Brute force compares every pair, up to n²/2 comparisons. [click] Presorting: sort first, then compare only neighbours, because duplicates end up side by side. That is n log n.',
+      '[click] For a million elements: 500 billion comparisons versus 20 million. Minutes versus a blink.',
+      '[click] In real life, the Unix pipeline <code>sort | uniq</code> works exactly like this, and so do databases for DISTINCT and GROUP BY.',
+    ],
+    tr: [
+      'Birinci örnek: tüm elemanlar farklı mı? [click] Kaba kuvvet her çifti karşılaştırır, n²/2’ye kadar karşılaştırma. [click] Önceden sıralama: önce sırala, sonra sadece komşuları karşılaştır, çünkü tekrarlar yan yana gelir. Bu n log n.',
+      '[click] Bir milyon eleman için: 500 milyar karşılaştırmaya karşı 20 milyon. Dakikalar ve göz açıp kapayıncaya kadar.',
+      '[click] Gerçek hayatta Unix’teki <code>sort | uniq</code> tam olarak böyle çalışır; veritabanları da DISTINCT ve GROUP BY için aynısını yapar.',
+    ],
+  },
+
+  'gauss': {
+    time: 34,
+    cues: ['R₂ − 3/2·R₁', 'R₃ − 1/2·R₁', 'R₃ − 3/5·R₂ → triangle, Θ(n³)', 'Back substitution: x = 2, 1, 6', 'Check ✓', 'Real world: NumPy/MATLAB, TOP500'],
+    en: [
+      'Example two: Gaussian elimination turns a system of equations into a triangle. [click] Row two minus 3/2 of row one: a zero. [click] Row three, the same. [click] One more step, and the matrix is triangular. This costs n³.',
+      '[click] Now we solve bottom-up: x₃ = 6, x₂ = 1, x₁ = 2. [click] They check out.',
+      '[click] In real life, NumPy and MATLAB solve systems this way, and the TOP500 supercomputers are ranked by how fast they do it.',
+    ],
+    tr: [
+      'İkinci örnek: Gauss eliminasyonu bir denklem sistemini üçgene çevirir. [click] İkinci satırdan birinci satırın 3/2’si çıkar: bir sıfır. [click] Üçüncü satıra da aynısı. [click] Bir adım daha ve matris üst üçgen oldu. Bunun maliyeti n³.',
+      '[click] Şimdi aşağıdan yukarı çözüyoruz: x₃ = 6, x₂ = 1, x₁ = 2. [click] Yerine koyunca hepsi tutuyor.',
+      '[click] Gerçek hayatta NumPy ve MATLAB sistemleri böyle çözer; TOP500 listesindeki süper bilgisayarlar da bunu ne kadar hızlı yaptıklarına göre sıralanır.',
+    ],
+  },
+
   /* ---------------- ★ Heaps & Heapsort ---------------- */
 
   'heap-intro': {
@@ -130,6 +184,11 @@ window.NOTES = {
   },
 
   /* ---------------- appendix ---------------- */
+
+  'sort-bound': {
+    en: ['If someone asks how fast sorting can be: every comparison sort needs about n log₂ n comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉), and mergesort reaches that bound. [click] Presorting pays off when you search many times: after about log₂ n searches, sorting once and using binary search wins. [click]'],
+    tr: ['Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [click] Önceden sıralama çok sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp ikili arama yapmak kazanır. [click]'],
+  },
 
   'playground': {
     en: ['For questions: type your own numbers (up to 15), press Play or Step, and watch both stages with live comparison and swap counters. Try "Already sorted" to see that the build is still linear.'],

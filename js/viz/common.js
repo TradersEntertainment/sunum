@@ -160,7 +160,8 @@
    *            {layout: 'row' | 'col', attrs: ' data-step="3"'})          */
   function real(items, opts) {
     const o = opts || {};
-    return '<div class="real ' + (o.layout || 'row') + (o.cls ? ' ' + o.cls : '') + '"' + (o.attrs || '') + '>'
+    // layout class is prefixed so it never collides with the generic .row/.col helpers
+    return '<div class="real real-' + (o.layout || 'row') + (o.cls ? ' ' + o.cls : '') + '"' + (o.attrs || '') + '>'
       + '<div class="real-head">' + ricon('globe', 26) + L('Real world · who uses it?', 'Gerçek hayatta · kim kullanıyor?') + '</div>'
       + '<div class="real-items">' + items.map((it) => '<div class="real-item">'
         + '<span class="real-ic">' + ricon(it.icon, 30) + '</span>'

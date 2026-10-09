@@ -29,10 +29,43 @@
 (function (root) {
   'use strict';
 
-  const T = { fly: 240, hop: 140, hold: 60, pop: 300, morph: 950, badge: 260 };
+  const T = { fly: 220, hop: 110, hold: 50, pop: 250, morph: 800, badge: 240 };
   const lerp = (a, b, p) => a + (b - a) * p;
   const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
   const eid = (a, b) => (a < b ? a + '-' + b : b + '-' + a);
+
+  /* Move something through waypoints in ONE tween (no frame gaps between
+   * legs). pts = [{x, y, dur, dwell, at}]: each leg eases in and out, then
+   * waits `dwell` ms; at() fires on arrival. set(x, y) draws a position. */
+  function travel(A, start, pts, set) {
+    const legs = [];
+    let t = 0, prev = start;
+    for (const p of pts) {
+      legs.push({ t0: t, t1: t + p.dur, a: prev, b: p });
+      t += p.dur + (p.dwell || 0);
+      prev = p;
+    }
+    const total = Math.max(1, t);
+    let fired = 0;
+    return A.run((q) => {
+      const now = Math.min(1, q) * total;
+      while (fired < legs.length && now >= legs[fired].t1) {
+        if (legs[fired].b.at) legs[fired].b.at();
+        fired++;
+      }
+      let pos = start;
+      for (const g of legs) {
+        if (now < g.t0) break;
+        if (now < g.t1) {
+          const k = Anim.ease.inOut((now - g.t0) / (g.t1 - g.t0));
+          pos = { x: lerp(g.a.x, g.b.x, k), y: lerp(g.a.y, g.b.y, k) };
+          break;
+        }
+        pos = g.b;
+      }
+      set(pos.x, pos.y);
+    }, { dur: total, ease: 'linear' });
+  }
 
   class BinTreeView {
     constructor(container, o) {
@@ -241,16 +274,21 @@
       const start = o.from || { x: target.x, y: target.y - this.o.rowH };
       Anim.set(probe, { x: start.x, y: start.y, scale: 0.5, opacity: 0 });
       const appear = A.to(probe, { scale: 1, opacity: 1 }, { dur: Math.min(160, fly) });
+      // the probe sits on the side of each visited node it will go to next
+      const pts = [];
       let prev = null;
       for (const k of path) {
         const c = this.cur[k];
         const dir = key < k ? -1 : 1;
-        if (prev != null) this.edgeMark(prev, k, 'hot');
-        await A.to(probe, { x: c.x + dir * R * 1.62, y: c.y - R * 0.92 }, { dur: prev == null ? fly : hop });
-        this.mark(k, 'cmp');
-        if (hold) await A.wait(hold);
+        const from = prev;
+        pts.push({
+          x: c.x + dir * R * 1.62, y: c.y - R * 0.92, dur: prev == null ? fly : hop, dwell: hold,
+          at: () => { this.mark(k, 'cmp'); if (from != null) this.edgeMark(from, k, 'hot'); },
+        });
         prev = k;
       }
+      pts.push({ x: target.x, y: target.y, dur: path.length ? hop : fly });
+      await travel(A, start, pts, (x, y) => Anim.set(probe, { x, y }));
       await appear;
       // land
       const node = this.makeNode(key);
@@ -263,7 +301,6 @@
         edge.line.classList.add('hot');
       }
       this.frame();
-      await A.to(probe, { x: target.x, y: target.y }, { dur: path.length ? hop : fly });
       for (const k of path) this.mark(k, 'cmp', false);
       this.clearEdges();
       node.classList.add('new');
@@ -375,6 +412,7 @@
   }
 
   BinTreeView.T = T;
+  BinTreeView.travel = travel;
   root.BinTreeView = BinTreeView;
   root.TreeQueue = TreeQueue;
 })(window);

@@ -1,1 +1,327 @@
-/* styles for the trees act */
+/* Search trees: BST problem (bp-), AVL (avl-), 2-3 trees (t23-), appendix
+   rotations (rot-), and the tree views: binary tree (bin-), 2-3 tree (tt-),
+   key queue (tq-). Body area is 1700 × ~750 stage px. */
+
+/* ---------- binary tree view ---------- */
+.bin-node, .bin-probe, .bin-badge, .tt-key { transform-origin: center; }
+.bin-probe .disc { stroke: var(--star); stroke-width: 5; fill: color-mix(in srgb, var(--star) 18%, var(--node-fill)); }
+.bin-svg .edge.turn { stroke: var(--swap); opacity: 1; stroke-width: 8; }
+.bin-badge rect {
+  fill: var(--panel-solid);
+  stroke: color-mix(in srgb, var(--ink-2) 50%, transparent);
+  stroke-width: 2;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.bin-badge text {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  fill: var(--ink-2);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.bin-badge.bad rect { fill: color-mix(in srgb, var(--bad) 26%, var(--panel-solid)); stroke: var(--bad); stroke-width: 3; }
+.bin-badge.bad text { fill: var(--bad); font-weight: 700; }
+.bin-guide { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 10; stroke-linecap: round; opacity: 0.4; }
+.bin-axis-line { stroke: var(--panel-border); stroke-width: 2; }
+.bin-tick { stroke: var(--muted); stroke-width: 2; }
+.bin-axis {
+  font-family: var(--font-mono);
+  font-size: 25px;
+  font-weight: 500;
+  fill: var(--muted);
+  text-anchor: middle;
+  dominant-baseline: central;
+  transition: fill 0.4s;
+}
+.bin-svg.sorted .bin-axis { fill: var(--ok); font-weight: 700; }
+.bin-svg.sorted .bin-tick { stroke: var(--ok); }
+
+/* ---------- key queue ---------- */
+.tq-chip { transition: opacity 0.35s; }
+.tq-chip rect { fill: var(--node-fill); stroke: var(--panel-border); stroke-width: 2.5; transition: stroke 0.3s; }
+.tq-chip text {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 600;
+  fill: var(--ink);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.tq-chip.next rect { stroke: var(--star); stroke-width: 4; }
+.tq-chip.used { opacity: 0.22; }
+.tq-label {
+  font-family: var(--font-mono);
+  font-size: 21px;
+  fill: var(--muted);
+  dominant-baseline: central;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---------- 2-3 tree view ---------- */
+.tt-box {
+  fill: var(--node-fill);
+  stroke: var(--node-stroke);
+  stroke-width: 4;
+  transition: fill 0.3s, stroke 0.3s, stroke-width 0.3s;
+}
+.tt-div { fill: none; stroke: var(--node-stroke); stroke-width: 2.5; stroke-opacity: 0.65; }
+.tt-node.cmp .tt-box { stroke: var(--cmp); fill: color-mix(in srgb, var(--cmp) 26%, var(--node-fill)); stroke-width: 6; }
+.tt-node.bad .tt-box, .tt-box.bad {
+  stroke: var(--bad);
+  fill: color-mix(in srgb, var(--bad) 24%, var(--node-fill));
+  stroke-width: 6;
+  stroke-dasharray: 12 7;
+}
+.tt-node.bad .tt-div, .tt-div.bad { stroke: var(--bad); stroke-opacity: 1; }
+.tt-node.ok .tt-box { stroke: var(--ok); fill: color-mix(in srgb, var(--ok) 22%, var(--node-fill)); stroke-width: 6; }
+.tt-node.new .tt-box { stroke: var(--star); stroke-width: 6; }
+.tt-box.up { stroke: var(--swap); fill: color-mix(in srgb, var(--swap) 26%, var(--node-fill)); stroke-width: 5; }
+.tt-key text {
+  fill: var(--node-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.tt-chip { fill: color-mix(in srgb, var(--star) 18%, var(--node-fill)); stroke: var(--star); stroke-width: 4; }
+.tt-key.up .tt-chip { fill: color-mix(in srgb, var(--swap) 28%, var(--node-fill)); stroke: var(--swap); }
+
+/* ---------- BST problem ---------- */
+.bp-panel { position: absolute; left: 0; top: 0; width: 800px; height: 750px; }
+.bp-bwrap { position: absolute; left: 900px; top: 0; width: 800px; height: 750px; }
+.bp-tag { position: absolute; left: 0; top: 0; }
+.bp-tag .pill { color: var(--ok); font-size: 22px; }
+.bp-tag .pill.bad { color: var(--bad); }
+.bp-scene { position: absolute; left: 0; top: 50px; width: 800px; height: 600px; }
+.bp-res { position: absolute; left: 0; top: 662px; height: 80px; display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.bp-h { font-family: var(--font-mono); font-size: 38px; font-weight: 700; }
+.bp-eq { font-family: var(--font-mono); font-size: 30px; color: var(--ink-2); margin-right: 18px; }
+.bp-cost { font-size: 25px; color: var(--muted); }
+.bp-x { display: inline-block; margin-left: 6px; }
+.bp-x .stamp { width: 64px; height: 64px; border-width: 4px; }
+.bp-x .stamp svg { width: 34px; height: 34px; }
+.bp-list {
+  position: absolute;
+  left: 92px;
+  top: 524px;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1;
+  color: var(--star);
+  white-space: nowrap;
+  transform: rotate(-4deg);
+}
+.bp-note-arrow { fill: none; stroke: var(--star); stroke-width: 3.5; stroke-linecap: round; }
+.bp-levels line { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 4 10; opacity: 0.35; }
+.bp-levels text {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  fill: var(--muted);
+  text-anchor: end;
+  dominant-baseline: central;
+}
+.bp-lev.hi text { font-size: 30px; font-weight: 700; }
+.bp-lev.hi.ok text { fill: var(--ok); }
+.bp-lev.hi.bad text { fill: var(--bad); }
+.bp-lev.hi.ok line { stroke: var(--ok); opacity: 0.75; }
+.bp-lev.hi.bad line { stroke: var(--bad); opacity: 0.75; }
+.bp-rule {
+  position: absolute;
+  left: 900px;
+  top: 96px;
+  width: 800px;
+  padding: 24px 30px 24px 18px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 26px;
+  align-items: center;
+}
+.bp-rule svg { display: block; overflow: visible; }
+.bp-rule h3 { font-size: 34px; color: var(--ink); margin-bottom: 12px; }
+.bp-rule p { font-size: 26px; line-height: 1.38; color: var(--ink-2); margin-top: 8px; }
+.bp-tri { stroke-width: 2.5; stroke-linejoin: round; }
+.bp-tri.l { fill: color-mix(in srgb, var(--cmp) 16%, transparent); stroke: var(--cmp); }
+.bp-tri.r { fill: color-mix(in srgb, var(--star) 16%, transparent); stroke: var(--star); }
+.bp-tri-t { font-family: var(--font-mono); font-size: 24px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+.bp-fork { position: absolute; left: 790px; top: 0; overflow: visible; }
+.bp-fork-line { fill: none; stroke-width: 4; stroke-linecap: round; }
+.bp-fork-head { transform-origin: center; }
+.bp-door {
+  position: absolute;
+  left: 900px;
+  width: 800px;
+  height: 352px;
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 24px 32px 24px 26px;
+  box-shadow: inset 6px 0 0 var(--act), var(--shadow);
+}
+.bp-d1 { top: 0; }
+.bp-d2 { top: 396px; }
+.bp-door-txt .pill { color: var(--act); font-size: 20px; }
+.bp-door-txt h3 { font-size: 38px; line-height: 1.1; margin: 16px 0 12px; color: var(--ink); }
+.bp-door-txt p { font-size: 28px; color: var(--ink-2); line-height: 1.35; }
+.bp-art { display: block; overflow: visible; }
+.bp-art-h { font-family: var(--font-mono); font-size: 26px; font-weight: 600; fill: var(--ok); text-anchor: middle; }
+.bp-art-key {
+  fill: var(--node-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* ---------- AVL ---------- */
+.avl-left { position: absolute; left: 0; top: 0; width: 520px; height: 750px; }
+.avl-def { position: absolute; left: 0; top: 0; width: 520px; padding: 20px 24px 18px; }
+.avl-def h3 { font-size: 34px; color: var(--ink); }
+.avl-defviz { display: block; margin: 4px 0 0 -10px; }
+.avl-tri { stroke-width: 3; stroke-linejoin: round; }
+.avl-tri.l { fill: color-mix(in srgb, var(--cmp) 20%, transparent); stroke: var(--cmp); }
+.avl-tri.r { fill: color-mix(in srgb, var(--star) 20%, transparent); stroke: var(--star); }
+.avl-v { fill: var(--node-fill); stroke: var(--node-stroke); stroke-width: 4; }
+.avl-dim { fill: none; stroke-width: 3; }
+.avl-dim.l { stroke: var(--cmp); }
+.avl-dim.r { stroke: var(--star); }
+.avl-dimt { font-family: var(--font-mono); font-size: 30px; font-weight: 600; dominant-baseline: central; }
+.avl-dimt.l { fill: var(--cmp); text-anchor: end; }
+.avl-dimt.r { fill: var(--star); text-anchor: start; }
+.avl-formula { font-family: var(--font-mono); font-size: 32px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.avl-formula sub { font-size: 0.6em; }
+.avl-trit { font-family: var(--font-body); font-size: 21px; font-weight: 600; text-anchor: middle; }
+.avl-trit.l { fill: var(--cmp); }
+.avl-trit.r { fill: var(--star); }
+.avl-rot-idle { font-family: var(--font-body); font-size: 24px; font-weight: 500; color: var(--muted); }
+.avl-allowed { display: flex; align-items: center; gap: 9px; margin-top: 14px; }
+.avl-bf {
+  min-width: 54px;
+  height: 36px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  display: inline-grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink-2);
+  background: var(--panel-solid);
+  border: 2px solid color-mix(in srgb, var(--ink-2) 50%, transparent);
+}
+.avl-bf.bad { color: var(--bad); border: 3px solid var(--bad); background: color-mix(in srgb, var(--bad) 26%, var(--panel-solid)); }
+.avl-mk { font-size: 30px; font-weight: 700; margin-right: 14px; }
+.avl-then { font-size: 26px; color: var(--ink-2); white-space: nowrap; }
+.avl-empty { font-size: 22px; color: var(--muted); margin-top: 10px; }
+.avl-rot {
+  position: absolute;
+  left: 0;
+  top: 400px;
+  width: 520px;
+  height: 184px;
+  padding: 14px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  column-gap: 12px;
+}
+.avl-rot-lbl {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 21px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.avl-rot-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 1;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.avl-rot.live .avl-rot-name { color: var(--swap); }
+.avl-rot.done .avl-rot-name { color: var(--ok); }
+.avl-rot.live { border-color: color-mix(in srgb, var(--swap) 60%, transparent); }
+.avl-rot-ico { display: flex; align-items: center; gap: 4px; }
+.rot-ico { display: inline-flex; flex-direction: column; align-items: center; opacity: 0.4; transition: opacity 0.3s; }
+.rot-ico svg path { fill: none; stroke: var(--swap); stroke-width: 4; stroke-linecap: round; }
+.rot-ico b { font-family: var(--font-mono); font-size: 21px; color: var(--swap); }
+.rot-ico.on, .avl-rot.done .rot-ico { opacity: 1; }
+.rot-then { font-style: normal; color: var(--muted); font-size: 26px; padding-bottom: 22px; }
+.avl-log { position: absolute; left: 0; top: 606px; width: 520px; display: flex; gap: 12px; }
+.avl-log-pill {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 12px;
+  color: var(--ok);
+  border: 2px solid color-mix(in srgb, var(--ok) 55%, transparent);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+}
+.avl-scene { position: absolute; left: 560px; top: 0; width: 1140px; height: 640px; }
+.avl-caption, .t23-caption {
+  position: absolute;
+  top: 652px;
+  min-height: 92px;
+  padding: 12px 22px;
+  box-sizing: border-box;
+  border-left: 5px solid var(--act);
+  background: color-mix(in srgb, var(--act) 8%, transparent);
+  border-radius: 0 14px 14px 0;
+  font-size: 28px;
+}
+.avl-caption { left: 560px; width: 1140px; }
+.avl-stamp { position: absolute; left: 1598px; top: 86px; }
+.avl-real { left: 0; top: 0; width: 540px; }
+
+/* ---------- 2-3 trees ---------- */
+.t23-left { position: absolute; left: 0; top: 0; width: 470px; height: 750px; }
+.t23-legend { position: absolute; left: 0; top: 0; width: 470px; padding: 18px 14px 16px; }
+.t23-legend svg, .t23-rule svg { display: block; margin: 0 auto; overflow: visible; }
+.t23-names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; font-size: 21px; line-height: 1.3; color: var(--ink-2); text-align: center; }
+.t23-names b { display: block; font-family: var(--font-display); font-size: 27px; color: var(--ink); }
+.t23-tri { fill: color-mix(in srgb, var(--represent) 14%, transparent); stroke: var(--represent); stroke-width: 2.5; stroke-linejoin: round; }
+.t23-tri-t { font-family: var(--font-mono); font-size: 21px; fill: var(--ink-2); text-anchor: middle; }
+.t23-lk {
+  fill: var(--node-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.t23-lk.up { fill: var(--ink); }
+.t23-rule { position: absolute; left: 0; top: 356px; width: 470px; padding: 18px 10px 16px; }
+.t23-rule p { font-size: 25px; line-height: 1.3; color: var(--ink-2); text-align: center; margin-top: 10px; }
+.t23-arrow { stroke: var(--ink-2); stroke-width: 4; fill: none; }
+.t23-up { stroke: var(--swap); stroke-width: 4; fill: none; stroke-linecap: round; }
+.t23-scene { position: absolute; left: 520px; top: 0; width: 1180px; height: 640px; }
+.t23-caption { left: 520px; width: 1180px; }
+.t23-level { fill: none; stroke: var(--ok); stroke-width: 4; stroke-dasharray: 14 10; stroke-linecap: round; }
+.t23-level-t { font-family: var(--font-mono); font-size: 26px; font-weight: 600; fill: var(--ok); text-anchor: middle; dominant-baseline: central; }
+.t23-grow path { fill: none; stroke: var(--star); stroke-width: 3.5; stroke-linecap: round; }
+.t23-real { left: 0; top: 0; width: 500px; }
+
+/* ---------- appendix: the four rotations ---------- */
+.rot-grid { position: absolute; left: 0; top: 0; width: 1700px; height: 440px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.rot-card { position: relative; padding-top: 14px; }
+.rot-head { padding: 0 22px; }
+.rot-head b { display: block; font-family: var(--font-display); font-size: 46px; line-height: 1; color: var(--swap); }
+.rot-head span { display: block; font-size: 21px; color: var(--ink-2); margin-top: 4px; }
+.rot-scene { position: relative; width: 395px; height: 330px; }
+.rot-when { position: absolute; right: 18px; top: 22px; font-family: var(--font-mono); font-size: 20px; color: var(--muted); }
+.rot-bounds { position: absolute; left: 0; top: 472px; width: 1700px; height: 270px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.rot-b { padding: 22px 28px; }
+.rot-b h3 { font-size: 32px; margin-bottom: 16px; color: var(--ink); }
+.rot-b .formula { font-size: 34px; }
+.rot-avg { font-size: 25px; color: var(--ink-2); margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rot-avg .badge-o { font-size: 26px; }

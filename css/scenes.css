@@ -257,8 +257,8 @@
 }
 .real-head .ricon { stroke: var(--act); }
 .real-items { display: grid; gap: 12px 22px; }
-.real.row .real-items { grid-auto-flow: column; grid-auto-columns: 1fr; }
-.real.col .real-items { grid-auto-flow: row; }
+.real.real-row .real-items { grid-auto-flow: column; grid-auto-columns: 1fr; }
+.real.real-col .real-items { grid-auto-flow: row; }
 .real-item { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
 .real-ic {
   flex: none;
