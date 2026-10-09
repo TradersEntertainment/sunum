@@ -450,6 +450,17 @@
     renderNotes();
   }
 
+  /* Speaker notes: string or array of paragraphs; [click] marks a click. */
+  function notesHtml(v, step) {
+    const arr = Array.isArray(v) ? v : v ? [v] : [];
+    let n = 0;
+    return arr.map((p) => '<p>' + p.replace(/\[click\]/g, () => {
+      n++;
+      const cls = n <= step ? 'done' : n === step + 1 ? 'next' : '';
+      return '<span class="clk ' + cls + '">▶' + n + '</span>';
+    }) + '</p>').join('');
+  }
+
   function renderNotes() {
     const n = dom.notes;
     if (!n || n.hidden || !cur) return;
@@ -457,8 +468,8 @@
     if (!notes) { n.innerHTML = '<p class="nd-empty">—</p>'; return; }
     const cues = notes.cues || [];
     n.innerHTML = '<div class="nd-head"><b>' + label(idx) + '</b> ' + I18n.pick(slides[idx].title || {})
-      + (notes.time ? ' <span class="nd-time">' + notes.time + '</span>' : '') + '</div>'
-      + '<div class="nd-cols"><div class="nd-en" lang="en">' + notes.en + '</div><div class="nd-tr" lang="tr">' + notes.tr + '</div></div>'
+      + (notes.time ? ' <span class="nd-time">' + notes.time + ' s</span>' : '') + '</div>'
+      + '<div class="nd-cols"><div class="nd-en" lang="en">' + notesHtml(notes.en, cur.step) + '</div><div class="nd-tr" lang="tr">' + notesHtml(notes.tr, cur.step) + '</div></div>'
       + (cues.length ? '<ol class="nd-cues">' + cues.map((c, i) => '<li class="' + (i + 1 === cur.step ? 'cur' : i + 1 < cur.step ? 'done' : '') + '">' + c + '</li>').join('') + '</ol>' : '');
   }
 
@@ -560,7 +571,8 @@
       if (m.cmd === 'next') next();
       else if (m.cmd === 'prev') prev();
       else if (m.cmd === 'goto') goto(Number(m.i) || 0, Number(m.step) || 0);
-      else if (m.cmd === 'hello') emitChange();
+      else if (m.cmd === 'hello') { presenterWin = e.source || presenterWin; emitChange(); }
+      else if (m.cmd === 'blackout') dom.blackout.hidden = !dom.blackout.hidden;
     });
     root.addEventListener('langchange', () => { updateChrome(); renderNotes(); emitChange(); });
   }
@@ -612,6 +624,6 @@
     get current() { return cur; },
     get busy() { return !!pending; },
     get dom() { return dom; },
-    label, toast,
+    label, toast, notesHtml,
   };
 })(window);

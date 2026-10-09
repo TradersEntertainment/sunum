@@ -212,8 +212,8 @@
       const jobs = [];
       const si = this.o.tree && this.slotXY(i), sj = this.o.tree && this.slotXY(j);
       const ci = this.o.array && this.cellXY(i), cj = this.o.array && this.cellXY(j);
-      if (A.node) jobs.push(Anim.to(A.node, sj, { dur: T.swap, arc: 40 * lift }));
-      if (B.node) jobs.push(Anim.to(B.node, si, { dur: T.swap, arc: 40 * lift }));
+      if (A.node) jobs.push(Anim.to(A.node, sj, { dur: T.swap, arc: 70 * lift }));
+      if (B.node) jobs.push(Anim.to(B.node, si, { dur: T.swap, arc: 70 * lift }));
       const archeight = Math.min(120, 30 + Math.abs(j - i) * 22);
       if (A.chip) jobs.push(Anim.to(A.chip, cj, { dur: T.swap, arc: (j > i ? 1 : -1) * archeight }));
       if (B.chip) jobs.push(Anim.to(B.chip, ci, { dur: T.swap, arc: (j > i ? 1 : -1) * archeight }));

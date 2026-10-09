@@ -120,7 +120,7 @@
     el.style.transform = 'translate(' + t.x.toFixed(2) + 'px,' + t.y.toFixed(2) + 'px)'
       + (t.r ? ' rotate(' + t.r.toFixed(2) + 'deg)' : '')
       + (t.s !== 1 ? ' scale(' + t.s.toFixed(4) + ')' : '');
-    el.style.opacity = t.o >= 0.999 ? '' : String(Math.max(0, t.o));
+    el.style.opacity = t.o >= 0.999 ? '' : String(Math.max(0, Math.round(t.o * 1000) / 1000));
   }
 
   const KEYS = { x: 'x', y: 'y', scale: 's', s: 's', rot: 'r', r: 'r', opacity: 'o', o: 'o' };

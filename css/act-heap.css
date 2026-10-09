@@ -125,7 +125,22 @@
 .pq-op .ico { width: 64px; height: 64px; }
 .pq-op h3 { font-size: 30px; }
 .pq-op p { font-size: 22px; color: var(--ink-2); margin-top: 2px; }
-.pq-queue { position: absolute; left: 0; top: 520px; width: 640px; }
+.pq-queue { position: absolute; left: 0; top: 520px; width: 640px; display: flex; align-items: center; gap: 22px; }
+.pq-door { flex: none; }
+.pq-line { display: flex; gap: 14px; align-items: flex-end; padding-left: 100px; }
+.pq-p {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 8px 10px 6px;
+  border-radius: 12px;
+  border: 2px solid var(--panel-border);
+  background: var(--panel);
+  min-width: 52px;
+}
+.pq-p b { font-family: var(--font-display); font-size: 28px; color: var(--ink); }
+.pq-p.urgent { border-color: var(--star); box-shadow: 0 0 0 3px color-mix(in srgb, var(--star) 35%, transparent); }
+.pq-p.urgent b { color: var(--star); }
 .pq-scene { position: absolute; left: 700px; top: 0; width: 1000px; height: 640px; }
 .pq-caption { position: absolute; left: 700px; top: 648px; width: 1000px; }
 

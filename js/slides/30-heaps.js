@@ -68,7 +68,7 @@
           <p class="lead">${L('Representation change: the same keys, <b>thought of as a tree</b>, <b>stored as an array</b>.',
             'Gösterimi değiştirme: aynı anahtarlar <b>ağaç gibi düşünülür</b>, <b>dizi olarak saklanır</b>.')}</p>
         </div>
-        <div class="hi-scene"></div>
+        <div class="hi-scene" data-ambient></div>
       </div>`,
     init(ctx) {
       const host = ctx.$('.hi-scene');
@@ -596,6 +596,14 @@
         <p class="txt" data-step="1" style="--d:450ms">${L('Emergency room, CPU scheduler, Dijkstra: always serve the most urgent first.',
           'Acil servis, işlemci zamanlayıcı, Dijkstra: her zaman önce en acil olan.')}</p>
       </div>
+      <div class="pq-queue" data-step="1" data-anim="fade" style="--d:600ms">
+        <div class="pq-door"><svg viewBox="-30 -36 60 72" width="54" height="64" aria-hidden="true">
+          <rect x="-24" y="-34" width="48" height="68" rx="6" style="fill:none;stroke:var(--ok);stroke-width:4"/>
+          <path d="M-8,0 h16 M0,-8 v16" style="stroke:var(--ok);stroke-width:5"/></svg></div>
+        <div class="pq-line" data-ambient>${[3, 9, 5, 7, 2].map((v) => `<span class="pq-p" data-v="${v}">
+          <svg viewBox="-16 -20 32 40" width="34" height="42" aria-hidden="true"><circle cy="-11" r="7" style="fill:var(--ink-2)"/>
+          <path d="M-12,18 v-8 a12,12 0 0 1 24,0 v8 z" style="fill:var(--ink-2)"/></svg><b>${v}</b></span>`).join('')}</div>
+      </div>
       <div class="pq-scene"></div>
       <div class="pq-caption caption"></div>`,
     init(ctx) {
@@ -606,6 +614,21 @@
         array: { x: 51, y: 470, cell: 116, gap: 14 },
       });
       d.caption = new Viz.Caption(ctx.$('.pq-caption'));
+    },
+    enter(ctx) {
+      const pats = ctx.$$('.pq-p');
+      const top = pats.find((p) => p.dataset.v === '9');
+      const line = ctx.$('.pq-line');
+      ctx.loop(async (A) => {
+        if (ctx.step < 1) { await A.wait(400); return; }
+        await A.wait(1600);
+        top.classList.add('urgent');
+        const dx = line.offsetLeft + 8 - top.offsetLeft;   // into the free spot by the door (decorative)
+        await A.to(top, { x: dx, y: -6 }, { dur: 900, arc: 50, ease: 'inOut' });
+        await A.wait(1300);
+        await A.to(top, { x: 0, y: 0, opacity: 1 }, { dur: 700 });
+        top.classList.remove('urgent');
+      });
     },
     async step(n, ctx) {
       const d = ctx.data, sc = d.scene;
