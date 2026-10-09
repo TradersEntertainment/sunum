@@ -53,6 +53,23 @@ Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki bası�
 - Sondaki **Ek** slaytlarında, soru gelirse kullanabileceğin interaktif bir **heapsort oyun alanı** var: kendi sayılarını yazıp adım adım izleyebilirsin.
 - Başlık slaytında adının görünmesi için `js/config.js` içindeki `presenter: ''` satırına adını yaz.
 
+## İki kişi sunuyorsanız
+
+Konuşma metni ikiye bölünmüş durumda (düz metin, UTF-8; telefonda da açılır):
+
+- **`KONUSMA_BOLUM_1.txt`**: 1–7. slaytlar (başlık, ana fikir, presorting, Gauss, ikili arama ağacı, AVL, 2-3 ağacı). Yaklaşık 3:15.
+- **`KONUSMA_BOLUM_2.txt`**: 8–21. slaytlar (heap ve heapsort, Horner, üs alma, indirgeme, özet, teşekkür). Yaklaşık 7:09.
+
+Her dosyada kendi zaman planı, devir teslim cümleleri ve kendi konularına ait olası sorular ile ek slaytlar var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar.
+
+Bölme noktasını değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin ilk 9 slaytı birinci kişiye vermek için:
+
+```bash
+NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-array
+```
+
+Slayt id'leri: `title, big-idea, presorting, gauss, bst-problem, avl, two-three, heap-intro, heap-def, heap-array, heap-build, heapsort, heap-analysis, priority-queue, heap-real, horner, binexp, reduction, paths, summary, thanks`.
+
 ## Telefon ve tablet
 
 Site telefonda ve tablette de açılır. Dokunmatik ekranlarda altta (geniş ekranlarda sağda) büyük düğmeler çıkar: genel bakış, dil, tema, tam ekran, geri, ileri. Slayta dokunmak ileri gider, sağa/sola kaydırmak geri/ileri götürür. Parmakla yakınlaştırma çalışır; yakınlaştırılmışken kaydırma slayt değiştirmez.

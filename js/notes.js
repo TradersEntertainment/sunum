@@ -307,16 +307,19 @@ window.NOTES = {
   /* ---------------- appendix ---------------- */
 
   'sort-bound': {
+    about: 'presorting',          // extra for Q&A: belongs to whoever presents this slide
     en: ['If someone asks how fast sorting can be: every comparison sort needs about n log₂ n comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉), and mergesort reaches that bound. [click] Presorting pays off when you search many times: after about log₂ n searches, sorting once and using binary search wins. [click]'],
     tr: ['Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [click] Önceden sıralama çok sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp ikili arama yapmak kazanır. [click]'],
   },
 
   'avl-rotations': {
+    about: 'avl',          // extra for Q&A: belongs to whoever presents this slide
     en: ['For questions about balanced trees: [click] an AVL tree’s height is at most about 1.44 log₂ n, and one insertion needs at most one single or double rotation, which only re-links a few pointers. [click] A 2-3 tree’s height is between log₃ n and log₂ n; search, insert and delete are Θ(log n) in both.'],
     tr: ['Dengeli ağaçlarla ilgili sorular için: [click] bir AVL ağacının yüksekliği en fazla yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme ister; döndürme sadece birkaç işaretçiyi yeniden bağlar. [click] 2-3 ağacının yüksekliği log₃ n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).'],
   },
 
   'playground': {
+    about: 'heap-intro',          // extra for Q&A: belongs to whoever presents this slide
     en: ['For questions: type your own numbers (up to 15), press Play or Step, and watch both stages with live comparison and swap counters. Try "Already sorted" to see that the build is still linear.'],
     tr: ['Soru-cevap için: kendi sayılarınızı yazın (en fazla 15), Oynat ya da Adım’a basın ve iki aşamayı canlı karşılaştırma ve takas sayaçlarıyla izleyin. "Zaten sıralı" ile kurmanın yine doğrusal olduğunu gösterebilirsiniz.'],
   },
@@ -324,48 +327,56 @@ window.NOTES = {
   /* ---------------- likely questions (for KONUSMA_METNI.md) ---------------- */
   __qa: [
     {
+      slide: 'heap-real',
       q: 'Where exactly is heapsort used in practice?',
       qtr: 'Heapsort pratikte tam olarak nerede kullanılıyor?',
       a: 'The Linux kernel’s generic sort() in lib/sort.c is a heapsort (guaranteed n log n, no extra memory, no recursion). C++ std::sort and .NET Array.Sort use introsort, which falls back to heapsort. PostgreSQL uses a top-N heapsort for ORDER BY with a small LIMIT.',
       atr: 'Linux çekirdeğinin lib/sort.c içindeki genel sort() fonksiyonu heapsort’tur (garanti n log n, ek bellek yok, özyineleme yok). C++ std::sort ve .NET Array.Sort introsort kullanır; introsort gerektiğinde heapsort’a geçer. PostgreSQL küçük bir LIMIT ile ORDER BY için top-N heapsort kullanır.',
     },
     {
+      slide: 'heap-build',
       q: 'Why is building a heap only O(n), not O(n log n)?',
       qtr: 'Heap kurmak neden O(n log n) değil de O(n)?',
       a: 'Most nodes are leaves or near the leaves, and they can sink only a few levels. Only the root can sink log n levels. If you add up the work level by level, it is less than 2n comparisons.',
       atr: 'Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir. Sadece kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az karşılaştırma çıkar.',
     },
     {
+      slide: 'heapsort',
       q: 'Heapsort, quicksort or mergesort?',
       qtr: 'Heapsort mu, quicksort mu, mergesort mu?',
       a: 'All three are n log n on average. Heapsort is in place and has no bad worst case, but quicksort is usually faster in practice. Mergesort is stable, but it needs an extra array.',
       atr: 'Üçü de ortalamada n log n. Heapsort yerinde çalışır ve kötü bir en kötü durumu yoktur, ama pratikte quicksort genelde daha hızlıdır. Mergesort kararlıdır ama ek bir dizi ister.',
     },
     {
+      slide: 'heap-analysis',
       q: 'Why is heapsort not stable?',
       qtr: 'Heapsort neden kararlı değil?',
       a: 'The root is swapped with the last key of the heap, which jumps over other keys. Two equal keys can end up in the opposite order, like 1a and 1b on the slide.',
       atr: 'Kök, heap’in son anahtarıyla yer değiştirir ve bu hamle diğer anahtarların üzerinden atlar. Slayttaki 1a ve 1b gibi iki eşit anahtar ters sırada kalabilir.',
     },
     {
+      slide: 'heap-def',
       q: 'What is a min-heap?',
       qtr: 'Min-heap nedir?',
       a: 'The same structure with the opposite rule: every parent is smaller than or equal to its children, so the minimum is at the root. It is used when a smaller number means a higher priority.',
       atr: 'Aynı yapı, ters kuralla: her ebeveyn çocuklarından küçük ya da eşittir, bu yüzden en küçük eleman köktedir. Küçük sayının yüksek öncelik anlamına geldiği durumlarda kullanılır.',
     },
     {
+      slide: 'heap-build',
       q: 'Why build bottom-up instead of inserting the keys one by one?',
       qtr: 'Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?',
       a: 'Inserting n keys one by one (top-down) can cost n log n. Bottom-up construction costs only O(n).',
       atr: 'n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı kurmak sadece O(n) tutar.',
     },
     {
+      slide: 'avl',
       q: 'AVL tree or 2-3 tree?',
       qtr: 'AVL ağacı mı, 2-3 ağacı mı?',
       a: 'Both keep the height at O(log n). AVL trees stay binary and fix the balance with rotations. 2-3 trees allow two keys in a node and fix overflows by splitting, so all leaves stay on the same level.',
       atr: 'İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi döndürmelerle (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir ve taşmayı bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.',
     },
     {
+      slide: 'gauss',
       q: 'Why is Gaussian elimination Θ(n³)?',
       qtr: 'Gauss eliminasyonu neden Θ(n³)?',
       a: 'There are three nested loops: one over the pivot rows, one over the rows below, and one over the columns. That gives about n³/3 multiplications.',

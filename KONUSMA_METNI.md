@@ -10,6 +10,7 @@
 - `S`: sunucu penceresi. Bu metin, süre sayacı ve "sonraki tıklama" ipucu orada görünür; ikinci ekranda (laptop) aç, sunum projeksiyonda kalsın. Tek ekranda `N` notları altta gösterir.
 - `L`: ekrandaki yazıları Türkçe ⇄ İngilizce yapar. Soru-cevapta Türkçe açıklamak istersen kullan.
 - Konuşma yavaş ve net olsun: dakikada ~120 kelime. Animasyonlar zaten anlatıyor, acele etme.
+- İki kişi sunuyorsanız her birinin kendi dosyası var: `KONUSMA_BOLUM_1.txt` ve `KONUSMA_BOLUM_2.txt` (devir teslim cümleleri ve kendi soruları dahil).
 
 ## Zaman planı
 

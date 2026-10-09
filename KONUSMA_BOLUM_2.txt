@@ -1,0 +1,485 @@
+==========================================================================================
+KONUŞMA METNİ - BÖLÜM 2/2  |  Transform & Conquer (CMP3005, Bölüm 6)
+==========================================================================================
+Slaytlar    : 8-21  (Heaps & Heapsort  ...  Thank you! Questions?)
+Süre        : yaklaşık 7:09 (planlanan)  |  tüm sunumda 3:15 -> 10:24
+Kelime      : 925 (İngilizce)
+Diğer bölüm : 1-7 (arkadaşın)  - bu dosyada yok
+
+NASIL KULLANILIR
+- İngilizce metni sesli söyle. Altındaki Türkçe, ne söylediğini anlaman için.
+- [[CLICK]] / [[TIKLA]] işaretini görünce bir kez ileri tuşuna (->) bas. O anda ekranda
+  bir animasyon oynar.
+- Animasyon oynarken tekrar basarsan hemen tamamlanır. Yanlışlıkla ileri gittiysen <- ile
+  bir adım geri dön.
+- Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre
+  sayacı), L = dil.
+- Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
+  etme.
+
+ZAMAN PLANI
+ No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
+ 8   Heaps & Heapsort                               0   0:12   0:00         3:15
+ 9   What is a heap? Two rules                      4   0:40   0:12         3:27
+ 10  A heap is secretly an array                    4   0:36   0:52         4:07
+ 11  Building a heap bottom-up                      5   0:50   1:28         4:43
+ 12  Heapsort: remove the max, again and again      4   0:50   2:18         5:33
+ 13  How fast is heapsort?                          4   0:36   3:08         6:23
+ 14  Heaps power priority queues                    3   0:28   3:44         6:59
+ 15  Real world: who uses heaps?                    3   0:45   4:12         7:27
+ 16  Horner’s rule: fewer multiplications           4   0:28   4:57         8:12
+ 17  Binary exponentiation: aⁿ by squaring          3   0:26   5:25         8:40
+ 18  Reduce to a problem you can already solve      4   0:28   5:51         9:06
+ 19  Counting paths = multiplying matrices          4   0:25   6:19         9:34
+ 20  Three ways to transform, then conquer          2   0:20   6:44         9:59
+ 21  Thank you! Questions?                          0   0:05   7:04         10:19
+     TOPLAM                                             7:09  
+
+******************************************************************************************
+BAŞLANGIÇ - 8. slayt ekrana gelince önce şunu söyle:
+******************************************************************************************
+EN: Thank you! I will continue from here.
+TR: Teşekkürler! Buradan ben devam ediyorum.
+
+------------------------------------------------------------------------------------------
+SLAYT 8 / 21  -  Heaps & Heapsort
+(Heap ve Heapsort)   [Heaps & Heapsort]
+Süre 0:12  |  bölüm saati 0:00 -> 0:12  |  0 tıklama
+------------------------------------------------------------------------------------------
+EN (söyleyeceğin):
+  Now the star of this chapter: heaps and heapsort. We think of the keys as a tree, but
+  store them in a simple array.
+
+TR (anlamı):
+  Şimdi bölümün yıldızı: heap ve heapsort. Anahtarları bir ağaç gibi düşünüyor, ama basit
+  bir dizide saklıyoruz.
+
+------------------------------------------------------------------------------------------
+SLAYT 9 / 21  -  What is a heap? Two rules
+(Heap nedir? İki kural)   [Heaps & Heapsort]
+Süre 0:40  |  bölüm saati 0:12 -> 0:52  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Rule 1: shape (slots fill in order) (2) Rule 2: parent ≥ children (3)
+            Paths go down; no left-right order (4) Heap or not? ✓ ✗ ✗
+
+EN (söyleyeceğin):
+  A heap is a binary tree with two rules. [[CLICK]] Rule one, shape: we fill the tree
+  level by level, left to right. Only the last level can have gaps, and only on the right.
+
+  [[CLICK]] Rule two, order: every parent is greater than or equal to its children. That
+  is a max-heap.
+
+  [[CLICK]] So keys decrease along every path down. But there is no left-to-right order: 8
+  is lower, yet bigger than 4.
+
+  [[CLICK]] Quick check: the first tree is a heap. The second has a hole in its shape. The
+  third breaks the order: 6 is bigger than its parent 5.
+
+TR (anlamı):
+  Heap, iki kurala uyan bir ikili ağaçtır. [[TIKLA]] Birinci kural, şekil: ağacı seviye
+  seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.
+
+  [[TIKLA]] İkinci kural, sıra: her ebeveyn çocuklarından büyük ya da eşittir. Buna
+  max-heap denir.
+
+  [[TIKLA]] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra
+  yoktur: 8 daha aşağıda, ama 4’ten büyük.
+
+  [[TIKLA]] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü
+  sırayı bozuyor: 6, ebeveyni 5’ten büyük.
+
+------------------------------------------------------------------------------------------
+SLAYT 10 / 21  -  A heap is secretly an array
+(Heap aslında bir dizidir)   [Heaps & Heapsort]
+Süre 0:36  |  bölüm saati 0:52 -> 1:28  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Number the nodes, fly them into the array (2) Children of j: 2j, 2j+1 (3)
+            Parent of j: ⌊j/2⌋ (4) Parents first, max at H[1]
+
+EN (söyleyeceğin):
+  Here is the trick. [[CLICK]] We number the nodes top-down, left to right, and simply put
+  them into an array. No pointers at all.
+
+  [[CLICK]] For the node at position j, the children are at 2j and 2j + 1. For j = 2, that
+  is 4 and 5.
+
+  [[CLICK]] And the parent of j is at j divided by 2, rounded down. Five divided by two is
+  two.
+
+  [[CLICK]] So the parents fill the first half of the array, and the maximum is always at
+  position one.
+
+TR (anlamı):
+  İşin püf noktası şu. [[TIKLA]] Düğümleri yukarıdan aşağı, soldan sağa numaralandırıp
+  doğrudan bir diziye koyuyoruz. Hiç işaretçi (pointer) yok.
+
+  [[TIKLA]] j konumundaki düğümün çocukları 2j ve 2j + 1 konumlarındadır. j = 2 için
+  bunlar 4 ve 5.
+
+  [[TIKLA]] j’nin ebeveyni ise j bölü 2’nin aşağı yuvarlanmışıdır. 5 bölü 2, 2 eder.
+
+  [[TIKLA]] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman
+  1. konumdadır.
+
+------------------------------------------------------------------------------------------
+SLAYT 11 / 21  -  Building a heap bottom-up
+(Heap’i aşağıdan yukarı kurmak)   [Heaps & Heapsort]
+Süre 0:50  |  bölüm saati 1:28 -> 2:18  |  5 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Parent 7: swap with 8 (2) Parent 9: already OK ✓ (3) Root 2: swap with 9
+            (4) 2 keeps sinking: swap with 6 (5) Done: heap 9 6 8 2 5 7
+
+EN (söyleyeceğin):
+  To build a heap, we go bottom-up: start at the last parent, fix its subtree, and move
+  back toward the root. Our list: 2, 9, 7, 6, 5, 8.
+
+  [[CLICK]] The last parent is 7. Its bigger child is 8, so they swap. [[CLICK]] Next is
+  9. It is already bigger than its children: nothing to do.
+
+  [[CLICK]] Now the root, 2. Its bigger child is 9: swap. [[CLICK]] 2 is still too small,
+  so it keeps sinking: it swaps with 6 and reaches a leaf.
+
+  [[CLICK]] Done: a heap, with the maximum, 9, at the root. The table matches our lecture
+  slides.
+
+TR (anlamı):
+  Heap’i kurmak için aşağıdan yukarı gideriz: son ebeveynden başla, alt ağacını düzelt ve
+  köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.
+
+  [[TIKLA]] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [[TIKLA]] Sırada 9
+  var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.
+
+  [[TIKLA]] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [[TIKLA]] 2 hâlâ çok küçük,
+  batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.
+
+  [[TIKLA]] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle
+  aynı.
+
+------------------------------------------------------------------------------------------
+SLAYT 12 / 21  -  Heapsort: remove the max, again and again
+(Heapsort: en büyüğü tekrar tekrar çıkar)   [Heaps & Heapsort]
+Süre 0:50  |  bölüm saati 2:18 -> 3:08  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Swap root 9 with last; lock 9 (2) Sift 7 down (swap with 8) (3) Autoplay
+            the remaining removals (4) Sorted: 2 5 6 7 8 9
+
+EN (söyleyeceğin):
+  Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum
+  again and again.
+
+  [[CLICK]] Swap the root with the last key. Now 9 is in its final place, so we lock it,
+  and the heap shrinks by one.
+
+  [[CLICK]] The new root, 7, is too small, so we sift it down: it swaps with its bigger
+  child, 8. The heap is fixed again.
+
+  [[CLICK]] We repeat the same two moves: swap the max to the end, then sift down. Watch
+  the sorted part grow on the right.
+
+  [[CLICK]] And the array is sorted: 2, 5, 6, 7, 8, 9. Notice that we never needed a
+  second array.
+
+TR (anlamı):
+  Heapsort: birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı
+  tekrar tekrar çıkarır.
+
+  [[TIKLA]] Kökü son anahtarla değiştir. Artık 9 son yerinde, onu kilitliyoruz ve heap bir
+  eleman küçülüyor.
+
+  [[TIKLA]] Yeni kök 7 çok küçük, onu aşağı itiyoruz: büyük çocuğu 8 ile yer değiştiriyor.
+  Heap yine düzgün.
+
+  [[TIKLA]] Aynı iki hamleyi tekrarlıyoruz: en büyüğü sona taşı, sonra aşağı it. Sağda
+  sıralı kısmın büyüdüğüne bakın.
+
+  [[TIKLA]] Ve dizi sıralandı: 2, 5, 6, 7, 8, 9. Dikkat edin, hiç ikinci bir diziye
+  ihtiyacımız olmadı.
+
+------------------------------------------------------------------------------------------
+SLAYT 13 / 21  -  How fast is heapsort?
+(Heapsort ne kadar hızlı?)   [Heaps & Heapsort]
+Süre 0:36  |  bölüm saati 3:08 -> 3:44  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Build = Θ(n): work per level (2) Sort = Θ(n log n) (3) Total Θ(n log n),
+            in-place ✓ (4) Not stable ✗ (1a 1b → 1b 1a)
+
+EN (söyleyeceğin):
+  How fast is it? [[CLICK]] Building the heap is linear. Most nodes are near the bottom
+  and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.
+
+  [[CLICK]] Sorting does n − 1 removals, and each costs at most about 2 log n comparisons.
+  So that part is n log n.
+
+  [[CLICK]] In total, heapsort is n log n in the worst case and on average, and it works
+  in place.
+
+  [[CLICK]] One weakness: it is not stable. Two equal keys can change their order.
+
+TR (anlamı):
+  Peki ne kadar hızlı? [[TIKLA]] Heap’i kurmak doğrusal zaman alır. Düğümlerin çoğu en
+  altta ve sadece biraz batabilir. 15 anahtar için en fazla 22 karşılaştırma, yani 2n’den
+  az.
+
+  [[TIKLA]] Sıralama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n
+  karşılaştırma. Yani bu kısım n log n.
+
+  [[TIKLA]] Toplamda heapsort hem en kötü hem ortalama durumda n log n’dir ve yerinde
+  (in-place) çalışır.
+
+  [[TIKLA]] Bir zayıflığı var: kararlı (stable) değil. Eşit iki anahtarın sırası
+  değişebilir.
+
+------------------------------------------------------------------------------------------
+SLAYT 14 / 21  -  Heaps power priority queues
+(Öncelik kuyruklarının motoru: heap)   [Heaps & Heapsort]
+Süre 0:28  |  bölüm saati 3:44 -> 4:12  |  3 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Priority queue operations (2) Insert 10 at the end (3) 10 bubbles up to
+            the root
+
+EN (söyleyeceğin):
+  Heaps are not only for sorting. [[CLICK]] They are perfect for priority queues: find the
+  max in constant time, insert or delete in log n. Like an emergency room: the most urgent
+  patient goes first.
+
+  [[CLICK]] To insert 10, we put it at the end. [[CLICK]] Then it bubbles up while it
+  beats its parent: past 8, past 9, up to the root. At most log n steps.
+
+TR (anlamı):
+  Heap sadece sıralama için değil. [[TIKLA]] Öncelik kuyrukları için mükemmeldir: en
+  büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil
+  hasta önce.
+
+  [[TIKLA]] 10’u eklemek için onu sona koyuyoruz. [[TIKLA]] Sonra ebeveyninden büyük
+  oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
+
+------------------------------------------------------------------------------------------
+SLAYT 15 / 21  -  Real world: who uses heaps?
+(Gerçek hayatta heap’i kim kullanıyor?)   [Heaps & Heapsort]
+Süre 0:45  |  bölüm saati 4:12 -> 4:57  |  3 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Sorting: Linux, C++/.NET, PostgreSQL, std libraries (2) Priority queues:
+            timers, routers, search, ZIP/PNG (3) Heaps are everywhere
+
+EN (söyleyeceğin):
+  Who uses this in real life? Almost everyone. [[CLICK]] Sorting: the Linux kernel’s
+  sort() is heapsort, because it guarantees n log n with no extra memory. C++ and .NET
+  switch to heapsort when quicksort gets unlucky. PostgreSQL runs a “top-N heapsort” for
+  ORDER BY with LIMIT.
+
+  [[CLICK]] Priority queues: Node.js and Go keep their timers in a heap, routers run
+  Dijkstra with a priority queue, Elasticsearch collects its top results in one, and ZIP
+  and PNG build their Huffman codes with a heap.
+
+  [[CLICK]] Kernels, databases, servers, networks, compression: heaps are everywhere.
+
+TR (anlamı):
+  Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [[TIKLA]] Sıralama: Linux
+  çekirdeğinin sort() fonksiyonu doğrudan heapsort’tur, çünkü ek bellek olmadan n log n
+  garanti eder. C++ ve .NET, quicksort’un şansı kötü giderse heapsort’a geçer. PostgreSQL,
+  LIMIT’li ORDER BY için “top-N heapsort” çalıştırır.
+
+  [[TIKLA]] Öncelik kuyrukları: Node.js ve Go zamanlayıcılarını bir heap’te tutar,
+  yönlendiriciler Dijkstra’yı öncelik kuyruğuyla çalıştırır, Elasticsearch en iyi
+  sonuçları bir öncelik kuyruğunda toplar, ZIP ve PNG de Huffman kodlarını bir heap ile
+  kurar.
+
+  [[TIKLA]] Çekirdekler, veritabanları, sunucular, ağlar, sıkıştırma: heap her yerde.
+
+------------------------------------------------------------------------------------------
+SLAYT 16 / 21  -  Horner’s rule: fewer multiplications
+(Horner kuralı: daha az çarpma)   [Representation change]
+Süre 0:28  |  bölüm saati 4:57 -> 5:25  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Factor out x again and again (2) Table at x = 3: 2, 5, 18, 55, 160 (3) n
+            multiplications instead of ~n²/2 (4) Real world: hashCode, parseInt
+
+EN (söyleyeceğin):
+  Back to representation change. [[CLICK]] Horner’s rule rewrites a polynomial by
+  factoring out x again and again. [[CLICK]] At x = 3: multiply by 3, add the next
+  coefficient: 2, 5, 18, 55, and p(3) = 160.
+
+  [[CLICK]] Only n multiplications instead of about n²/2. [[CLICK]] In real life, Java’s
+  String.hashCode() is Horner’s rule, and so is every parseInt.
+
+TR (anlamı):
+  Gösterimi değiştirmeye geri dönelim. [[TIKLA]] Horner kuralı bir polinomu tekrar tekrar
+  x parantezine alarak yeniden yazar. [[TIKLA]] x = 3 için: 3 ile çarp, sonraki katsayıyı
+  ekle: 2, 5, 18, 55 ve p(3) = 160.
+
+  [[TIKLA]] Yaklaşık n²/2 yerine sadece n çarpma. [[TIKLA]] Gerçek hayatta Java’nın
+  String.hashCode() fonksiyonu Horner kuralıdır; her parseInt da öyle.
+
+------------------------------------------------------------------------------------------
+SLAYT 17 / 21  -  Binary exponentiation: aⁿ by squaring
+(İkili üs alma: kare alarak aⁿ)   [Representation change]
+Süre 0:26  |  bölüm saati 5:25 -> 5:51  |  3 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Left to right: square, multiply on 1 (2) Right to left: a · a⁴ · a⁸ (3)
+            Real world: HTTPS / RSA
+
+EN (söyleyeceğin):
+  Binary exponentiation: to compute a¹³, write 13 in binary: 1101. [[CLICK]] Left to
+  right: square at every bit, and multiply by a when the bit is 1. a, a³, a⁶, a¹³: 5
+  multiplications instead of 12.
+
+  [[CLICK]] Or right to left: multiply the powers a, a⁴ and a⁸. [[CLICK]] In real life,
+  every HTTPS connection that uses RSA computes huge powers exactly this way.
+
+TR (anlamı):
+  İkili üs alma: a¹³’ü hesaplamak için 13’ü ikilik tabanda yaz: 1101. [[TIKLA]] Soldan
+  sağa: her bitte kare al, bit 1 ise a ile de çarp. a, a³, a⁶, a¹³: 12 yerine 5 çarpma.
+
+  [[TIKLA]] Ya da sağdan sola: a, a⁴ ve a⁸ kuvvetlerini çarp. [[TIKLA]] Gerçek hayatta RSA
+  kullanan her HTTPS bağlantısı dev üsleri tam olarak böyle hesaplar.
+
+------------------------------------------------------------------------------------------
+SLAYT 18 / 21  -  Reduce to a problem you can already solve
+(Zaten çözebildiğin bir probleme indirge)   [Problem reduction]
+Süre 0:28  |  bölüm saati 5:51 -> 6:19  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Idea: A → B (already solvable) → answer (2) lcm(24, 60) via gcd = 12 → 120
+            (3) max f = −min(−f); LP, graph search (4) Real world: machine learning,
+            airlines
+
+EN (söyleyeceğin):
+  [[CLICK]] Problem reduction: turn problem A into a problem B that we can already solve,
+  then translate the answer back, if the detour is cheaper.
+
+  [[CLICK]] lcm of 24 and 60: Euclid gives gcd = 12, so lcm = 24·60/12 = 120. [[CLICK]] To
+  find a maximum, find the minimum of −f.
+
+  [[CLICK]] In real life, training an AI model maximizes likelihood by minimizing a loss.
+
+TR (anlamı):
+  [[TIKLA]] Probleme indirgeme: A problemini, zaten çözebildiğimiz bir B problemine çevir,
+  sonra cevabı geri çevir; tabii bu dolambaç daha ucuzsa.
+
+  [[TIKLA]] 24 ve 60’ın lcm’i (EKOK): Öklid gcd’yi (EBOB) 12 bulur, yani lcm = 24·60/12 =
+  120. [[TIKLA]] Bir maksimumu bulmak için −f’nin minimumunu bul.
+
+  [[TIKLA]] Gerçek hayatta bir yapay zekâ modelini eğitmek, bir kaybı (loss) en aza
+  indirerek olabilirliği en büyütmektir.
+
+------------------------------------------------------------------------------------------
+SLAYT 19 / 21  -  Counting paths = multiplying matrices
+(Yol saymak = matris çarpmak)   [Problem reduction]
+Süre 0:25  |  bölüm saati 6:19 -> 6:44  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Graph → adjacency matrix A (2) A² = A · A (3) (2, 4) = 2: the two paths
+            (4) Real world: social networks, PageRank
+
+EN (söyleyeceğin):
+  One more reduction: counting paths. [[CLICK]] Write the graph as an adjacency matrix A.
+  [[CLICK]] Square it. [[CLICK]] Entry (2, 4) of A² is 2: exactly the two paths from 2 to
+  4. Counting paths is just matrix multiplication.
+
+  [[CLICK]] In real life: “friends of friends” in social networks, and Google’s PageRank.
+
+TR (anlamı):
+  Bir indirgeme daha: yol saymak. [[TIKLA]] Grafı bir komşuluk matrisi A olarak yaz.
+  [[TIKLA]] Karesini al. [[TIKLA]] A²’nin (2, 4) elemanı 2: tam olarak 2’den 4’e giden iki
+  yol. Yol saymak sadece matris çarpımıdır.
+
+  [[TIKLA]] Gerçek hayatta: sosyal ağlardaki “arkadaşın arkadaşı” ve Google’ın PageRank’i.
+
+------------------------------------------------------------------------------------------
+SLAYT 20 / 21  -  Three ways to transform, then conquer
+(Dönüştürmenin üç yolu, sonra fethet)   [Wrap-up]
+Süre 0:20  |  bölüm saati 6:44 -> 7:04  |  2 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Three buckets, with where each is used (2) Change the problem, then
+            conquer it
+
+EN (söyleyeceğin):
+  To sum up: [[CLICK]] three ways to transform. Simplify the instance, change the
+  representation, or reduce to another problem, and every one of them runs in real systems
+  today.
+
+  [[CLICK]] Change the problem, then conquer it.
+
+TR (anlamı):
+  Özetle: [[TIKLA]] dönüştürmenin üç yolu var. Örneği basitleştir, gösterimi değiştir ya
+  da başka bir probleme indirge; ve her biri bugün gerçek sistemlerde çalışıyor.
+
+  [[TIKLA]] Problemi değiştir, sonra fethet.
+
+------------------------------------------------------------------------------------------
+SLAYT 21 / 21  -  Thank you! Questions?
+(Teşekkürler! Sorular?)   [Wrap-up]
+Süre 0:05  |  bölüm saati 7:04 -> 7:09  |  0 tıklama
+------------------------------------------------------------------------------------------
+EN (söyleyeceğin):
+  Thank you for listening. I’m happy to take your questions.
+
+TR (anlamı):
+  Dinlediğiniz için teşekkürler. Sorularınızı memnuniyetle cevaplarım.
+
+==========================================================================================
+OLASI SORULAR (senin konuların)
+==========================================================================================
+1) Where exactly is heapsort used in practice?
+   (Heapsort pratikte tam olarak nerede kullanılıyor?)
+   EN: The Linux kernel’s generic sort() in lib/sort.c is a heapsort (guaranteed n log n,
+       no extra memory, no recursion). C++ std::sort and .NET Array.Sort use introsort,
+       which falls back to heapsort. PostgreSQL uses a top-N heapsort for ORDER BY with a
+       small LIMIT.
+   TR: Linux çekirdeğinin lib/sort.c içindeki genel sort() fonksiyonu heapsort’tur
+       (garanti n log n, ek bellek yok, özyineleme yok). C++ std::sort ve .NET Array.Sort
+       introsort kullanır; introsort gerektiğinde heapsort’a geçer. PostgreSQL küçük bir
+       LIMIT ile ORDER BY için top-N heapsort kullanır.
+
+2) Why is building a heap only O(n), not O(n log n)?
+   (Heap kurmak neden O(n log n) değil de O(n)?)
+   EN: Most nodes are leaves or near the leaves, and they can sink only a few levels. Only
+       the root can sink log n levels. If you add up the work level by level, it is less
+       than 2n comparisons.
+   TR: Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir.
+       Sadece kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az
+       karşılaştırma çıkar.
+
+3) Heapsort, quicksort or mergesort?
+   (Heapsort mu, quicksort mu, mergesort mu?)
+   EN: All three are n log n on average. Heapsort is in place and has no bad worst case,
+       but quicksort is usually faster in practice. Mergesort is stable, but it needs an
+       extra array.
+   TR: Üçü de ortalamada n log n. Heapsort yerinde çalışır ve kötü bir en kötü durumu
+       yoktur, ama pratikte quicksort genelde daha hızlıdır. Mergesort kararlıdır ama ek
+       bir dizi ister.
+
+4) Why is heapsort not stable?
+   (Heapsort neden kararlı değil?)
+   EN: The root is swapped with the last key of the heap, which jumps over other keys. Two
+       equal keys can end up in the opposite order, like 1a and 1b on the slide.
+   TR: Kök, heap’in son anahtarıyla yer değiştirir ve bu hamle diğer anahtarların
+       üzerinden atlar. Slayttaki 1a ve 1b gibi iki eşit anahtar ters sırada kalabilir.
+
+5) What is a min-heap?
+   (Min-heap nedir?)
+   EN: The same structure with the opposite rule: every parent is smaller than or equal to
+       its children, so the minimum is at the root. It is used when a smaller number means
+       a higher priority.
+   TR: Aynı yapı, ters kuralla: her ebeveyn çocuklarından küçük ya da eşittir, bu yüzden
+       en küçük eleman köktedir. Küçük sayının yüksek öncelik anlamına geldiği durumlarda
+       kullanılır.
+
+6) Why build bottom-up instead of inserting the keys one by one?
+   (Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?)
+   EN: Inserting n keys one by one (top-down) can cost n log n. Bottom-up construction
+       costs only O(n).
+   TR: n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı
+       kurmak sadece O(n) tutar.
+
+==========================================================================================
+EK SLAYTLAR (sadece soru gelirse göster)
+==========================================================================================
+EK A1  -  Try it: heapsort playground  (Deneyin: heapsort oyun alanı)
+  EN: For questions: type your own numbers (up to 15), press Play or Step, and watch both
+      stages with live comparison and swap counters. Try "Already sorted" to see that the
+      build is still linear.
+  TR: Soru-cevap için: kendi sayılarınızı yazın (en fazla 15), Oynat ya da Adım’a basın ve
+      iki aşamayı canlı karşılaştırma ve takas sayaçlarıyla izleyin. "Zaten sıralı" ile
+      kurmanın yine doğrusal olduğunu gösterebilirsiniz.
+
+------------------------------------------------------------------------------------------
+Bu dosya "node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-intro).

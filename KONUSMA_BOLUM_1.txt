@@ -1,0 +1,254 @@
+==========================================================================================
+KONUŞMA METNİ - BÖLÜM 1/2  |  Transform & Conquer (CMP3005, Bölüm 6)
+==========================================================================================
+Slaytlar    : 1-7  (Transform & Conquer  ...  2-3 trees: a full node splits in two)
+Süre        : yaklaşık 3:15 (planlanan)  |  tüm sunumda 0:00 -> 3:15
+Kelime      : 417 (İngilizce)
+Diğer bölüm : 8-21 (arkadaşın)  - bu dosyada yok
+
+NASIL KULLANILIR
+- İngilizce metni sesli söyle. Altındaki Türkçe, ne söylediğini anlaman için.
+- [[CLICK]] / [[TIKLA]] işaretini görünce bir kez ileri tuşuna (->) bas. O anda ekranda
+  bir animasyon oynar.
+- Animasyon oynarken tekrar basarsan hemen tamamlanır. Yanlışlıkla ileri gittiysen <- ile
+  bir adım geri dön.
+- Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre
+  sayacı), L = dil.
+- Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
+  etme.
+
+ZAMAN PLANI
+ No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
+ 1   Transform & Conquer                            0   0:13   0:00         0:00
+ 2   The idea: transform, then conquer              4   0:30   0:13         0:13
+ 3   Presorting: are all elements distinct?         4   0:34   0:43         0:43
+ 4   Gaussian elimination: make it triangular       6   0:34   1:17         1:17
+ 5   Binary search trees: shape decides speed       3   0:22   1:51         1:51
+ 6   AVL trees: rotate to stay balanced             5   0:32   2:13         2:13
+ 7   2-3 trees: a full node splits in two           5   0:30   2:45         2:45
+     TOPLAM                                             3:15  
+
+------------------------------------------------------------------------------------------
+SLAYT 1 / 21  -  Transform & Conquer
+(Dönüştür ve Fethet)   [Transform & Conquer]
+Süre 0:13  |  bölüm saati 0:00 -> 0:13  |  0 tıklama
+------------------------------------------------------------------------------------------
+EN (söyleyeceğin):
+  Hello everyone. Today’s topic is Chapter 6: Transform and Conquer. The idea: when a
+  problem is hard, first change it into an easier one, then solve it.
+
+TR (anlamı):
+  Herkese merhaba. Bugünkü konum Bölüm 6: Dönüştür ve Fethet. Fikir şu: bir problem zorsa
+  önce onu daha kolay bir probleme dönüştür, sonra çöz.
+
+------------------------------------------------------------------------------------------
+SLAYT 2 / 21  -  The idea: transform, then conquer
+(Fikir: önce dönüştür, sonra fethet)   [Transform & Conquer]
+Süre 0:30  |  bölüm saati 0:13 -> 0:43  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Pipeline: transform → conquer (2) Way 1: instance simplification (3) Way
+            2: representation change (4) Way 3: problem reduction
+
+EN (söyleyeceğin):
+  [[CLICK]] We transform the problem into an easier one, then conquer it.
+
+  [[CLICK]] There are three ways. One: instance simplification, the same problem with a
+  simpler instance, like a sorted list. [[CLICK]] Two: representation change, the same
+  data in a different form, like an array seen as a tree. [[CLICK]] Three: problem
+  reduction, turning it into a problem we can already solve, like lcm through gcd.
+
+TR (anlamı):
+  [[TIKLA]] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.
+
+  [[TIKLA]] Bunun üç yolu var. Bir: örneği basitleştirme; aynı problem, daha basit bir
+  örnek, mesela sıralı bir liste. [[TIKLA]] İki: gösterimi değiştirme; aynı veri, farklı
+  bir biçimde, mesela ağaç gibi okunan bir dizi. [[TIKLA]] Üç: probleme indirgeme; onu
+  zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.
+
+------------------------------------------------------------------------------------------
+SLAYT 3 / 21  -  Presorting: are all elements distinct?
+(Ön sıralama: tüm elemanlar farklı mı?)   [Instance simplification]
+Süre 0:34  |  bölüm saati 0:43 -> 1:17  |  4 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Brute force: compare every pair (2) Presort, then compare neighbours (3) n
+            = 1 000 000: 5·10¹¹ vs 2·10⁷ (4) Real world: sort | uniq, databases
+
+EN (söyleyeceğin):
+  Example one: are all elements distinct? [[CLICK]] Brute force compares every pair, up to
+  n²/2 comparisons. [[CLICK]] Presorting: sort first, then compare only neighbours,
+  because duplicates end up side by side. That is n log n.
+
+  [[CLICK]] For a million elements: 500 billion comparisons versus 20 million. Minutes
+  versus a blink.
+
+  [[CLICK]] In real life, the Unix pipeline sort | uniq works exactly like this, and so do
+  databases for DISTINCT and GROUP BY.
+
+TR (anlamı):
+  Birinci örnek: tüm elemanlar farklı mı? [[TIKLA]] Kaba kuvvet her çifti karşılaştırır,
+  n²/2’ye kadar karşılaştırma. [[TIKLA]] Önceden sıralama: önce sırala, sonra sadece
+  komşuları karşılaştır, çünkü tekrarlar yan yana gelir. Bu n log n.
+
+  [[TIKLA]] Bir milyon eleman için: 500 milyar karşılaştırmaya karşı 20 milyon. Dakikalar
+  ve göz açıp kapayıncaya kadar.
+
+  [[TIKLA]] Gerçek hayatta Unix’teki sort | uniq tam olarak böyle çalışır; veritabanları
+  da DISTINCT ve GROUP BY için aynısını yapar.
+
+------------------------------------------------------------------------------------------
+SLAYT 4 / 21  -  Gaussian elimination: make it triangular
+(Gauss eliminasyonu: üçgen hâline getir)   [Instance simplification]
+Süre 0:34  |  bölüm saati 1:17 -> 1:51  |  6 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) R₂ − 3/2·R₁ (2) R₃ − 1/2·R₁ (3) R₃ − 3/5·R₂ → triangle, Θ(n³) (4) Back
+            substitution: x = 2, 1, 6 (5) Check ✓ (6) Real world: NumPy/MATLAB, TOP500
+
+EN (söyleyeceğin):
+  Example two: Gaussian elimination turns a system of equations into a triangle. [[CLICK]]
+  Row two minus 3/2 of row one: a zero. [[CLICK]] Row three, the same. [[CLICK]] One more
+  step, and the matrix is triangular. This costs n³.
+
+  [[CLICK]] Now we solve bottom-up: x₃ = 6, x₂ = 1, x₁ = 2. [[CLICK]] They check out.
+
+  [[CLICK]] In real life, NumPy and MATLAB solve systems this way, and the TOP500
+  supercomputers are ranked by how fast they do it.
+
+TR (anlamı):
+  İkinci örnek: Gauss eliminasyonu bir denklem sistemini üçgene çevirir. [[TIKLA]] İkinci
+  satırdan birinci satırın 3/2’si çıkar: bir sıfır. [[TIKLA]] Üçüncü satıra da aynısı.
+  [[TIKLA]] Bir adım daha ve matris üst üçgen oldu. Bunun maliyeti n³.
+
+  [[TIKLA]] Şimdi aşağıdan yukarı çözüyoruz: x₃ = 6, x₂ = 1, x₁ = 2. [[TIKLA]] Yerine
+  koyunca hepsi tutuyor.
+
+  [[TIKLA]] Gerçek hayatta NumPy ve MATLAB sistemleri böyle çözer; TOP500 listesindeki
+  süper bilgisayarlar da bunu ne kadar hızlı yaptıklarına göre sıralanır.
+
+------------------------------------------------------------------------------------------
+SLAYT 5 / 21  -  Binary search trees: shape decides speed
+(İkili arama ağacı: hızı şekil belirler)   [Instance simplification]
+Süre 0:22  |  bölüm saati 1:51 -> 2:13  |  3 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) A bushy BST: fast (2) Sorted keys → a stick, O(n) (3) Two fixes: balance
+            (AVL) / more keys per node (2-3)
+
+EN (söyleyeceğin):
+  Now search trees. [[CLICK]] A binary search tree is fast when it is bushy. [[CLICK]] But
+  if the keys arrive already sorted, it becomes a stick: search costs O(n).
+
+  [[CLICK]] Two fixes: keep it balanced, like AVL trees, or put more keys in a node, like
+  2-3 trees.
+
+TR (anlamı):
+  Şimdi arama ağaçları. [[TIKLA]] İkili arama ağacı gür olduğunda hızlıdır. [[TIKLA]] Ama
+  anahtarlar zaten sıralı gelirse bir çubuğa dönüşür: arama O(n) olur.
+
+  [[TIKLA]] İki çözüm var: ağacı dengeli tutmak, AVL ağaçları gibi, ya da bir düğüme daha
+  çok anahtar koymak, 2-3 ağaçları gibi.
+
+------------------------------------------------------------------------------------------
+SLAYT 6 / 21  -  AVL trees: rotate to stay balanced
+(AVL ağaçları: dengede kalmak için döndür)   [Instance simplification]
+Süre 0:32  |  bölüm saati 2:13 -> 2:45  |  5 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) Insert 5, 6, 8 → L(5) (2) Insert 3, 2 → R(5) (3) Insert 4 → LR(6) (4)
+            Insert 7 → RL(6): balanced and sorted (5) Real world: Linux scheduler, TreeMap
+
+EN (söyleyeceğin):
+  An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2, 4, 7.
+  [[CLICK]] After 8, node 5 tips over: one left rotation. [[CLICK]] After 2: a right
+  rotation. [[CLICK]] After 4: a double rotation. [[CLICK]] After 7: another double one.
+  Balanced, and still sorted.
+
+  [[CLICK]] In real life, the Linux CPU scheduler and Java’s TreeMap use red-black trees,
+  the AVL tree’s cousin.
+
+TR (anlamı):
+  AVL ağacı her düğümün denge faktörünü −1, 0 veya 1’de tutar. 5, 6, 8, 3, 2, 4, 7
+  ekliyoruz. [[TIKLA]] 8’den sonra 5 dengesini kaybediyor: bir sola döndürme. [[TIKLA]]
+  2’den sonra: sağa döndürme. [[TIKLA]] 4’ten sonra: çift döndürme. [[TIKLA]] 7’den sonra
+  bir çift döndürme daha. Dengeli ve hâlâ sıralı.
+
+  [[TIKLA]] Gerçek hayatta Linux’un işlemci zamanlayıcısı ve Java’nın TreeMap’i, AVL’nin
+  kuzeni olan red-black ağaçlarını kullanır.
+
+------------------------------------------------------------------------------------------
+SLAYT 7 / 21  -  2-3 trees: a full node splits in two
+(2-3 ağaçları: dolan düğüm ikiye bölünür)   [Representation change]
+Süre 0:30  |  bölüm saati 2:45 -> 3:15  |  5 tıklama
+------------------------------------------------------------------------------------------
+Tıklamalar: (1) 9, 5, 8 → split, 8 moves up (2) Small nodes absorb keys (3) Splits climb
+            to the root (4) All leaves on one level: Θ(log n) (5) Real world: database
+            indexes, file systems
+
+EN (söyleyeceğin):
+  2-3 trees take the other road: a node holds one or two keys. [[CLICK]] Three keys? The
+  node splits, and the middle key moves up. [[CLICK]] Small nodes just absorb keys.
+  [[CLICK]] Splits can climb to the root: the tree grows only at the top. [[CLICK]] So all
+  leaves stay on one level: log n.
+
+  [[CLICK]] In real life, every index in MySQL, PostgreSQL and SQLite is a B-tree: a 2-3
+  tree with hundreds of keys per node.
+
+TR (anlamı):
+  2-3 ağaçları diğer yolu seçer: bir düğüm bir ya da iki anahtar tutar. [[TIKLA]] Üç
+  anahtar mı oldu? Düğüm bölünür, ortadaki anahtar yukarı çıkar. [[TIKLA]] Küçük düğümler
+  anahtarları kolayca alır. [[TIKLA]] Bölünmeler köke kadar tırmanabilir: ağaç sadece
+  tepeden büyür. [[TIKLA]] Böylece tüm yapraklar aynı seviyede kalır: log n.
+
+  [[TIKLA]] Gerçek hayatta MySQL, PostgreSQL ve SQLite’taki her indeks bir B-ağacıdır:
+  düğüm başına yüzlerce anahtar tutan bir 2-3 ağacı.
+
+******************************************************************************************
+DEVİR TESLİM - 7. slaytın son tıklamasından sonra söyle, sonra -> ile 8. slayta geç:
+******************************************************************************************
+EN: That was the first part. Now my friend continues with: Heaps & Heapsort.
+TR: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heap ve Heapsort.
+
+==========================================================================================
+OLASI SORULAR (senin konuların)
+==========================================================================================
+1) AVL tree or 2-3 tree?
+   (AVL ağacı mı, 2-3 ağacı mı?)
+   EN: Both keep the height at O(log n). AVL trees stay binary and fix the balance with
+       rotations. 2-3 trees allow two keys in a node and fix overflows by splitting, so
+       all leaves stay on the same level.
+   TR: İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi
+       döndürmelerle (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir
+       ve taşmayı bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.
+
+2) Why is Gaussian elimination Θ(n³)?
+   (Gauss eliminasyonu neden Θ(n³)?)
+   EN: There are three nested loops: one over the pivot rows, one over the rows below, and
+       one over the columns. That gives about n³/3 multiplications.
+   TR: İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da
+       yaklaşık n³/3 çarpma eder.
+
+==========================================================================================
+EK SLAYTLAR (sadece soru gelirse göster)
+==========================================================================================
+EK A2  -  How fast can we sort?  (Ne kadar hızlı sıralayabiliriz?)
+  EN: If someone asks how fast sorting can be: every comparison sort needs about n log₂ n
+      comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉),
+      and mergesort reaches that bound. [[CLICK]] Presorting pays off when you search many
+      times: after about log₂ n searches, sorting once and using binary search wins.
+      [[CLICK]]
+  TR: Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her
+      sıralama en kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir
+      karar ağacının yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [[TIKLA]]
+      Önceden sıralama çok sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan
+      sonra bir kez sıralayıp ikili arama yapmak kazanır. [[TIKLA]]
+
+EK A3  -  The four AVL rotations  (Dört AVL döndürmesi)
+  EN: For questions about balanced trees: [[CLICK]] an AVL tree’s height is at most about
+      1.44 log₂ n, and one insertion needs at most one single or double rotation, which
+      only re-links a few pointers. [[CLICK]] A 2-3 tree’s height is between log₃ n and
+      log₂ n; search, insert and delete are Θ(log n) in both.
+  TR: Dengeli ağaçlarla ilgili sorular için: [[TIKLA]] bir AVL ağacının yüksekliği en
+      fazla yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme
+      ister; döndürme sadece birkaç işaretçiyi yeniden bağlar. [[TIKLA]] 2-3 ağacının
+      yüksekliği log₃ n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log
+      n).
+
+------------------------------------------------------------------------------------------
+Bu dosya "node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-intro).
