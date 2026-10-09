@@ -2,8 +2,23 @@
 
 CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Ana konu **Heaps & Heapsort**. Bölümün geri kalanı da (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) kısa ve görsel olarak anlatılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
 
-- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 10 dakika.
+- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 10,5 dakika. Sonunda olası sorular ve kısa cevaplar da var.
+- **Gerçek hayatta kim kullanıyor?** Her tekniğin slaydı, kaynaklarla doğrulanmış bir "Gerçek hayatta · kim kullanıyor?" şeridiyle biter. Heap için ayrı bir slayt var: Linux çekirdeği, PostgreSQL, C++/.NET, Node.js/Go, internet yönlendiricileri, Elasticsearch, ZIP/PNG.
 - **Tek dosya sürümü:** `dist/transform-and-conquer.html`. Fontlar ve kodlar içine gömülüdür. USB belleğe atıp internetsiz açabilirsin.
+
+## Slaytlar
+
+| # | Slayt | Gerçek hayatta |
+|---|---|---|
+| 1–2 | Başlık, ana fikir (dönüştürmenin 3 yolu) | — |
+| 3 | Presorting: tüm elemanlar farklı mı? | `sort \| uniq`, PostgreSQL/MySQL `DISTINCT` |
+| 4 | Gauss eliminasyonu | TOP500 süper bilgisayarları, NumPy/MATLAB |
+| 5–7 | İkili arama ağacı, AVL, 2-3 ağacı | Linux zamanlayıcısı, Java TreeMap; MySQL/PostgreSQL/SQLite indeksleri (B-ağacı) |
+| 8–15 | **★ Heap & Heapsort:** tanım, ağaç ⇄ dizi, aşağıdan yukarı kurma, heapsort, analiz, öncelik kuyruğu, **heap'i kim kullanıyor?** | Linux `sort()`, PostgreSQL top-N heapsort, Node.js, OSPF, ZIP/PNG… |
+| 16–17 | Horner kuralı, ikili üs alma | Java `hashCode`, `parseInt`; HTTPS/RSA |
+| 18–19 | Probleme indirgeme, matris kuvvetiyle yol sayma | makine öğrenmesi, havayolları; sosyal ağlar, PageRank |
+| 20–21 | Özet, teşekkürler | — |
+| A1–A3 | Ek: heapsort oyun alanı, sıralama alt sınırı, AVL döndürmeleri | — |
 
 ## Açmak
 

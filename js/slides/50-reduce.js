@@ -53,12 +53,15 @@
         + (v[1] ? '<div class="re-sub">' + v[1] + '</div>' : '') + '</div>').join('') + '</div>';
   }
 
-  /* Show caption set k (0 generic, 1 lcm, 2 max) on every box. */
-  function setLabels(ctx, k, animate) {
+  /* Show caption set k (0 generic, 1 lcm, 2 max) on every box. `at` gives
+   * per-box delays (ms), so a box shows its value only once it is computed. */
+  function setLabels(ctx, k, animate, at) {
     const jobs = [];
     ctx.$$('.re-v').forEach((el) => {
       const on = Number(el.dataset.v) === k;
-      if (animate) jobs.push(Anim.to(el, { opacity: on ? 1 : 0, y: on ? 0 : -10 }, { dur: 360, delay: on ? 180 : 0 }));
+      const box = el.dataset.box || 'solve';
+      const t = (at && at[box]) || 0;
+      if (animate) jobs.push(Anim.to(el, { opacity: on ? 1 : 0, y: on ? 0 : -10 }, { dur: 320, delay: t + (on ? 160 : 0) }));
       else Anim.set(el, { opacity: on ? 1 : 0, y: 0 });
     });
     return Promise.all(jobs);
@@ -291,16 +294,17 @@
         await Promise.all([fadeTo(d.dot, 0, 60, 200), fadeTo(d.q, 0.45, 0, 300), Anim.to(d.cost, { opacity: 1 }, { dur: 420 })]);
       } else if (n === 2) {
         // lcm(24, 60) via gcd: the token runs the detour while Euclid works
+        const E0 = 350, ES = 480;
+        const tG = E0 + 260 + (d.eu.length - 2) * ES + 560;     // gcd known
         const jobs = [
           Anim.to(d.diag, SPOT.side, { dur: 600 }),
-          setLabels(ctx, 1, true),
+          setLabels(ctx, 1, true, { Sol: tG, Ans: tG + 460 }),
           fadeTo(d.lcm, 1, 150, 300),
           pop(d.ident, 250, 340),
           runDot(d, 0, 1, 300),
         ];
         // Euclid: gcd(m, n) = gcd(n, m mod n) until n = 0
         const e = d.eu;
-        const E0 = 350, ES = 480;
         jobs.push(fadeTo(e[0].g, 1, E0, 240), pop(e[0].a, E0 + 40, 240), pop(e[0].b, E0 + 80, 240));
         for (let k = 1; k < e.length; k++) {
           const t0 = E0 + 260 + (k - 1) * ES;
@@ -312,7 +316,6 @@
           jobs.push(Anim.to(e[k].a, { x: 0, opacity: 1 }, { dur: 420, delay: t0 + 80, arc: 34 }));
           jobs.push(pop(e[k].b, t0 + 330, 260));
         }
-        const tG = E0 + 260 + (e.length - 2) * ES + 560;
         jobs.push(pop(d.euRes, tG, 300));
         jobs.push(runDot(d, 1, 2, tG - 120));
         // lcm = m·n / gcd, then back to the answer of A
@@ -338,7 +341,7 @@
         }
       } else if (n === 3) {
         // max f = −min(−f): mirror the curve, find the min, flip the sign back
-        const jobs = [fadeTo(d.lcm, 0, 0, 250), setLabels(ctx, 2, true), fadeTo(d.max, 1, 100, 280)];
+        const jobs = [fadeTo(d.lcm, 0, 0, 250), setLabels(ctx, 2, true, { Sol: 1560, Ans: 2000 }), fadeTo(d.max, 1, 100, 280)];
         jobs.push(drawPath(d.f, { dur: 600, delay: 200 }), fadeTo(d.fT, 1, 620, 220), runDot(d, 0, 1, 300));
         jobs.push(pop(d.peak, 760, 280), fadeTo(d.peakT, 1, 820, 220));
         jobs.push(Anim.run((p) => {

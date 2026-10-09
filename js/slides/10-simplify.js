@@ -43,9 +43,9 @@
   }
 
   const REAL_PRESORT = [
-    { icon: 'terminal', who: 'Linux / Unix shell', en: '<code>sort names.txt | uniq</code>: uniq only removes <b>neighbouring</b> duplicates, so you presort first.', tr: '<code>sort names.txt | uniq</code>: uniq sadece <b>yan yana</b> duran tekrarları siler; bu yüzden önce sıralarsın.' },
+    { icon: 'terminal', who: { en: 'Linux / Unix shell', tr: 'Linux / Unix komut satırı' }, en: '<code>sort names.txt | uniq</code>: uniq only removes <b>neighbouring</b> duplicates, so you presort first.', tr: '<code>sort names.txt | uniq</code>: uniq sadece <b>yan yana</b> duran tekrarları siler; bu yüzden önce sıralarsın.' },
     { icon: 'database', who: 'PostgreSQL · MySQL', en: '<code>SELECT DISTINCT</code> and <code>GROUP BY</code> can run as "sort, then compare neighbours".', tr: '<code>SELECT DISTINCT</code> ve <code>GROUP BY</code> "önce sırala, sonra komşuları karşılaştır" diye çalışabilir.' },
-    { icon: 'search', who: 'Contacts · dictionaries · indexes', en: 'Sorted once, then every lookup is a binary search: log n.', tr: 'Bir kez sıralanır, sonra her arama ikili aramadır: log n.' },
+    { icon: 'search', who: { en: 'Contacts · dictionaries · indexes', tr: 'Rehber · sözlük · indeksler' }, en: 'Sorted once, then every lookup is a binary search: log n.', tr: 'Bir kez sıralanır, sonra her arama ikili aramadır: log n.' },
   ];
 
   const ICO_PAIRS = '<svg class="ps-ico" viewBox="0 0 64 44" aria-hidden="true"><path d="M8,30 C8,44 56,44 56,30 M8,30 C8,40 32,40 32,30 M20,30 C20,40 44,40 44,30 M8,30 C8,37 20,37 20,30 M32,30 C32,37 44,37 44,30 M20,30 C20,42 56,42 56,30"/><rect x="4" y="12" width="8" height="16" rx="2"/><rect x="16" y="4" width="8" height="24" rx="2"/><rect x="28" y="16" width="8" height="12" rx="2"/><rect x="40" y="8" width="8" height="20" rx="2"/><rect x="52" y="14" width="8" height="14" rx="2"/></svg>';
@@ -218,9 +218,9 @@
     0: 'x₁ = (6 − <i>6</i> + 4·<i>1</i>) ÷ 2 =',
   };
   const REAL_GAUSS = [
-    { icon: 'chip', who: 'TOP500 supercomputers', en: 'Ranked by how fast they run Gaussian elimination: the HPL (LINPACK) benchmark, LU with partial pivoting.', tr: 'Gauss eliminasyonunu ne kadar hızlı yaptıklarına göre sıralanır: HPL (LINPACK) testi, kısmi pivotlamalı LU.' },
+    { icon: 'chip', who: { en: 'TOP500 supercomputers', tr: 'TOP500 süper bilgisayarları' }, en: 'Ranked by how fast they run Gaussian elimination: the HPL (LINPACK) benchmark, LU with partial pivoting.', tr: 'Gauss eliminasyonunu ne kadar hızlı yaptıklarına göre sıralanır: HPL (LINPACK) testi, kısmi pivotlamalı LU.' },
     { icon: 'code', who: 'NumPy · MATLAB', en: '<code>numpy.linalg.solve(A, b)</code> and MATLAB’s <code>A\\b</code> run LAPACK’s LU, i.e. Gaussian elimination.', tr: '<code>numpy.linalg.solve(A, b)</code> ve MATLAB’in <code>A\\b</code> komutu LAPACK’in LU’sunu, yani Gauss eliminasyonunu çalıştırır.' },
-    { icon: 'bolt', who: 'Engineering software', en: 'Circuit simulators (SPICE) and finite-element analysis of bridges and buildings solve huge linear systems this way.', tr: 'Devre simülatörleri (SPICE) ve köprü/bina sonlu eleman analizleri dev doğrusal sistemleri böyle çözer.' },
+    { icon: 'bolt', who: { en: 'Engineering software', tr: 'Mühendislik yazılımları' }, en: 'Circuit simulators (SPICE) and finite-element analysis of bridges and buildings solve huge linear systems this way.', tr: 'Devre simülatörleri (SPICE) ve köprü/bina sonlu eleman analizleri dev doğrusal sistemleri böyle çözer.' },
   ];
 
   function gaussSay(n) {

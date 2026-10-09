@@ -102,6 +102,9 @@ function pageLayout() {
       const slides = await page.evaluate(() => Deck.slides.map((s) => ({ id: s.id, steps: s.steps })));
       const only = args.only ? String(args.only).split(',') : null;
       console.log(`\n== ${lang} / ${theme}: ${slides.length} slides ==`);
+      // errors while loading (e.g. a slide file with a syntax error) belong to no slide
+      errors.splice(0).forEach((e) => fail(`page load: ${e}`));
+      if (only) only.filter((id) => !slides.some((sl) => sl.id === id)).forEach((id) => fail(`slide "${id}" is not registered`));
       const idle = () => page.waitForFunction(() => !Deck.busy, null, { timeout: 30000 });
 
       for (let i = 0; i < slides.length; i++) {

@@ -130,7 +130,7 @@
       ${C.presenter ? `<div class="ty-who" data-in="fade" style="--d:600ms">${esc(C.presenter)}</div>` : ''}
       <div class="ty-next" data-in="up" style="--d:900ms"><b>${L('Appendix', 'Ek')} →</b> ${L('interactive heapsort playground · extra slides', 'etkileşimli heapsort oyun alanı · ek slaytlar')}</div>
       <div class="ty-src" data-in="fade" style="--d:1100ms">${esc(C.source || '')}</div>
-      <div class="ty-scene"></div>`;
+      <div class="ty-scene" data-ambient></div>`;
     },
     init(ctx) {
       const d = ctx.data;

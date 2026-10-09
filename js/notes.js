@@ -59,17 +59,58 @@ window.NOTES = {
     ],
   },
 
+  /* ---------------- search trees ---------------- */
+
+  'bst-problem': {
+    time: 22,
+    cues: ['A bushy BST: fast', 'Sorted keys → a stick, O(n)', 'Two fixes: balance (AVL) / more keys per node (2-3)'],
+    en: [
+      'Now search trees. [click] A binary search tree is fast when it is bushy. [click] But if the keys arrive already sorted, it becomes a stick: search costs O(n).',
+      '[click] Two fixes: keep it balanced, like AVL trees, or put more keys in a node, like 2-3 trees.',
+    ],
+    tr: [
+      'Şimdi arama ağaçları. [click] İkili arama ağacı gür olduğunda hızlıdır. [click] Ama anahtarlar zaten sıralı gelirse bir çubuğa dönüşür: arama O(n) olur.',
+      '[click] İki çözüm var: ağacı dengeli tutmak, AVL ağaçları gibi, ya da bir düğüme daha çok anahtar koymak, 2-3 ağaçları gibi.',
+    ],
+  },
+
+  'avl': {
+    time: 32,
+    cues: ['Insert 5, 6, 8 → L(5)', 'Insert 3, 2 → R(5)', 'Insert 4 → LR(6)', 'Insert 7 → RL(6): balanced and sorted', 'Real world: Linux scheduler, TreeMap'],
+    en: [
+      'An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2, 4, 7. [click] After 8, node 5 tips over: one left rotation. [click] After 2: a right rotation. [click] After 4: a double rotation. [click] After 7: another double one. Balanced, and still sorted.',
+      '[click] In real life, the Linux CPU scheduler and Java’s TreeMap use red-black trees, the AVL tree’s cousin.',
+    ],
+    tr: [
+      'AVL ağacı her düğümün denge faktörünü −1, 0 veya 1’de tutar. 5, 6, 8, 3, 2, 4, 7 ekliyoruz. [click] 8’den sonra 5 dengesini kaybediyor: bir sola döndürme. [click] 2’den sonra: sağa döndürme. [click] 4’ten sonra: çift döndürme. [click] 7’den sonra bir çift döndürme daha. Dengeli ve hâlâ sıralı.',
+      '[click] Gerçek hayatta Linux’un işlemci zamanlayıcısı ve Java’nın TreeMap’i, AVL’nin kuzeni olan red-black ağaçlarını kullanır.',
+    ],
+  },
+
+  'two-three': {
+    time: 30,
+    cues: ['9, 5, 8 → split, 8 moves up', 'Small nodes absorb keys', 'Splits climb to the root', 'All leaves on one level: Θ(log n)', 'Real world: database indexes, file systems'],
+    en: [
+      '2-3 trees take the other road: a node holds one or two keys. [click] Three keys? The node splits, and the middle key moves up. [click] Small nodes just absorb keys. [click] Splits can climb to the root: the tree grows only at the top. [click] So all leaves stay on one level: log n.',
+      '[click] In real life, every index in MySQL, PostgreSQL and SQLite is a B-tree: a 2-3 tree with hundreds of keys per node.',
+    ],
+    tr: [
+      '2-3 ağaçları diğer yolu seçer: bir düğüm bir ya da iki anahtar tutar. [click] Üç anahtar mı oldu? Düğüm bölünür, ortadaki anahtar yukarı çıkar. [click] Küçük düğümler anahtarları kolayca alır. [click] Bölünmeler köke kadar tırmanabilir: ağaç sadece tepeden büyür. [click] Böylece tüm yapraklar aynı seviyede kalır: log n.',
+      '[click] Gerçek hayatta MySQL, PostgreSQL ve SQLite’taki her indeks bir B-ağacıdır: düğüm başına yüzlerce anahtar tutan bir 2-3 ağacı.',
+    ],
+  },
+
   /* ---------------- ★ Heaps & Heapsort ---------------- */
 
   'heap-intro': {
     time: 12,
     cues: [],
-    en: ['And now, the star of this chapter: <b>heaps and heapsort</b>. This is representation change at its best: we <b>think</b> of the keys as a tree, but we <b>store</b> them in a simple array.'],
-    tr: ['Ve şimdi bu bölümün yıldızı: <b>heap ve heapsort</b>. Gösterimi değiştirmenin en güzel örneği: anahtarları bir ağaç gibi <b>düşünüyoruz</b>, ama basit bir dizide <b>saklıyoruz</b>.'],
+    en: ['Now the star of this chapter: <b>heaps and heapsort</b>. We <b>think</b> of the keys as a tree, but <b>store</b> them in a simple array.'],
+    tr: ['Şimdi bölümün yıldızı: <b>heap ve heapsort</b>. Anahtarları bir ağaç gibi <b>düşünüyor</b>, ama basit bir dizide <b>saklıyoruz</b>.'],
   },
 
   'heap-def': {
-    time: 45,
+    time: 40,
     cues: ['Rule 1: shape (slots fill in order)', 'Rule 2: parent ≥ children', 'Paths go down; no left-right order', 'Heap or not? ✓ ✗ ✗'],
     en: [
       'A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
@@ -86,7 +127,7 @@ window.NOTES = {
   },
 
   'heap-array': {
-    time: 40,
+    time: 36,
     cues: ['Number the nodes, fly them into the array', 'Children of j: 2j, 2j+1', 'Parent of j: ⌊j/2⌋', 'Parents first, max at H[1]'],
     en: [
       'Here is the trick. [click] We number the nodes top-down, left to right, and simply put them into an array. No pointers at all.',
@@ -103,34 +144,34 @@ window.NOTES = {
   },
 
   'heap-build': {
-    time: 55,
+    time: 50,
     cues: ['Parent 7: swap with 8', 'Parent 9: already OK ✓', 'Root 2: swap with 9', '2 keeps sinking: swap with 6', 'Done: heap 9 6 8 2 5 7'],
     en: [
-      'How do we turn any list into a heap? We go <b>bottom-up</b>: we start at the last parent, fix each subtree, and move back toward the root. Our list is 2, 9, 7, 6, 5, 8.',
+      'To build a heap, we go <b>bottom-up</b>: start at the last parent, fix its subtree, and move back toward the root. Our list: 2, 9, 7, 6, 5, 8.',
       '[click] The last parent is 7. Its bigger child is 8, so they swap. [click] Next is 9. It is already bigger than its children: nothing to do.',
       '[click] Now the root, 2. Its bigger child is 9: swap. [click] 2 is still too small, so it keeps sinking: it swaps with 6 and reaches a leaf.',
-      '[click] Done. We have a heap, and the maximum, 9, sits at the root. The table on the right is exactly the one in our lecture slides.',
+      '[click] Done: a heap, with the maximum, 9, at the root. The table matches our lecture slides.',
     ],
     tr: [
-      'Herhangi bir listeyi nasıl heap’e çeviririz? <b>Aşağıdan yukarı</b> gideriz: son ebeveynden başlar, her alt ağacı düzeltir ve köke doğru geri geliriz. Listemiz 2, 9, 7, 6, 5, 8.',
+      'Heap’i kurmak için <b>aşağıdan yukarı</b> gideriz: son ebeveynden başla, alt ağacını düzelt ve köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.',
       '[click] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [click] Sırada 9 var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.',
       '[click] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [click] 2 hâlâ çok küçük, batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.',
-      '[click] Bitti. Artık bir heap’imiz var ve en büyük eleman 9 kökte. Sağdaki tablo, ders slaytlarımızdaki tablonun aynısı.',
+      '[click] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle aynı.',
     ],
   },
 
   'heapsort': {
-    time: 55,
+    time: 50,
     cues: ['Swap root 9 with last; lock 9', 'Sift 7 down (swap with 8)', 'Autoplay the remaining removals', 'Sorted: 2 5 6 7 8 9'],
     en: [
-      'Heapsort has two stages. Stage one builds the heap, which we just did. Stage two removes the maximum again and again.',
+      'Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum again and again.',
       '[click] Swap the root with the last key. Now 9 is in its final place, so we lock it, and the heap shrinks by one.',
       '[click] The new root, 7, is too small, so we sift it down: it swaps with its bigger child, 8. The heap is fixed again.',
       '[click] We repeat the same two moves: swap the max to the end, then sift down. Watch the sorted part grow on the right.',
       '[click] And the array is sorted: 2, 5, 6, 7, 8, 9. Notice that we never needed a second array.',
     ],
     tr: [
-      'Heapsort iki aşamadan oluşur. Birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı tekrar tekrar çıkarır.',
+      'Heapsort: birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı tekrar tekrar çıkarır.',
       '[click] Kökü son anahtarla değiştir. Artık 9 son yerinde, onu kilitliyoruz ve heap bir eleman küçülüyor.',
       '[click] Yeni kök 7 çok küçük, onu aşağı itiyoruz: büyük çocuğu 8 ile yer değiştiriyor. Heap yine düzgün.',
       '[click] Aynı iki hamleyi tekrarlıyoruz: en büyüğü sona taşı, sonra aşağı it. Sağda sıralı kısmın büyüdüğüne bakın.',
@@ -139,7 +180,7 @@ window.NOTES = {
   },
 
   'heap-analysis': {
-    time: 40,
+    time: 36,
     cues: ['Build = Θ(n): work per level', 'Sort = Θ(n log n)', 'Total Θ(n log n), in-place ✓', 'Not stable ✗ (1a 1b → 1b 1a)'],
     en: [
       'How fast is it? [click] Building the heap is <b>linear</b>. Most nodes are near the bottom and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.',
@@ -156,7 +197,7 @@ window.NOTES = {
   },
 
   'priority-queue': {
-    time: 30,
+    time: 28,
     cues: ['Priority queue operations', 'Insert 10 at the end', '10 bubbles up to the root'],
     en: [
       'Heaps are not only for sorting. [click] They are perfect for <b>priority queues</b>: find the max in constant time, insert or delete in log n. Like an emergency room: the most urgent patient goes first.',
@@ -183,11 +224,96 @@ window.NOTES = {
     ],
   },
 
+  /* ---------------- representation change: Horner & powers ---------------- */
+
+  'horner': {
+    time: 28,
+    cues: ['Factor out x again and again', 'Table at x = 3: 2, 5, 18, 55, 160', 'n multiplications instead of ~n²/2', 'Real world: hashCode, parseInt'],
+    en: [
+      'Back to representation change. [click] Horner’s rule rewrites a polynomial by factoring out x again and again. [click] At x = 3: multiply by 3, add the next coefficient: 2, 5, 18, 55, and p(3) = 160.',
+      '[click] Only n multiplications instead of about n²/2. [click] In real life, Java’s <code>String.hashCode()</code> is Horner’s rule, and so is every <code>parseInt</code>.',
+    ],
+    tr: [
+      'Gösterimi değiştirmeye geri dönelim. [click] Horner kuralı bir polinomu tekrar tekrar x parantezine alarak yeniden yazar. [click] x = 3 için: 3 ile çarp, sonraki katsayıyı ekle: 2, 5, 18, 55 ve p(3) = 160.',
+      '[click] Yaklaşık n²/2 yerine sadece n çarpma. [click] Gerçek hayatta Java’nın <code>String.hashCode()</code> fonksiyonu Horner kuralıdır; her <code>parseInt</code> da öyle.',
+    ],
+  },
+
+  'binexp': {
+    time: 26,
+    cues: ['Left to right: square, multiply on 1', 'Right to left: a · a⁴ · a⁸', 'Real world: HTTPS / RSA'],
+    en: [
+      'Binary exponentiation: to compute a¹³, write 13 in binary: 1101. [click] Left to right: square at every bit, and multiply by a when the bit is 1. a, a³, a⁶, a¹³: 5 multiplications instead of 12.',
+      '[click] Or right to left: multiply the powers a, a⁴ and a⁸. [click] In real life, every HTTPS connection that uses RSA computes huge powers exactly this way.',
+    ],
+    tr: [
+      'İkili üs alma: a¹³’ü hesaplamak için 13’ü ikilik tabanda yaz: 1101. [click] Soldan sağa: her bitte kare al, bit 1 ise a ile de çarp. a, a³, a⁶, a¹³: 12 yerine 5 çarpma.',
+      '[click] Ya da sağdan sola: a, a⁴ ve a⁸ kuvvetlerini çarp. [click] Gerçek hayatta RSA kullanan her HTTPS bağlantısı dev üsleri tam olarak böyle hesaplar.',
+    ],
+  },
+
+  /* ---------------- problem reduction ---------------- */
+
+  'reduction': {
+    time: 28,
+    cues: ['Idea: A → B (already solvable) → answer', 'lcm(24, 60) via gcd = 12 → 120', 'max f = −min(−f); LP, graph search', 'Real world: machine learning, airlines'],
+    en: [
+      '[click] Problem reduction: turn problem A into a problem B that we can already solve, then translate the answer back, if the detour is cheaper.',
+      '[click] lcm of 24 and 60: Euclid gives gcd = 12, so lcm = 24·60/12 = 120. [click] To find a maximum, find the minimum of −f.',
+      '[click] In real life, training an AI model maximizes likelihood by minimizing a loss.',
+    ],
+    tr: [
+      '[click] Probleme indirgeme: A problemini, zaten çözebildiğimiz bir B problemine çevir, sonra cevabı geri çevir; tabii bu dolambaç daha ucuzsa.',
+      '[click] 24 ve 60’ın lcm’i (EKOK): Öklid gcd’yi (EBOB) 12 bulur, yani lcm = 24·60/12 = 120. [click] Bir maksimumu bulmak için −f’nin minimumunu bul.',
+      '[click] Gerçek hayatta bir yapay zekâ modelini eğitmek, bir kaybı (loss) en aza indirerek olabilirliği en büyütmektir.',
+    ],
+  },
+
+  'paths': {
+    time: 25,
+    cues: ['Graph → adjacency matrix A', 'A² = A · A', '(2, 4) = 2: the two paths', 'Real world: social networks, PageRank'],
+    en: [
+      'One more reduction: counting paths. [click] Write the graph as an adjacency matrix A. [click] Square it. [click] Entry (2, 4) of A² is 2: exactly the two paths from 2 to 4. Counting paths is just matrix multiplication.',
+      '[click] In real life: “friends of friends” in social networks, and Google’s PageRank.',
+    ],
+    tr: [
+      'Bir indirgeme daha: yol saymak. [click] Grafı bir komşuluk matrisi A olarak yaz. [click] Karesini al. [click] A²’nin (2, 4) elemanı 2: tam olarak 2’den 4’e giden iki yol. Yol saymak sadece matris çarpımıdır.',
+      '[click] Gerçek hayatta: sosyal ağlardaki “arkadaşın arkadaşı” ve Google’ın PageRank’i.',
+    ],
+  },
+
+  /* ---------------- closing ---------------- */
+
+  'summary': {
+    time: 20,
+    cues: ['Three buckets, with where each is used', 'Change the problem, then conquer it'],
+    en: [
+      'To sum up: [click] three ways to transform. Simplify the instance, change the representation, or reduce to another problem, and every one of them runs in real systems today.',
+      '[click] Change the problem, then conquer it.',
+    ],
+    tr: [
+      'Özetle: [click] dönüştürmenin üç yolu var. Örneği basitleştir, gösterimi değiştir ya da başka bir probleme indirge; ve her biri bugün gerçek sistemlerde çalışıyor.',
+      '[click] Problemi değiştir, sonra fethet.',
+    ],
+  },
+
+  'thanks': {
+    time: 5,
+    cues: [],
+    en: ['Thank you for listening. I’m happy to take your questions.'],
+    tr: ['Dinlediğiniz için teşekkürler. Sorularınızı memnuniyetle cevaplarım.'],
+  },
+
   /* ---------------- appendix ---------------- */
 
   'sort-bound': {
     en: ['If someone asks how fast sorting can be: every comparison sort needs about n log₂ n comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉), and mergesort reaches that bound. [click] Presorting pays off when you search many times: after about log₂ n searches, sorting once and using binary search wins. [click]'],
     tr: ['Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [click] Önceden sıralama çok sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp ikili arama yapmak kazanır. [click]'],
+  },
+
+  'avl-rotations': {
+    en: ['For questions about balanced trees: [click] an AVL tree’s height is at most about 1.44 log₂ n, and one insertion needs at most one single or double rotation, which only re-links a few pointers. [click] A 2-3 tree’s height is between log₃ n and log₂ n; search, insert and delete are Θ(log n) in both.'],
+    tr: ['Dengeli ağaçlarla ilgili sorular için: [click] bir AVL ağacının yüksekliği en fazla yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme ister; döndürme sadece birkaç işaretçiyi yeniden bağlar. [click] 2-3 ağacının yüksekliği log₃ n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).'],
   },
 
   'playground': {

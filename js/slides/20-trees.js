@@ -264,10 +264,10 @@
     const g = key < c ? snap.nodes[c].l : snap.nodes[c].r;
     return [at, c, g];
   }
-  const AVL_FINAL = L('Balanced ✓ and still sorted: ' + K('2 3 4 5 6 7 8', 'ok') + ' — rotations never change the order',
-    'Dengeli ✓ ve hâlâ sıralı: ' + K('2 3 4 5 6 7 8', 'ok') + ' — döndürmeler sırayı hiç bozmaz');
+  const AVL_FINAL = L('Balanced ✓ and still sorted: ' + K('2, 3, 4, 5, 6, 7, 8', 'ok') + ' — rotations never change the order',
+    'Dengeli ✓ ve hâlâ sıralı: ' + K('2, 3, 4, 5, 6, 7, 8', 'ok') + ' — döndürmeler sırayı hiç bozmaz');
   const AVL_REAL = [
-    { icon: 'terminal', who: 'Linux kernel', en: 'The CPU scheduler keeps runnable tasks in a red-black tree, the AVL tree’s cousin, and runs the leftmost one.', tr: 'İşlemci zamanlayıcısı, çalışmaya hazır işlemleri AVL’nin kuzeni olan bir red-black ağaçta tutar ve en soldakini çalıştırır.' },
+    { icon: 'terminal', who: { en: 'Linux kernel', tr: 'Linux çekirdeği' }, en: 'The CPU scheduler keeps runnable tasks in a red-black tree, the AVL tree’s cousin, and runs the leftmost one.', tr: 'İşlemci zamanlayıcısı, çalışmaya hazır işlemleri AVL’nin kuzeni olan bir red-black ağaçta tutar ve en soldakini çalıştırır.' },
     { icon: 'code', who: 'Java TreeMap · C++ std::map', en: 'Sorted maps in standard libraries are self-balancing (red-black) trees: Θ(log n) per operation.', tr: 'Standart kütüphanelerdeki sıralı map’ler kendini dengeleyen (red-black) ağaçlardır: işlem başına Θ(log n).' },
     { icon: 'hash', who: 'Java HashMap (Java 8+)', en: 'A crowded hash bucket turns into a balanced tree, so its worst case drops from n to log n.', tr: 'Kalabalıklaşan bir hash kovası dengeli bir ağaca dönüşür; en kötü durum n’den log n’e iner.' },
   ];

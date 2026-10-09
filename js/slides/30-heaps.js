@@ -670,9 +670,9 @@
       { icon: 'clock', who: 'Node.js · Go',
         en: 'Timers wait in a heap; the root is the next one to fire.',
         tr: 'Zamanlayıcılar bir heap’te bekler; kök, ilk çalacak olandır.' },
-      { icon: 'route', who: { en: 'Internet routers (OSPF) · maps', tr: 'İnternet yönlendiricileri (OSPF) · haritalar' },
+      { icon: 'route', who: { en: 'Internet routers (OSPF) · maps', tr: 'Yönlendiriciler · haritalar' },
         en: 'Dijkstra’s shortest path takes the nearest node from a priority queue.',
-        tr: 'Dijkstra en kısa yol algoritması en yakın düğümü öncelik kuyruğundan alır.' },
+        tr: 'OSPF yönlendiricileri Dijkstra ile en kısa yolu bulur: en yakın düğüm öncelik kuyruğundan gelir.' },
       { icon: 'search', who: 'Elasticsearch (Lucene)',
         en: 'The top-10 search results are collected in a priority queue.',
         tr: 'En iyi 10 arama sonucu bir öncelik kuyruğunda toplanır.' },
@@ -682,7 +682,7 @@
     ],
   };
   const HUB = { x: 850, y: 300 };
-  const CARD = { w: 480, h: 164, gap: 26 };
+  const CARD = { w: 480, h: 170, gap: 22 };
   const cardY = (i) => i * (CARD.h + CARD.gap);
 
   function userCard(u, side, i, step) {

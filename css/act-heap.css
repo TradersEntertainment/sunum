@@ -212,7 +212,7 @@
 .hr-card {
   position: absolute;
   width: 480px;
-  height: 164px;
+  height: 170px;
   padding: 18px 20px;
   display: flex;
   gap: 16px;
@@ -230,7 +230,7 @@
 }
 .hr-ic .ricon { stroke: var(--star); }
 .hr-txt { font-size: 21px; line-height: 1.34; color: var(--ink-2); min-width: 0; }
-.hr-txt b { display: block; font-family: var(--font-display); font-size: 25px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.hr-txt b { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .hr-txt code { font-family: var(--font-mono); font-size: 0.9em; color: var(--ink); }
 .hr-banner {
   position: absolute;
