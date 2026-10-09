@@ -64,12 +64,12 @@ Site tamamen statik: **veritabanı, Volume (kalıcı disk), ortam değişkeni ya
 
 Repo Railway için hazır: `server.js` (sıfır bağımlılıklı küçük statik sunucu: `PORT`'u okur, `0.0.0.0`'a bağlanır, `/healthz` cevaplar), `package.json` içinde `npm start` ve `railway.json` (başlatma komutu + sağlık kontrolü).
 
-1. railway.com → **New Project → Deploy from GitHub repo** → `TradersEntertainment/sunum`. Repo bir organizasyondaysa Railway'in GitHub uygulamasına bu repo için erişim izni verilmiş olmalı. Branch olarak `claude/animated-presentation-website-59wtyv` seçili olsun (repo'nun varsayılan ve tek branch'i; değiştirmek için Settings → Source).
+1. railway.com → **New Project → Deploy from GitHub repo** → `TradersEntertainment/sunum`. Repo bir organizasyondaysa Railway'in GitHub uygulamasına bu repo için erişim izni verilmiş olmalı. Branch olarak **`main`** seçin (sonradan değiştirmek için Settings → Source → Branch).
 2. Hiçbir şey eklemeyin: Database yok, Volume yok, Variables yok. `PORT`'u Railway kendisi verir.
 3. **Settings → Networking → Generate Domain**. Birkaç dakika sonra site `https://….up.railway.app` adresinde açılır.
 4. Kontrol: `https://….up.railway.app/healthz` → `ok`. Tüm slaytları denemek için: `NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js --url=https://….up.railway.app/ --langs=en --themes=dark`.
 
-Bu branch'e her push'ta Railway otomatik yeniden yayınlar. Yerelde denemek için: `npm start` → http://localhost:3000.
+`main`'e her push'ta Railway otomatik yeniden yayınlar. Yerelde denemek için: `npm start` → http://localhost:3000.
 
 Not: Yayınlanan sitede `js/notes.js` (konuşma metni) de herkese açık olur; kaynağı görüntüleyen herkes okuyabilir.
 
