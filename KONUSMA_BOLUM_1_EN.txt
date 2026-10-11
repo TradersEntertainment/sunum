@@ -1,10 +1,10 @@
 ==========================================================================================
 SPEECH SCRIPT - PART 1/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
 ==========================================================================================
-Slides      : 1-4  (Transform & Conquer  ...  Building a heap bottom-up)
-Time        : about 2:42 (planned)  |  in the whole talk 0:00 -> 2:42
-Words       : 333 (English)
-Other part  : 5-8 (your friend)  - not in this file
+Slides      : 1-5  (Transform & Conquer  ...  Building a heap bottom-up)
+Time        : about 3:20 (planned)  |  in the whole talk 0:00 -> 3:20
+Words       : 412 (English)
+Other part  : 6-8 (your friend)  - not in this file
 Companion   : KONUSMA_BOLUM_1_TR.txt = the same text in Turkish (what it means)
 
 HOW TO USE
@@ -20,34 +20,54 @@ HOW TO USE
 
 TIME PLAN
  No  Slide                                         Clk  Time   Part time    Overall
- 1   Transform & Conquer                            0   0:22   0:00         0:00
- 2   What is a heap? Two rules                      4   0:52   0:22         0:22
- 3   A heap is secretly an array                    4   0:40   1:14         1:14
- 4   Building a heap bottom-up                      5   0:48   1:54         1:54
-     TOTAL                                              2:42  
+ 1   Transform & Conquer                            0   0:16   0:00         0:00
+ 2   The idea: transform, then conquer              4   0:46   0:16         0:16
+ 3   What is a heap? Two rules                      4   0:50   1:02         1:02
+ 4   A heap is secretly an array                    4   0:40   1:52         1:52
+ 5   Building a heap bottom-up                      5   0:48   2:32         2:32
+     TOTAL                                              3:20  
 
 ------------------------------------------------------------------------------------------
 SLIDE 1 / 8  -  Transform & Conquer
 [Transform & Conquer]
-Time 0:22  |  part time 0:00 -> 0:22  |  0 clicks
+Time 0:16  |  part time 0:00 -> 0:16  |  0 clicks
 ------------------------------------------------------------------------------------------
 SAY (English):
-  Hello everyone. Today’s topic is Chapter 6: Transform and Conquer. The idea: when a
-  problem is hard, first change it into an easier one, then solve it. Out of this chapter,
-  we will go deep on its most important example: heaps and heapsort.
+  Hello everyone. Today’s topic is Chapter 6: Transform and Conquer. First we will see
+  what that means, and then we will go deep on its most important example: heaps and
+  heapsort.
 
 ------------------------------------------------------------------------------------------
-SLIDE 2 / 8  -  What is a heap? Two rules
+SLIDE 2 / 8  -  The idea: transform, then conquer
+[Transform & Conquer]
+Time 0:46  |  part time 0:16 -> 1:02  |  4 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Pipeline: transform → conquer (2) Way 1: instance simplification (3) Way 2:
+        representation change (heaps live here) (4) Way 3: problem reduction
+
+SAY (English):
+  [[CLICK]] Transform and conquer works in two stages. First we transform: a hard, tangled
+  problem is changed into an easier one. Then we conquer: we solve the easy one, and the
+  answer is ready.
+
+  [[CLICK]] There are three ways to transform. One: instance simplification, the same
+  problem with a simpler instance, like a sorted list. [[CLICK]] Two: representation
+  change, the same data in a different form, like an array seen as a tree. This is where
+  our topic today lives: the heap. [[CLICK]] Three: problem reduction, turning it into a
+  problem we can already solve, like lcm through gcd.
+
+------------------------------------------------------------------------------------------
+SLIDE 3 / 8  -  What is a heap? Two rules
 [Heaps & Heapsort]
-Time 0:52  |  part time 0:22 -> 1:14  |  4 clicks
+Time 0:50  |  part time 1:02 -> 1:52  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Rule 1: shape (slots fill in order) (2) Rule 2: parent ≥ children (3) Paths go
         down; no left-right order (4) Heap or not? ✓ ✗ ✗
 
 SAY (English):
-  Here is the star of this chapter: the heap. A heap is a binary tree with two rules.
-  [[CLICK]] Rule one, shape: we fill the tree level by level, left to right. Only the last
-  level can have gaps, and only on the right.
+  So, what is a heap? A heap is a binary tree with two rules. [[CLICK]] Rule one, shape:
+  we fill the tree level by level, left to right. Only the last level can have gaps, and
+  only on the right.
 
   [[CLICK]] Rule two, order: every parent is greater than or equal to its children. That
   is a max-heap.
@@ -59,9 +79,9 @@ SAY (English):
   third breaks the order: 6 is bigger than its parent 5.
 
 ------------------------------------------------------------------------------------------
-SLIDE 3 / 8  -  A heap is secretly an array
+SLIDE 4 / 8  -  A heap is secretly an array
 [Heaps & Heapsort]
-Time 0:40  |  part time 1:14 -> 1:54  |  4 clicks
+Time 0:40  |  part time 1:52 -> 2:32  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Number the nodes, fly them into the array (2) Children of j: 2j, 2j+1 (3)
         Parent of j: ⌊j/2⌋ (4) Parents first, max at H[1]
@@ -80,9 +100,9 @@ SAY (English):
   position one.
 
 ------------------------------------------------------------------------------------------
-SLIDE 4 / 8  -  Building a heap bottom-up
+SLIDE 5 / 8  -  Building a heap bottom-up
 [Heaps & Heapsort]
-Time 0:48  |  part time 1:54 -> 2:42  |  5 clicks
+Time 0:48  |  part time 2:32 -> 3:20  |  5 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Parent 7: swap with 8 (2) Parent 9: already OK ✓ (3) Root 2: swap with 9 (4) 2
         keeps sinking: swap with 6 (5) Done: heap 9 6 8 2 5 7
@@ -101,7 +121,7 @@ SAY (English):
   slides.
 
 ******************************************************************************************
-HAND-OVER - after the last click of slide 4, say this, then press -> to go to slide 5:
+HAND-OVER - after the last click of slide 5, say this, then press -> to go to slide 6:
 ******************************************************************************************
 SAY: That was the first part. Now my friend continues with: Heapsort: remove the max,
      again and again.
@@ -138,14 +158,7 @@ BACKUP SLIDES (not in the talk; show one only if someone asks)
 How to open one: press O (overview) and click its card, or add #id to the address, e.g.
 index.html#avl.
 
-BACKUP A1  -  The idea: transform, then conquer  (#big-idea, 4 clicks)
-  [[CLICK]] We transform the problem into an easier one, then conquer it.
-  [[CLICK]] There are three ways. One: instance simplification, the same problem with a
-  simpler instance, like a sorted list. [[CLICK]] Two: representation change, the same
-  data in a different form, like an array seen as a tree. [[CLICK]] Three: problem
-  reduction, turning it into a problem we can already solve, like lcm through gcd.
-
-BACKUP A2  -  Presorting: are all elements distinct?  (#presorting, 4 clicks)
+BACKUP A1  -  Presorting: are all elements distinct?  (#presorting, 4 clicks)
   Example one: are all elements distinct? [[CLICK]] Brute force compares every pair, up to
   n²/2 comparisons. [[CLICK]] Presorting: sort first, then compare only neighbours,
   because duplicates end up side by side. That is n log n.
@@ -154,7 +167,7 @@ BACKUP A2  -  Presorting: are all elements distinct?  (#presorting, 4 clicks)
   [[CLICK]] In real life, the Unix pipeline sort | uniq works exactly like this, and so do
   databases for DISTINCT and GROUP BY.
 
-BACKUP A3  -  Gaussian elimination: make it triangular  (#gauss, 6 clicks)
+BACKUP A2  -  Gaussian elimination: make it triangular  (#gauss, 6 clicks)
   Example two: Gaussian elimination turns a system of equations into a triangle. [[CLICK]]
   Row two minus 3/2 of row one: a zero. [[CLICK]] Row three, the same. [[CLICK]] One more
   step, and the matrix is triangular. This costs n³.
@@ -162,13 +175,13 @@ BACKUP A3  -  Gaussian elimination: make it triangular  (#gauss, 6 clicks)
   [[CLICK]] In real life, NumPy and MATLAB solve systems this way, and the TOP500
   supercomputers are ranked by how fast they do it.
 
-BACKUP A4  -  Binary search trees: shape decides speed  (#bst-problem, 3 clicks)
+BACKUP A3  -  Binary search trees: shape decides speed  (#bst-problem, 3 clicks)
   Now search trees. [[CLICK]] A binary search tree is fast when it is bushy. [[CLICK]] But
   if the keys arrive already sorted, it becomes a stick: search costs O(n).
   [[CLICK]] Two fixes: keep it balanced, like AVL trees, or put more keys in a node, like
   2-3 trees.
 
-BACKUP A5  -  AVL trees: rotate to stay balanced  (#avl, 5 clicks)
+BACKUP A4  -  AVL trees: rotate to stay balanced  (#avl, 5 clicks)
   An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2, 4, 7.
   [[CLICK]] After 8, node 5 tips over: one left rotation. [[CLICK]] After 2: a right
   rotation. [[CLICK]] After 4: a double rotation. [[CLICK]] After 7: another double one.
@@ -176,7 +189,7 @@ BACKUP A5  -  AVL trees: rotate to stay balanced  (#avl, 5 clicks)
   [[CLICK]] In real life, the Linux CPU scheduler and Java’s TreeMap use red-black trees,
   the AVL tree’s cousin.
 
-BACKUP A6  -  2-3 trees: a full node splits in two  (#two-three, 5 clicks)
+BACKUP A5  -  2-3 trees: a full node splits in two  (#two-three, 5 clicks)
   2-3 trees take the other road: a node holds one or two keys. [[CLICK]] Three keys? The
   node splits, and the middle key moves up. [[CLICK]] Small nodes just absorb keys.
   [[CLICK]] Splits can climb to the root: the tree grows only at the top. [[CLICK]] So all
@@ -184,7 +197,7 @@ BACKUP A6  -  2-3 trees: a full node splits in two  (#two-three, 5 clicks)
   [[CLICK]] In real life, every index in MySQL, PostgreSQL and SQLite is a B-tree: a 2-3
   tree with hundreds of keys per node.
 
-BACKUP A7  -  Heaps & Heapsort  (#heap-intro, 0 clicks)
+BACKUP A6  -  Heaps & Heapsort  (#heap-intro, 0 clicks)
   Now the star of this chapter: heaps and heapsort. We think of the keys as a tree, but
   store them in a simple array.
 

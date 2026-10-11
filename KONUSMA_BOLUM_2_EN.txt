@@ -1,10 +1,10 @@
 ==========================================================================================
 SPEECH SCRIPT - PART 2/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
 ==========================================================================================
-Slides      : 5-8  (Heapsort: remove the max, again and again  ...  Real world: who uses heaps?)
-Time        : about 3:05 (planned)  |  in the whole talk 2:42 -> 5:47
-Words       : 384 (English)
-Other part  : 1-4 (your friend)  - not in this file
+Slides      : 6-8  (Heapsort: remove the max, again and again  ...  Real world: who uses heaps?)
+Time        : about 2:34 (planned)  |  in the whole talk 3:20 -> 5:54
+Words       : 319 (English)
+Other part  : 1-5 (your friend)  - not in this file
 Companion   : KONUSMA_BOLUM_2_TR.txt = the same text in Turkish (what it means)
 
 HOW TO USE
@@ -20,19 +20,18 @@ HOW TO USE
 
 TIME PLAN
  No  Slide                                         Clk  Time   Part time    Overall
- 5   Heapsort: remove the max, again and again      4   0:52   0:00         2:42
- 6   How fast is heapsort?                          4   0:42   0:52         3:34
- 7   Heaps power priority queues                    3   0:31   1:34         4:16
- 8   Real world: who uses heaps?                    3   1:00   2:05         4:47
-     TOTAL                                              3:05  
+ 6   Heapsort: remove the max, again and again      4   0:52   0:00         3:20
+ 7   How fast is heapsort?                          4   0:42   0:52         4:12
+ 8   Real world: who uses heaps?                    3   1:00   1:34         4:54
+     TOTAL                                              2:34  
 
 ******************************************************************************************
-START - when slide 5 is on the screen, first say:
+START - when slide 6 is on the screen, first say:
 ******************************************************************************************
 SAY: Thank you! I will continue from here.
 
 ------------------------------------------------------------------------------------------
-SLIDE 5 / 8  -  Heapsort: remove the max, again and again
+SLIDE 6 / 8  -  Heapsort: remove the max, again and again
 [Heaps & Heapsort]
 Time 0:52  |  part time 0:00 -> 0:52  |  4 clicks
 ------------------------------------------------------------------------------------------
@@ -56,7 +55,7 @@ SAY (English):
   second array.
 
 ------------------------------------------------------------------------------------------
-SLIDE 6 / 8  -  How fast is heapsort?
+SLIDE 7 / 8  -  How fast is heapsort?
 [Heaps & Heapsort]
 Time 0:42  |  part time 0:52 -> 1:34  |  4 clicks
 ------------------------------------------------------------------------------------------
@@ -76,25 +75,9 @@ SAY (English):
   [[CLICK]] One weakness: it is not stable. Two equal keys can change their order.
 
 ------------------------------------------------------------------------------------------
-SLIDE 7 / 8  -  Heaps power priority queues
-[Heaps & Heapsort]
-Time 0:31  |  part time 1:34 -> 2:05  |  3 clicks
-------------------------------------------------------------------------------------------
-Clicks: (1) Priority queue operations (2) Insert 10 at the end (3) 10 bubbles up to the
-        root
-
-SAY (English):
-  Heaps are not only for sorting. [[CLICK]] They are perfect for priority queues: find the
-  max in constant time, insert or delete in log n. Like an emergency room: the most urgent
-  patient goes first.
-
-  [[CLICK]] To insert 10, we put it at the end. [[CLICK]] Then it bubbles up while it
-  beats its parent: past 8, past 9, up to the root. At most log n steps.
-
-------------------------------------------------------------------------------------------
 SLIDE 8 / 8  -  Real world: who uses heaps?
 [Heaps & Heapsort]
-Time 1:00  |  part time 2:05 -> 3:05  |  3 clicks
+Time 1:00  |  part time 1:34 -> 2:34  |  3 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Sorting: Linux, C++/.NET, PostgreSQL, std libraries (2) Priority queues:
         timers, routers, search, ZIP/PNG (3) Heaps are everywhere
@@ -136,6 +119,13 @@ BACKUP SLIDES (not in the talk; show one only if someone asks)
 ==========================================================================================
 How to open one: press O (overview) and click its card, or add #id to the address, e.g.
 index.html#avl.
+
+BACKUP A7  -  Heaps power priority queues  (#priority-queue, 3 clicks)
+  Heaps are not only for sorting. [[CLICK]] They are perfect for priority queues: find the
+  max in constant time, insert or delete in log n. Like an emergency room: the most urgent
+  patient goes first.
+  [[CLICK]] To insert 10, we put it at the end. [[CLICK]] Then it bubbles up while it
+  beats its parent: past 8, past 9, up to the root. At most log n steps.
 
 BACKUP A8  -  Horner’s rule: fewer multiplications  (#horner, 4 clicks)
   Back to representation change. [[CLICK]] Horner’s rule rewrites a polynomial by

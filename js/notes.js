@@ -10,23 +10,22 @@ window.NOTES = {
   /* ---------------- opening ---------------- */
 
   'title': {
-    time: 22,
+    time: 16,
     cues: [],
-    en: ['Hello everyone. Today’s topic is Chapter 6: <b>Transform and Conquer</b>. The idea: when a problem is hard, first change it into an easier one, then solve it. Out of this chapter, we will go deep on its most important example: <b>heaps and heapsort</b>.'],
-    tr: ['Herkese merhaba. Bugünkü konum Bölüm 6: <b>Dönüştür ve Fethet</b>. Fikir şu: bir problem zorsa önce onu daha kolay bir probleme dönüştür, sonra çöz. Bu bölümün en önemli örneğine derinlemesine gireceğiz: <b>heap ve heapsort</b>.'],
+    en: ['Hello everyone. Today’s topic is Chapter 6: <b>Transform and Conquer</b>. First we will see what that means, and then we will go deep on its most important example: <b>heaps and heapsort</b>.'],
+    tr: ['Herkese merhaba. Bugünkü konum Bölüm 6: <b>Dönüştür ve Fethet</b>. Önce bunun ne demek olduğuna bakacağız, sonra en önemli örneğine derinlemesine gireceğiz: <b>heap ve heapsort</b>.'],
   },
 
   'big-idea': {
-    about: 'title',          // backup slide: its text belongs to whoever presents this slide
-    time: 30,
-    cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change', 'Way 3: problem reduction'],
+    time: 46,
+    cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change (heaps live here)', 'Way 3: problem reduction'],
     en: [
-      '[click] We transform the problem into an easier one, then conquer it.',
-      '[click] There are three ways. One: <b>instance simplification</b>, the same problem with a simpler instance, like a sorted list. [click] Two: <b>representation change</b>, the same data in a different form, like an array seen as a tree. [click] Three: <b>problem reduction</b>, turning it into a problem we can already solve, like lcm through gcd.',
+      '[click] Transform and conquer works in two stages. First we <b>transform</b>: a hard, tangled problem is changed into an easier one. Then we <b>conquer</b>: we solve the easy one, and the answer is ready.',
+      '[click] There are three ways to transform. One: <b>instance simplification</b>, the same problem with a simpler instance, like a sorted list. [click] Two: <b>representation change</b>, the same data in a different form, like an array seen as a tree. This is where our topic today lives: the heap. [click] Three: <b>problem reduction</b>, turning it into a problem we can already solve, like lcm through gcd.',
     ],
     tr: [
-      '[click] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.',
-      '[click] Bunun üç yolu var. Bir: <b>örneği basitleştirme</b>; aynı problem, daha basit bir örnek, mesela sıralı bir liste. [click] İki: <b>gösterimi değiştirme</b>; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. [click] Üç: <b>probleme indirgeme</b>; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.',
+      '[click] Dönüştür ve fethet iki aşamada çalışır. Önce <b>dönüştürürüz</b>: zor, karmaşık bir problem daha kolay bir probleme çevrilir. Sonra <b>fethederiz</b>: kolay olanı çözeriz ve cevap hazırdır.',
+      '[click] Dönüştürmenin üç yolu var. Bir: <b>örneği basitleştirme</b>; aynı problem, daha basit bir örnek, mesela sıralı bir liste. [click] İki: <b>gösterimi değiştirme</b>; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Bugünkü konumuz tam burada: heap. [click] Üç: <b>probleme indirgeme</b>; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.',
     ],
   },
 
@@ -119,16 +118,16 @@ window.NOTES = {
   },
 
   'heap-def': {
-    time: 52,
+    time: 50,
     cues: ['Rule 1: shape (slots fill in order)', 'Rule 2: parent ≥ children', 'Paths go down; no left-right order', 'Heap or not? ✓ ✗ ✗'],
     en: [
-      'Here is the star of this chapter: the <b>heap</b>. A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
+      'So, what is a <b>heap</b>? A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
       '[click] Rule two, <b>order</b>: every parent is greater than or equal to its children. That is a max-heap.',
       '[click] So keys decrease along every path down. But there is no left-to-right order: 8 is lower, yet bigger than 4.',
       '[click] Quick check: the first tree is a heap. The second has a hole in its shape. The third breaks the order: 6 is bigger than its parent 5.',
     ],
     tr: [
-      'İşte bu bölümün yıldızı: <b>heap</b>. Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
+      'Peki <b>heap</b> nedir? Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
       '[click] İkinci kural, <b>sıra</b>: her ebeveyn çocuklarından büyük ya da eşittir. Buna max-heap denir.',
       '[click] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra yoktur: 8 daha aşağıda, ama 4’ten büyük.',
       '[click] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü sırayı bozuyor: 6, ebeveyni 5’ten büyük.',
@@ -206,6 +205,7 @@ window.NOTES = {
   },
 
   'priority-queue': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 31,
     cues: ['Priority queue operations', 'Insert 10 at the end', '10 bubbles up to the root'],
     en: [

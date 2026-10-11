@@ -1,6 +1,6 @@
 # Transform & Conquer — Konuşma Metni
 
-> **Süre:** yaklaşık 5:47 dakika · **Ana konu:** Heaps & Heapsort · **Konuşma dili:** İngilizce (her bölümün altındaki Türkçe metin, ne söylediğini anlaman için)
+> **Süre:** yaklaşık 5:54 dakika · **Ana konu:** Heaps & Heapsort · **Konuşma dili:** İngilizce (her bölümün altındaki Türkçe metin, ne söylediğini anlaman için)
 
 ## Nasıl kullanılır
 
@@ -17,39 +17,58 @@
 
 | # | Slayt | Tıklama | Süre | Başlangıç |
 |---|---|---|---|---|
-| 1 | Transform & Conquer | 0 | 0:22 | 0:00 |
-| 2 | What is a heap? Two rules | 4 | 0:52 | 0:22 |
-| 3 | A heap is secretly an array | 4 | 0:40 | 1:14 |
-| 4 | Building a heap bottom-up | 5 | 0:48 | 1:54 |
-| 5 | Heapsort: remove the max, again and again | 4 | 0:52 | 2:42 |
-| 6 | How fast is heapsort? | 4 | 0:42 | 3:34 |
-| 7 | Heaps power priority queues | 3 | 0:31 | 4:16 |
-| 8 | Real world: who uses heaps? | 3 | 1:00 | 4:47 |
-| | **Toplam** | | **5:47** | |
+| 1 | Transform & Conquer | 0 | 0:16 | 0:00 |
+| 2 | The idea: transform, then conquer | 4 | 0:46 | 0:16 |
+| 3 | What is a heap? Two rules | 4 | 0:50 | 1:02 |
+| 4 | A heap is secretly an array | 4 | 0:40 | 1:52 |
+| 5 | Building a heap bottom-up | 5 | 0:48 | 2:32 |
+| 6 | Heapsort: remove the max, again and again | 4 | 0:52 | 3:20 |
+| 7 | How fast is heapsort? | 4 | 0:42 | 4:12 |
+| 8 | Real world: who uses heaps? | 3 | 1:00 | 4:54 |
+| | **Toplam** | | **5:54** | |
 
 ---
 
 ## 1 · Transform & Conquer
-*Dönüştür ve Fethet* · Transform & Conquer / Dönüştür ve Fethet · **0:00 → 0:22** · 0 tıklama
+*Dönüştür ve Fethet* · Transform & Conquer / Dönüştür ve Fethet · **0:00 → 0:16** · 0 tıklama
 
 **EN — söyleyeceğin:**
 
-Hello everyone. Today’s topic is Chapter 6: **Transform and Conquer**. The idea: when a problem is hard, first change it into an easier one, then solve it. Out of this chapter, we will go deep on its most important example: **heaps and heapsort**.
+Hello everyone. Today’s topic is Chapter 6: **Transform and Conquer**. First we will see what that means, and then we will go deep on its most important example: **heaps and heapsort**.
 
 **TR — anlamı:**
 
-> Herkese merhaba. Bugünkü konum Bölüm 6: **Dönüştür ve Fethet**. Fikir şu: bir problem zorsa önce onu daha kolay bir probleme dönüştür, sonra çöz. Bu bölümün en önemli örneğine derinlemesine gireceğiz: **heap ve heapsort**.
+> Herkese merhaba. Bugünkü konum Bölüm 6: **Dönüştür ve Fethet**. Önce bunun ne demek olduğuna bakacağız, sonra en önemli örneğine derinlemesine gireceğiz: **heap ve heapsort**.
 
 ---
 
-## 2 · What is a heap? Two rules
-*Heap nedir? İki kural* · Heaps & Heapsort / Heap ve Heapsort · **0:22 → 1:14** · 4 tıklama
+## 2 · The idea: transform, then conquer
+*Fikir: önce dönüştür, sonra fethet* · Transform & Conquer / Dönüştür ve Fethet · **0:16 → 1:02** · 4 tıklama
+
+**Tıklamalar:** (1) Pipeline: transform → conquer · (2) Way 1: instance simplification · (3) Way 2: representation change (heaps live here) · (4) Way 3: problem reduction
+
+**EN — söyleyeceğin:**
+
+**[▶ CLICK]** Transform and conquer works in two stages. First we **transform**: a hard, tangled problem is changed into an easier one. Then we **conquer**: we solve the easy one, and the answer is ready.
+
+**[▶ CLICK]** There are three ways to transform. One: **instance simplification**, the same problem with a simpler instance, like a sorted list. **[▶ CLICK]** Two: **representation change**, the same data in a different form, like an array seen as a tree. This is where our topic today lives: the heap. **[▶ CLICK]** Three: **problem reduction**, turning it into a problem we can already solve, like lcm through gcd.
+
+**TR — anlamı:**
+
+> **[▶ TIKLA]** Dönüştür ve fethet iki aşamada çalışır. Önce **dönüştürürüz**: zor, karmaşık bir problem daha kolay bir probleme çevrilir. Sonra **fethederiz**: kolay olanı çözeriz ve cevap hazırdır.
+>
+> **[▶ TIKLA]** Dönüştürmenin üç yolu var. Bir: **örneği basitleştirme**; aynı problem, daha basit bir örnek, mesela sıralı bir liste. **[▶ TIKLA]** İki: **gösterimi değiştirme**; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Bugünkü konumuz tam burada: heap. **[▶ TIKLA]** Üç: **probleme indirgeme**; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.
+
+---
+
+## 3 · What is a heap? Two rules
+*Heap nedir? İki kural* · Heaps & Heapsort / Heap ve Heapsort · **1:02 → 1:52** · 4 tıklama
 
 **Tıklamalar:** (1) Rule 1: shape (slots fill in order) · (2) Rule 2: parent ≥ children · (3) Paths go down; no left-right order · (4) Heap or not? ✓ ✗ ✗
 
 **EN — söyleyeceğin:**
 
-Here is the star of this chapter: the **heap**. A heap is a binary tree with two rules. **[▶ CLICK]** Rule one, **shape**: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.
+So, what is a **heap**? A heap is a binary tree with two rules. **[▶ CLICK]** Rule one, **shape**: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.
 
 **[▶ CLICK]** Rule two, **order**: every parent is greater than or equal to its children. That is a max-heap.
 
@@ -59,7 +78,7 @@ Here is the star of this chapter: the **heap**. A heap is a binary tree with two
 
 **TR — anlamı:**
 
-> İşte bu bölümün yıldızı: **heap**. Heap, iki kurala uyan bir ikili ağaçtır. **[▶ TIKLA]** Birinci kural, **şekil**: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.
+> Peki **heap** nedir? Heap, iki kurala uyan bir ikili ağaçtır. **[▶ TIKLA]** Birinci kural, **şekil**: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.
 >
 > **[▶ TIKLA]** İkinci kural, **sıra**: her ebeveyn çocuklarından büyük ya da eşittir. Buna max-heap denir.
 >
@@ -69,8 +88,8 @@ Here is the star of this chapter: the **heap**. A heap is a binary tree with two
 
 ---
 
-## 3 · A heap is secretly an array
-*Heap aslında bir dizidir* · Heaps & Heapsort / Heap ve Heapsort · **1:14 → 1:54** · 4 tıklama
+## 4 · A heap is secretly an array
+*Heap aslında bir dizidir* · Heaps & Heapsort / Heap ve Heapsort · **1:52 → 2:32** · 4 tıklama
 
 **Tıklamalar:** (1) Number the nodes, fly them into the array · (2) Children of j: 2j, 2j+1 · (3) Parent of j: ⌊j/2⌋ · (4) Parents first, max at H[1]
 
@@ -96,8 +115,8 @@ Here is the trick. **[▶ CLICK]** We number the nodes top-down, left to right, 
 
 ---
 
-## 4 · Building a heap bottom-up
-*Heap’i aşağıdan yukarı kurmak* · Heaps & Heapsort / Heap ve Heapsort · **1:54 → 2:42** · 5 tıklama
+## 5 · Building a heap bottom-up
+*Heap’i aşağıdan yukarı kurmak* · Heaps & Heapsort / Heap ve Heapsort · **2:32 → 3:20** · 5 tıklama
 
 **Tıklamalar:** (1) Parent 7: swap with 8 · (2) Parent 9: already OK ✓ · (3) Root 2: swap with 9 · (4) 2 keeps sinking: swap with 6 · (5) Done: heap 9 6 8 2 5 7
 
@@ -123,8 +142,8 @@ To build a heap, we go **bottom-up**: start at the last parent, fix its subtree,
 
 ---
 
-## 5 · Heapsort: remove the max, again and again
-*Heapsort: en büyüğü tekrar tekrar çıkar* · Heaps & Heapsort / Heap ve Heapsort · **2:42 → 3:34** · 4 tıklama
+## 6 · Heapsort: remove the max, again and again
+*Heapsort: en büyüğü tekrar tekrar çıkar* · Heaps & Heapsort / Heap ve Heapsort · **3:20 → 4:12** · 4 tıklama
 
 **Tıklamalar:** (1) Swap root 9 with last; lock 9 · (2) Sift 7 down (swap with 8) · (3) Autoplay the remaining removals · (4) Sorted: 2 5 6 7 8 9
 
@@ -154,8 +173,8 @@ Heapsort: stage one builds the heap, which we just did. Stage two removes the ma
 
 ---
 
-## 6 · How fast is heapsort?
-*Heapsort ne kadar hızlı?* · Heaps & Heapsort / Heap ve Heapsort · **3:34 → 4:16** · 4 tıklama
+## 7 · How fast is heapsort?
+*Heapsort ne kadar hızlı?* · Heaps & Heapsort / Heap ve Heapsort · **4:12 → 4:54** · 4 tıklama
 
 **Tıklamalar:** (1) Build = Θ(n): work per level · (2) Sort = Θ(n log n) · (3) Total Θ(n log n), in-place ✓ · (4) Not stable ✗ (1a 1b → 1b 1a)
 
@@ -181,27 +200,8 @@ How fast is it? **[▶ CLICK]** Building the heap is **linear**. Most nodes are 
 
 ---
 
-## 7 · Heaps power priority queues
-*Öncelik kuyruklarının motoru: heap* · Heaps & Heapsort / Heap ve Heapsort · **4:16 → 4:47** · 3 tıklama
-
-**Tıklamalar:** (1) Priority queue operations · (2) Insert 10 at the end · (3) 10 bubbles up to the root
-
-**EN — söyleyeceğin:**
-
-Heaps are not only for sorting. **[▶ CLICK]** They are perfect for **priority queues**: find the max in constant time, insert or delete in log n. Like an emergency room: the most urgent patient goes first.
-
-**[▶ CLICK]** To insert 10, we put it at the end. **[▶ CLICK]** Then it bubbles up while it beats its parent: past 8, past 9, up to the root. At most log n steps.
-
-**TR — anlamı:**
-
-> Heap sadece sıralama için değil. **[▶ TIKLA]** **Öncelik kuyrukları** için mükemmeldir: en büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil hasta önce.
->
-> **[▶ TIKLA]** 10’u eklemek için onu sona koyuyoruz. **[▶ TIKLA]** Sonra ebeveyninden büyük oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
-
----
-
 ## 8 · Real world: who uses heaps?
-*Gerçek hayatta heap’i kim kullanıyor?* · Heaps & Heapsort / Heap ve Heapsort · **4:47 → 5:47** · 3 tıklama
+*Gerçek hayatta heap’i kim kullanıyor?* · Heaps & Heapsort / Heap ve Heapsort · **4:54 → 5:54** · 3 tıklama
 
 **Tıklamalar:** (1) Sorting: Linux, C++/.NET, PostgreSQL, std libraries · (2) Priority queues: timers, routers, search, ZIP/PNG · (3) Heaps are everywhere
 
@@ -227,17 +227,7 @@ Who uses this in real life? Almost everyone. **[▶ CLICK]** Sorting: the Linux 
 
 Bu slaytlar sunumun akışında yok: sunum son slaytta biter, `→` yedek slaytlara geçmez. Soru gelirse `O` tuşuna basıp kartı seç ya da adrese `#slayt-id` ekle (ör. `index.html#avl`).
 
-### A1 · The idea: transform, then conquer — *Fikir: önce dönüştür, sonra fethet*  (`#big-idea`)
-
-**[▶ CLICK]** We transform the problem into an easier one, then conquer it.
-
-**[▶ CLICK]** There are three ways. One: **instance simplification**, the same problem with a simpler instance, like a sorted list. **[▶ CLICK]** Two: **representation change**, the same data in a different form, like an array seen as a tree. **[▶ CLICK]** Three: **problem reduction**, turning it into a problem we can already solve, like lcm through gcd.
-
-> **[▶ TIKLA]** Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.
->
-> **[▶ TIKLA]** Bunun üç yolu var. Bir: **örneği basitleştirme**; aynı problem, daha basit bir örnek, mesela sıralı bir liste. **[▶ TIKLA]** İki: **gösterimi değiştirme**; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. **[▶ TIKLA]** Üç: **probleme indirgeme**; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.
-
-### A2 · Presorting: are all elements distinct? — *Ön sıralama: tüm elemanlar farklı mı?*  (`#presorting`)
+### A1 · Presorting: are all elements distinct? — *Ön sıralama: tüm elemanlar farklı mı?*  (`#presorting`)
 
 Example one: are all elements distinct? **[▶ CLICK]** Brute force compares every pair, up to n²/2 comparisons. **[▶ CLICK]** Presorting: sort first, then compare only neighbours, because duplicates end up side by side. That is n log n.
 
@@ -251,7 +241,7 @@ Example one: are all elements distinct? **[▶ CLICK]** Brute force compares eve
 >
 > **[▶ TIKLA]** Gerçek hayatta Unix’teki sort | uniq tam olarak böyle çalışır; veritabanları da DISTINCT ve GROUP BY için aynısını yapar.
 
-### A3 · Gaussian elimination: make it triangular — *Gauss eliminasyonu: üçgen hâline getir*  (`#gauss`)
+### A2 · Gaussian elimination: make it triangular — *Gauss eliminasyonu: üçgen hâline getir*  (`#gauss`)
 
 Example two: Gaussian elimination turns a system of equations into a triangle. **[▶ CLICK]** Row two minus 3/2 of row one: a zero. **[▶ CLICK]** Row three, the same. **[▶ CLICK]** One more step, and the matrix is triangular. This costs n³.
 
@@ -265,7 +255,7 @@ Example two: Gaussian elimination turns a system of equations into a triangle. *
 >
 > **[▶ TIKLA]** Gerçek hayatta NumPy ve MATLAB sistemleri böyle çözer; TOP500 listesindeki süper bilgisayarlar da bunu ne kadar hızlı yaptıklarına göre sıralanır.
 
-### A4 · Binary search trees: shape decides speed — *İkili arama ağacı: hızı şekil belirler*  (`#bst-problem`)
+### A3 · Binary search trees: shape decides speed — *İkili arama ağacı: hızı şekil belirler*  (`#bst-problem`)
 
 Now search trees. **[▶ CLICK]** A binary search tree is fast when it is bushy. **[▶ CLICK]** But if the keys arrive already sorted, it becomes a stick: search costs O(n).
 
@@ -275,7 +265,7 @@ Now search trees. **[▶ CLICK]** A binary search tree is fast when it is bushy.
 >
 > **[▶ TIKLA]** İki çözüm var: ağacı dengeli tutmak, AVL ağaçları gibi, ya da bir düğüme daha çok anahtar koymak, 2-3 ağaçları gibi.
 
-### A5 · AVL trees: rotate to stay balanced — *AVL ağaçları: dengede kalmak için döndür*  (`#avl`)
+### A4 · AVL trees: rotate to stay balanced — *AVL ağaçları: dengede kalmak için döndür*  (`#avl`)
 
 An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2, 4, 7. **[▶ CLICK]** After 8, node 5 tips over: one left rotation. **[▶ CLICK]** After 2: a right rotation. **[▶ CLICK]** After 4: a double rotation. **[▶ CLICK]** After 7: another double one. Balanced, and still sorted.
 
@@ -285,7 +275,7 @@ An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2,
 >
 > **[▶ TIKLA]** Gerçek hayatta Linux’un işlemci zamanlayıcısı ve Java’nın TreeMap’i, AVL’nin kuzeni olan red-black ağaçlarını kullanır.
 
-### A6 · 2-3 trees: a full node splits in two — *2-3 ağaçları: dolan düğüm ikiye bölünür*  (`#two-three`)
+### A5 · 2-3 trees: a full node splits in two — *2-3 ağaçları: dolan düğüm ikiye bölünür*  (`#two-three`)
 
 2-3 trees take the other road: a node holds one or two keys. **[▶ CLICK]** Three keys? The node splits, and the middle key moves up. **[▶ CLICK]** Small nodes just absorb keys. **[▶ CLICK]** Splits can climb to the root: the tree grows only at the top. **[▶ CLICK]** So all leaves stay on one level: log n.
 
@@ -295,11 +285,21 @@ An AVL tree keeps every balance factor at −1, 0 or 1. We insert 5, 6, 8, 3, 2,
 >
 > **[▶ TIKLA]** Gerçek hayatta MySQL, PostgreSQL ve SQLite’taki her indeks bir B-ağacıdır: düğüm başına yüzlerce anahtar tutan bir 2-3 ağacı.
 
-### A7 · Heaps & Heapsort — *Heap ve Heapsort*  (`#heap-intro`)
+### A6 · Heaps & Heapsort — *Heap ve Heapsort*  (`#heap-intro`)
 
 Now the star of this chapter: **heaps and heapsort**. We **think** of the keys as a tree, but **store** them in a simple array.
 
 > Şimdi bölümün yıldızı: **heap ve heapsort**. Anahtarları bir ağaç gibi **düşünüyor**, ama basit bir dizide **saklıyoruz**.
+
+### A7 · Heaps power priority queues — *Öncelik kuyruklarının motoru: heap*  (`#priority-queue`)
+
+Heaps are not only for sorting. **[▶ CLICK]** They are perfect for **priority queues**: find the max in constant time, insert or delete in log n. Like an emergency room: the most urgent patient goes first.
+
+**[▶ CLICK]** To insert 10, we put it at the end. **[▶ CLICK]** Then it bubbles up while it beats its parent: past 8, past 9, up to the root. At most log n steps.
+
+> Heap sadece sıralama için değil. **[▶ TIKLA]** **Öncelik kuyrukları** için mükemmeldir: en büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil hasta önce.
+>
+> **[▶ TIKLA]** 10’u eklemek için onu sona koyuyoruz. **[▶ TIKLA]** Sonra ebeveyninden büyük oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
 
 ### A8 · Horner’s rule: fewer multiplications — *Horner kuralı: daha az çarpma*  (`#horner`)
 
@@ -440,4 +440,4 @@ There are three nested loops: one over the pivot rows, one over the rows below, 
 > İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da yaklaşık n³/3 çarpma eder.
 
 
-<sub>Bu dosya `node tools/build-speech.js` ile js/notes.js dosyasından üretildi. Toplam 717 İngilizce kelime.</sub>
+<sub>Bu dosya `node tools/build-speech.js` ile js/notes.js dosyasından üretildi. Toplam 731 İngilizce kelime.</sub>

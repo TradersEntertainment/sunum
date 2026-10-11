@@ -1,8 +1,8 @@
 # Transform & Conquer — animasyonlu sunum sitesi
 
-CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Sunum bölümün en önemli konusuna odaklanır: **Heaps & Heapsort**, **8 slayt**. Bölümün geri kalanı (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) silinmedi; **yedek slayt** olarak sitede duruyor ve soru gelirse açılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
+CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Sunum, bölümün fikrini (önce dönüştür, sonra fethet; 3 yol) bir slaytta anlatır ve en önemli konusuna odaklanır: **Heaps & Heapsort**, toplam **8 slayt**. Bölümün geri kalanı (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) silinmedi; **yedek slayt** olarak sitede duruyor ve soru gelirse açılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
 
-- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 6 dakika (5:47). Sonunda yedek slaytların metinleri, olası sorular ve kısa cevaplar da var.
+- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 6 dakika (5:54). Sonunda yedek slaytların metinleri, olası sorular ve kısa cevaplar da var.
 - **Gerçek hayatta kim kullanıyor?** Her tekniğin slaydı, kaynaklarla doğrulanmış bir "Gerçek hayatta · kim kullanıyor?" şeridiyle biter. Heap için ayrı bir slayt var: Linux çekirdeği, PostgreSQL, C++/.NET, Node.js/Go, internet yönlendiricileri, Elasticsearch, ZIP/PNG.
 - **Tek dosya sürümü:** `dist/transform-and-conquer.html`. Fontlar ve kodlar içine gömülüdür. USB belleğe atıp internetsiz açabilirsin.
 
@@ -13,23 +13,23 @@ Sunum 8 slayttır. Hangi slaytların sunumda olduğunu `js/config.js` içindeki 
 | # | Slayt | Tıklama | Gerçek hayatta |
 |---|---|---|---|
 | 1 | Başlık: Transform & Conquer, ★ Heap ve Heapsort | 0 | — |
-| 2 | Heap nedir? İki kural (şekil, sıra) | 4 | — |
-| 3 | Heap aslında bir dizidir (2j, 2j+1, ⌊j/2⌋) | 4 | — |
-| 4 | Heap'i aşağıdan yukarı kurmak | 5 | — |
-| 5 | Heapsort: en büyüğü tekrar tekrar çıkar | 4 | — |
-| 6 | Heapsort ne kadar hızlı? Θ(n), Θ(n log n), yerinde, kararlı değil | 4 | — |
-| 7 | Öncelik kuyruğu: ekleme yukarı kabarır | 3 | — |
+| 2 | **Fikir: önce dönüştür, sonra fethet** (zor problem → dönüştür → kolay problem → fethet; 3 yol, heap "gösterimi değiştirme" yolunda) | 4 | — |
+| 3 | Heap nedir? İki kural (şekil, sıra) | 4 | — |
+| 4 | Heap aslında bir dizidir (2j, 2j+1, ⌊j/2⌋) | 4 | — |
+| 5 | Heap'i aşağıdan yukarı kurmak | 5 | — |
+| 6 | Heapsort: en büyüğü tekrar tekrar çıkar | 4 | — |
+| 7 | Heapsort ne kadar hızlı? Θ(n), Θ(n log n), yerinde, kararlı değil | 4 | — |
 | 8 | **Gerçek hayatta heap'i kim kullanıyor?** | 3 | Linux `sort()`, PostgreSQL top-N heapsort, C++/.NET, Node.js/Go, OSPF, Elasticsearch, ZIP/PNG |
 
 **Yedek slaytlar (A1–A16)** sunumun akışında yok; soru gelirse `O` tuşuyla açılır (ya da adrese `#slayt-id` yazılır). Metinleri konuşma dosyalarının sonunda.
 
 | Yedek | Slayt (id) | Gerçek hayatta |
 |---|---|---|
-| A1 | Ana fikir: dönüştürmenin 3 yolu (`big-idea`) | — |
-| A2 | Presorting: tüm elemanlar farklı mı? (`presorting`) | `sort \| uniq`, PostgreSQL/MySQL `DISTINCT` |
-| A3 | Gauss eliminasyonu (`gauss`) | TOP500 süper bilgisayarları, NumPy/MATLAB |
-| A4–A6 | İkili arama ağacı, AVL, 2-3 ağacı (`bst-problem`, `avl`, `two-three`) | Linux zamanlayıcısı, Java TreeMap; MySQL/PostgreSQL/SQLite indeksleri (B-ağacı) |
-| A7 | Heap bölüm kartı (`heap-intro`) | — |
+| A1 | Presorting: tüm elemanlar farklı mı? (`presorting`) | `sort \| uniq`, PostgreSQL/MySQL `DISTINCT` |
+| A2 | Gauss eliminasyonu (`gauss`) | TOP500 süper bilgisayarları, NumPy/MATLAB |
+| A3–A5 | İkili arama ağacı, AVL, 2-3 ağacı (`bst-problem`, `avl`, `two-three`) | Linux zamanlayıcısı, Java TreeMap; MySQL/PostgreSQL/SQLite indeksleri (B-ağacı) |
+| A6 | Heap bölüm kartı (`heap-intro`) | — |
+| A7 | Öncelik kuyruğunun motoru: ekleme yukarı kabarır (`priority-queue`) | — |
 | A8–A9 | Horner kuralı, ikili üs alma (`horner`, `binexp`) | Java `hashCode`, `parseInt`; HTTPS/RSA |
 | A10–A11 | Probleme indirgeme, matris kuvvetiyle yol sayma (`reduction`, `paths`) | makine öğrenmesi, havayolları; sosyal ağlar, PageRank |
 | A12–A13 | Özet, teşekkürler (`summary`, `thanks`) | — |
@@ -76,18 +76,18 @@ Konuşma metni hem iki kişiye hem iki dile ayrılmış durumda (düz metin, UTF
 
 | Kişi | Slaytlar | İngilizce (söyleyeceğin) | Türkçe (anlamı) | Süre |
 |---|---|---|---|---|
-| 1. kişi | 1–4: başlık, heap nedir, heap bir dizidir, heap'i kurmak | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~2:42 |
-| 2. kişi | 5–8: heapsort, ne kadar hızlı, öncelik kuyruğu, gerçek hayatta heap | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~3:05 |
+| 1. kişi | 1–5: başlık, fikir (dönüştür, fethet), heap nedir, heap bir dizidir, heap'i kurmak | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~3:20 |
+| 2. kişi | 6–8: heapsort, ne kadar hızlı, gerçek hayatta heap | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~2:34 |
 
-Her dosyada kendi zaman planı, devir teslim cümleleri, kendi konularına ait olası sorular ve yedek slaytların metinleri var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Yedek slaytlar konularına göre dağıtıldı: sunum öncesi konular (ana fikir, presorting, Gauss, ağaçlar) 1. kişide, sonrası (Horner, üs alma, indirgeme, özet) ve oyun alanı 2. kişide. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
+Her dosyada kendi zaman planı, devir teslim cümleleri, kendi konularına ait olası sorular ve yedek slaytların metinleri var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Yedek slaytlar konularına göre dağıtıldı: heap'ten önceki bölüm konuları (presorting, Gauss, ağaçlar, sıralama alt sınırı) ve heap bölüm kartı 1. kişide; sonrakiler (öncelik kuyruğu, Horner, üs alma, indirgeme, özet, teşekkür) ve oyun alanı 2. kişide. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
 
-Bölme noktası varsayılan olarak iki kişinin süresini eşitler (yukarıdaki tablo). Değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin 2. kişi "heap'i kurmak" slaytından (4. slayt) başlasın istersen:
+Bölme noktası varsayılan olarak iki kişinin süresini eşitler (yukarıdaki tablo). Değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin 1. kişi sadece başlık ve fikir slaytını anlatsın (~1:02), 2. kişi heap'in tanımından itibaren devam etsin istersen:
 
 ```bash
-NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-build
+NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-def
 ```
 
-Sunumdaki slayt id'leri: `title, heap-def, heap-array, heap-build, heapsort, heap-analysis, priority-queue, heap-real`.
+Sunumdaki slayt id'leri: `title, big-idea, heap-def, heap-array, heap-build, heapsort, heap-analysis, heap-real`.
 
 ## Telefon ve tablet
 

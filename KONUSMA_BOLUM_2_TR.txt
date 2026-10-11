@@ -1,10 +1,10 @@
 ==========================================================================================
 KONUŞMA METNİ - BÖLÜM 2/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
 ==========================================================================================
-Slaytlar    : 5-8  (Heapsort: en büyüğü tekrar tekrar çıkar  ...  Gerçek hayatta heap’i kim kullanıyor?)
-Süre        : yaklaşık 3:05 (planlanan)  |  tüm sunumda 2:42 -> 5:47
-Kelime      : 384 (İngilizce metindeki)
-Diğer bölüm : 1-4 (arkadaşın)  - bu dosyada yok
+Slaytlar    : 6-8  (Heapsort: en büyüğü tekrar tekrar çıkar  ...  Gerçek hayatta heap’i kim kullanıyor?)
+Süre        : yaklaşık 2:34 (planlanan)  |  tüm sunumda 3:20 -> 5:54
+Kelime      : 319 (İngilizce metindeki)
+Diğer bölüm : 1-5 (arkadaşın)  - bu dosyada yok
 Eş dosya    : KONUSMA_BOLUM_2_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
 
 NASIL KULLANILIR
@@ -23,19 +23,18 @@ NASIL KULLANILIR
 
 ZAMAN PLANI
  No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
- 5   Heapsort: en büyüğü tekrar tekrar çıkar        4   0:52   0:00         2:42
- 6   Heapsort ne kadar hızlı?                       4   0:42   0:52         3:34
- 7   Öncelik kuyruklarının motoru: heap             3   0:31   1:34         4:16
- 8   Gerçek hayatta heap’i kim kullanıyor?          3   1:00   2:05         4:47
-     TOPLAM                                             3:05  
+ 6   Heapsort: en büyüğü tekrar tekrar çıkar        4   0:52   0:00         3:20
+ 7   Heapsort ne kadar hızlı?                       4   0:42   0:52         4:12
+ 8   Gerçek hayatta heap’i kim kullanıyor?          3   1:00   1:34         4:54
+     TOPLAM                                             2:34  
 
 ******************************************************************************************
-BAŞLANGIÇ - 5. slayt ekrana gelince önce şunu söyle:
+BAŞLANGIÇ - 6. slayt ekrana gelince önce şunu söyle:
 ******************************************************************************************
 ANLAMI: Teşekkürler! Buradan ben devam ediyorum.
 
 ------------------------------------------------------------------------------------------
-SLAYT 5 / 8  -  Heapsort: en büyüğü tekrar tekrar çıkar
+SLAYT 6 / 8  -  Heapsort: en büyüğü tekrar tekrar çıkar
 [Heap ve Heapsort]
 Süre 0:52  |  bölüm saati 0:00 -> 0:52  |  4 tıklama
 ------------------------------------------------------------------------------------------
@@ -56,7 +55,7 @@ ANLAMI (Türkçe):
   ihtiyacımız olmadı.
 
 ------------------------------------------------------------------------------------------
-SLAYT 6 / 8  -  Heapsort ne kadar hızlı?
+SLAYT 7 / 8  -  Heapsort ne kadar hızlı?
 [Heap ve Heapsort]
 Süre 0:42  |  bölüm saati 0:52 -> 1:34  |  4 tıklama
 ------------------------------------------------------------------------------------------
@@ -75,22 +74,9 @@ ANLAMI (Türkçe):
   değişebilir.
 
 ------------------------------------------------------------------------------------------
-SLAYT 7 / 8  -  Öncelik kuyruklarının motoru: heap
-[Heap ve Heapsort]
-Süre 0:31  |  bölüm saati 1:34 -> 2:05  |  3 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
-  Heap sadece sıralama için değil. [[TIKLA]] Öncelik kuyrukları için mükemmeldir: en
-  büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil
-  hasta önce.
-
-  [[TIKLA]] 10’u eklemek için onu sona koyuyoruz. [[TIKLA]] Sonra ebeveyninden büyük
-  oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
-
-------------------------------------------------------------------------------------------
 SLAYT 8 / 8  -  Gerçek hayatta heap’i kim kullanıyor?
 [Heap ve Heapsort]
-Süre 1:00  |  bölüm saati 2:05 -> 3:05  |  3 tıklama
+Süre 1:00  |  bölüm saati 1:34 -> 2:34  |  3 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
   Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [[TIKLA]] Sıralama: Linux
@@ -130,6 +116,13 @@ YEDEK SLAYTLAR (sunumda yok; sadece soru gelirse göster)
 ==========================================================================================
 Nasıl açılır: O (genel bakış) tuşuna bas ve kartına tıkla, ya da adrese #id ekle, örneğin
 index.html#avl.
+
+YEDEK A7  -  Öncelik kuyruklarının motoru: heap  (#priority-queue, 3 tıklama)
+  Heap sadece sıralama için değil. [[TIKLA]] Öncelik kuyrukları için mükemmeldir: en
+  büyüğü sabit zamanda bulur, ekleme ve silmeyi log n’de yapar. Acil servis gibi: en acil
+  hasta önce.
+  [[TIKLA]] 10’u eklemek için onu sona koyuyoruz. [[TIKLA]] Sonra ebeveyninden büyük
+  oldukça yukarı çıkıyor: 8’i geçiyor, 9’u geçiyor, köke kadar. En fazla log n adım.
 
 YEDEK A8  -  Horner kuralı: daha az çarpma  (#horner, 4 tıklama)
   Gösterimi değiştirmeye geri dönelim. [[TIKLA]] Horner kuralı bir polinomu tekrar tekrar
