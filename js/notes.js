@@ -17,15 +17,15 @@ window.NOTES = {
   },
 
   'big-idea': {
-    time: 46,
-    cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change (heaps live here)', 'Way 3: problem reduction'],
+    time: 59,
+    cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change → heapsort: array → heap, then take the max out', 'Way 3: problem reduction'],
     en: [
       '[click] Transform and conquer works in two stages. First we <b>transform</b>: a hard, tangled problem is changed into an easier one. Then we <b>conquer</b>: we solve the easy one, and the answer is ready.',
-      '[click] There are three ways to transform. One: <b>instance simplification</b>, the same problem with a simpler instance, like a sorted list. [click] Two: <b>representation change</b>, the same data in a different form, like an array seen as a tree. This is where our topic today lives: the heap. [click] Three: <b>problem reduction</b>, turning it into a problem we can already solve, like lcm through gcd.',
+      '[click] There are three ways to transform. One: <b>instance simplification</b>, the same problem with a simpler instance, like a sorted list. [click] Two: <b>representation change</b>, the same data in a different form, like an array seen as a tree. Heapsort does exactly this. We <b>transform</b> the array into a heap, a tree with the biggest key on top. Then we <b>conquer</b>: we take that key out, again and again, and the array comes out sorted. [click] Three: <b>problem reduction</b>, turning it into a problem we can already solve, like lcm through gcd.',
     ],
     tr: [
       '[click] Dönüştür ve fethet iki aşamada çalışır. Önce <b>dönüştürürüz</b>: zor, karmaşık bir problem daha kolay bir probleme çevrilir. Sonra <b>fethederiz</b>: kolay olanı çözeriz ve cevap hazırdır.',
-      '[click] Dönüştürmenin üç yolu var. Bir: <b>örneği basitleştirme</b>; aynı problem, daha basit bir örnek, mesela sıralı bir liste. [click] İki: <b>gösterimi değiştirme</b>; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Bugünkü konumuz tam burada: heap. [click] Üç: <b>probleme indirgeme</b>; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.',
+      '[click] Dönüştürmenin üç yolu var. Bir: <b>örneği basitleştirme</b>; aynı problem, daha basit bir örnek, mesela sıralı bir liste. [click] İki: <b>gösterimi değiştirme</b>; aynı veri, farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Heapsort tam olarak bunu yapar. Diziyi, en büyük anahtarın tepede durduğu bir ağaca, yani bir heap’e <b>dönüştürürüz</b>. Sonra <b>fethederiz</b>: o anahtarı tekrar tekrar çıkarırız ve dizi sıralı çıkar. [click] Üç: <b>probleme indirgeme</b>; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.',
     ],
   },
 
@@ -118,16 +118,16 @@ window.NOTES = {
   },
 
   'heap-def': {
-    time: 50,
+    time: 54,
     cues: ['Rule 1: shape (slots fill in order)', 'Rule 2: parent ≥ children', 'Paths go down; no left-right order', 'Heap or not? ✓ ✗ ✗'],
     en: [
-      'So, what is a <b>heap</b>? A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
+      'So, what is a <b>heap</b>? It is the form we transform our array into. A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
       '[click] Rule two, <b>order</b>: every parent is greater than or equal to its children. That is a max-heap.',
       '[click] So keys decrease along every path down. But there is no left-to-right order: 8 is lower, yet bigger than 4.',
       '[click] Quick check: the first tree is a heap. The second has a hole in its shape. The third breaks the order: 6 is bigger than its parent 5.',
     ],
     tr: [
-      'Peki <b>heap</b> nedir? Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
+      'Peki <b>heap</b> nedir? Dizimizi dönüştüreceğimiz biçim bu. Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
       '[click] İkinci kural, <b>sıra</b>: her ebeveyn çocuklarından büyük ya da eşittir. Buna max-heap denir.',
       '[click] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra yoktur: 8 daha aşağıda, ama 4’ten büyük.',
       '[click] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü sırayı bozuyor: 6, ebeveyni 5’ten büyük.',
@@ -135,33 +135,33 @@ window.NOTES = {
   },
 
   'heap-array': {
-    time: 40,
+    time: 46,
     cues: ['Number the nodes, fly them into the array', 'Children of j: 2j, 2j+1', 'Parent of j: ⌊j/2⌋', 'Parents first, max at H[1]'],
     en: [
       'Here is the trick. [click] We number the nodes top-down, left to right, and simply put them into an array. No pointers at all.',
       '[click] For the node at position j, the children are at <b>2j</b> and <b>2j + 1</b>. For j = 2, that is 4 and 5.',
       '[click] And the parent of j is at <b>j divided by 2, rounded down</b>. Five divided by two is two.',
-      '[click] So the parents fill the first half of the array, and the maximum is always at position one.',
+      '[click] So the parents fill the first half of the array, and the maximum is always at position one. Same keys, new form: now the biggest one is easy to find.',
     ],
     tr: [
       'İşin püf noktası şu. [click] Düğümleri yukarıdan aşağı, soldan sağa numaralandırıp doğrudan bir diziye koyuyoruz. Hiç işaretçi (pointer) yok.',
       '[click] j konumundaki düğümün çocukları <b>2j</b> ve <b>2j + 1</b> konumlarındadır. j = 2 için bunlar 4 ve 5.',
       '[click] j’nin ebeveyni ise <b>j bölü 2’nin aşağı yuvarlanmışıdır</b>. 5 bölü 2, 2 eder.',
-      '[click] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman 1. konumdadır.',
+      '[click] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman 1. konumdadır. Aynı anahtarlar, yeni biçim: artık en büyüğünü bulmak çok kolay.',
     ],
   },
 
   'heap-build': {
-    time: 48,
+    time: 52,
     cues: ['Parent 7: swap with 8', 'Parent 9: already OK ✓', 'Root 2: swap with 9', '2 keeps sinking: swap with 6', 'Done: heap 9 6 8 2 5 7'],
     en: [
-      'To build a heap, we go <b>bottom-up</b>: start at the last parent, fix its subtree, and move back toward the root. Our list: 2, 9, 7, 6, 5, 8.',
+      'This is stage one, the <b>transformation</b>: we turn the messy array into a heap. We go <b>bottom-up</b>: start at the last parent, fix its subtree, and move back toward the root. Our list: 2, 9, 7, 6, 5, 8.',
       '[click] The last parent is 7. Its bigger child is 8, so they swap. [click] Next is 9. It is already bigger than its children: nothing to do.',
       '[click] Now the root, 2. Its bigger child is 9: swap. [click] 2 is still too small, so it keeps sinking: it swaps with 6 and reaches a leaf.',
       '[click] Done: a heap, with the maximum, 9, at the root. The table matches our lecture slides.',
     ],
     tr: [
-      'Heap’i kurmak için <b>aşağıdan yukarı</b> gideriz: son ebeveynden başla, alt ağacını düzelt ve köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.',
+      'Bu birinci aşama, yani <b>dönüştürme</b>: dağınık diziyi bir heap’e çeviriyoruz. <b>Aşağıdan yukarı</b> gideriz: son ebeveynden başla, alt ağacını düzelt ve köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.',
       '[click] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [click] Sırada 9 var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.',
       '[click] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [click] 2 hâlâ çok küçük, batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.',
       '[click] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle aynı.',
@@ -169,17 +169,17 @@ window.NOTES = {
   },
 
   'heapsort': {
-    time: 52,
+    time: 55,
     cues: ['Swap root 9 with last; lock 9', 'Sift 7 down (swap with 8)', 'Autoplay the remaining removals', 'Sorted: 2 5 6 7 8 9'],
     en: [
-      'Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum again and again.',
+      'Now stage two, the <b>conquering</b>. The heap is ready, so the biggest key is always on top. We take it out, again and again.',
       '[click] Swap the root with the last key. Now 9 is in its final place, so we lock it, and the heap shrinks by one.',
       '[click] The new root, 7, is too small, so we sift it down: it swaps with its bigger child, 8. The heap is fixed again.',
       '[click] We repeat the same two moves: swap the max to the end, then sift down. Watch the sorted part grow on the right.',
       '[click] And the array is sorted: 2, 5, 6, 7, 8, 9. Notice that we never needed a second array.',
     ],
     tr: [
-      'Heapsort: birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı tekrar tekrar çıkarır.',
+      'Şimdi ikinci aşama, yani <b>fethetme</b>. Heap hazır, yani en büyük anahtar hep tepede. Onu tekrar tekrar çıkarıyoruz.',
       '[click] Kökü son anahtarla değiştir. Artık 9 son yerinde, onu kilitliyoruz ve heap bir eleman küçülüyor.',
       '[click] Yeni kök 7 çok küçük, onu aşağı itiyoruz: büyük çocuğu 8 ile yer değiştiriyor. Heap yine düzgün.',
       '[click] Aynı iki hamleyi tekrarlıyoruz: en büyüğü sona taşı, sonra aşağı it. Sağda sıralı kısmın büyüdüğüne bakın.',
@@ -188,17 +188,17 @@ window.NOTES = {
   },
 
   'heap-analysis': {
-    time: 42,
+    time: 44,
     cues: ['Build = Θ(n): work per level', 'Sort = Θ(n log n)', 'Total Θ(n log n), in-place ✓', 'Not stable ✗ (1a 1b → 1b 1a)'],
     en: [
-      'How fast is it? [click] Building the heap is <b>linear</b>. Most nodes are near the bottom and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.',
-      '[click] Sorting does n − 1 removals, and each costs at most about 2 log n comparisons. So that part is <b>n log n</b>.',
+      'How fast is it? [click] Stage one, building the heap, is <b>linear</b>. Most nodes are near the bottom and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.',
+      '[click] Stage two does n − 1 removals, and each costs at most about 2 log n comparisons. So that part is <b>n log n</b>.',
       '[click] In total, heapsort is n log n in the worst case and on average, and it works in place.',
       '[click] One weakness: it is <b>not stable</b>. Two equal keys can change their order.',
     ],
     tr: [
-      'Peki ne kadar hızlı? [click] Heap’i kurmak <b>doğrusal</b> zaman alır. Düğümlerin çoğu en altta ve sadece biraz batabilir. 15 anahtar için en fazla 22 karşılaştırma, yani 2n’den az.',
-      '[click] Sıralama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n karşılaştırma. Yani bu kısım <b>n log n</b>.',
+      'Peki ne kadar hızlı? [click] Birinci aşama, yani heap’i kurmak, <b>doğrusal</b> zaman alır. Düğümlerin çoğu en altta ve sadece biraz batabilir. 15 anahtar için en fazla 22 karşılaştırma, yani 2n’den az.',
+      '[click] İkinci aşama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n karşılaştırma. Yani bu kısım <b>n log n</b>.',
       '[click] Toplamda heapsort hem en kötü hem ortalama durumda n log n’dir ve yerinde (in-place) çalışır.',
       '[click] Bir zayıflığı var: <b>kararlı (stable) değil</b>. Eşit iki anahtarın sırası değişebilir.',
     ],
@@ -337,6 +337,29 @@ window.NOTES = {
     about: 'heapsort',          // extra for Q&A: belongs to whoever presents this slide
     en: ['For questions: type your own numbers (up to 15), press Play or Step, and watch both stages with live comparison and swap counters. Try "Already sorted" to see that the build is still linear.'],
     tr: ['Soru-cevap için: kendi sayılarınızı yazın (en fazla 15), Oynat ya da Adım’a basın ve iki aşamayı canlı karşılaştırma ve takas sayaçlarıyla izleyin. "Zaten sıralı" ile kurmanın yine doğrusal olduğunu gösterebilirsiniz.'],
+  },
+
+  /* ---------------- the logic in one minute (for the presenters; printed in the speech files, not spoken) ---------------- */
+  __logic: {
+    title: { en: 'THE LOGIC IN ONE MINUTE (to understand it, not to read aloud)', tr: 'MANTIK BİR DAKİKADA (anlamak için, sesli okumak için değil)' },
+    en: [
+      'Transform and conquer: do not attack a hard problem directly. First transform it into an easier form, then conquer (solve) that easy form.',
+      'Our problem: sort an array. The hard part is finding the biggest key again and again: a full scan every time.',
+      'TRANSFORM (stage 1, build the heap): same keys, different form. Read the array as a tree (the children of cell j are 2j and 2j+1) and arrange it so that every parent is at least as big as its children. Now the biggest key is always on top, so finding it costs nothing. This is a representation change.',
+      'CONQUER (stage 2, maximum deletions): the problem is easy now. Take the top key, put it in its final place at the end, repair the heap (sift down, about log n steps), and repeat n - 1 times. The array is sorted.',
+      'So the heap is the "easier problem" of the pipeline on the idea slide: problem -> TRANSFORM -> heap -> CONQUER -> sorted array. The heap slides show the same gear (transform) and flag (conquer) in their header.',
+      'Why it pays off: building the heap is linear and each removal costs only log n, so the whole sort is n log n and needs no second array.',
+      'It is not divide and conquer: we never split the problem into smaller copies of itself, we change its form.',
+    ],
+    tr: [
+      'Dönüştür ve fethet: zor bir problemin üstüne doğrudan gitme. Önce onu daha kolay bir biçime dönüştür, sonra o kolay biçimi fethet (çöz).',
+      'Bizim problemimiz: bir diziyi sırala. Zor kısım, en büyük anahtarı tekrar tekrar bulmak: her seferinde tüm diziye bakmak gerekir.',
+      'DÖNÜŞTÜR (aşama 1, heap kurma): aynı anahtarlar, başka bir biçim. Diziyi ağaç gibi okuruz (j. hücrenin çocukları 2j ve 2j+1) ve her ebeveyn çocuklarından büyük ya da eşit olacak şekilde düzenleriz. Artık en büyük anahtar hep tepede, onu bulmak bedava. Bu bir gösterim değiştirmedir.',
+      'FETHET (aşama 2, en büyüğü çıkarma): problem artık kolay. Tepedeki anahtarı al, sondaki son yerine koy, heap’i onar (aşağı it, yaklaşık log n adım) ve n - 1 kez tekrarla. Dizi sıralanır.',
+      'Yani heap, fikir slaydındaki hattın "daha kolay problem" kutusudur: problem -> DÖNÜŞTÜR -> heap -> FETHET -> sıralı dizi. Heap slaytlarının başlığında aynı dişli (dönüştür) ve bayrak (fethet) görünür.',
+      'Neden kârlı: heap kurmak doğrusal zamandır, her çıkarma sadece log n tutar; toplam n log n ve ikinci bir diziye gerek yok.',
+      'Böl ve fethet değil: problemi kendisinin küçük kopyalarına bölmüyoruz, biçimini değiştiriyoruz.',
+    ],
   },
 
   /* ---------------- likely questions (for KONUSMA_METNI.md) ---------------- */

@@ -173,6 +173,26 @@ svg * { transform-box: fill-box; }
   display: inline-block;
 }
 .star-mark { font-size: 22px; letter-spacing: 0; }
+/* transform > conquer stage pills in a slide header (heap slides): same gear and flag as the idea slide */
+.stage-pills { display: inline-flex; align-items: center; gap: 10px; margin-left: 22px; font-size: 18px; letter-spacing: 0.1em; }
+.stage-pill {
+  --c: var(--line);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 3px 14px 3px 8px;
+  border-radius: 999px;
+  border: 1.5px solid var(--panel-border);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.stage-pill.conquer { --c: var(--star); }
+.stage-pill.on { border-color: var(--c); color: var(--ink); background: color-mix(in srgb, var(--c) 16%, transparent); }
+.sp-ic { flex: none; }
+.sp-ic path { fill: color-mix(in srgb, var(--c) 18%, transparent); stroke: var(--muted); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.sp-ic circle { fill: var(--bg); stroke: var(--muted); stroke-width: 1.6; }
+.sp-ic .pole { fill: none; }
+.stage-pill.on .sp-ic path, .stage-pill.on .sp-ic circle { stroke: var(--c); }
+.stage-pill.conquer.on .sp-ic path:not(.pole) { fill: var(--c); }
+.sp-next { font-style: normal; font-size: 22px; color: var(--muted); }
 .slide-title {
   margin: 0;
   font-family: var(--font-display);

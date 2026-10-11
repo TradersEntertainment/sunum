@@ -169,5 +169,31 @@
       + '</div></div>';
   }
 
-  root.Viz = { ICONS, RICONS, ricon, real, whoText, svg, text, draw, undraw, hiddenPath, stamp, fade, Caption, TraceTable, legend, K };
+  /* A gear outline: the TRANSFORM station of the idea slide (outer radius R, root radius r). */
+  function gearPath(R, r, teeth) {
+    let d = '';
+    const step = (Math.PI * 2) / teeth;
+    for (let k = 0; k < teeth; k++) {
+      const a = k * step;
+      const pts = [[r, a - step * 0.5], [r, a - step * 0.22], [R, a - step * 0.14], [R, a + step * 0.14], [r, a + step * 0.22]];
+      pts.forEach(([rad, ang], j) => {
+        d += (k === 0 && j === 0 ? 'M' : 'L') + (rad * Math.cos(ang)).toFixed(1) + ',' + (rad * Math.sin(ang)).toFixed(1) + ' ';
+      });
+    }
+    return d + 'Z';
+  }
+
+  /* The two stages of transform-and-conquer as small pills for a slide header, with the same
+   * gear and flag as the idea slide. `active` lights the current stage: 'transform' | 'conquer' | 'both'. */
+  function stagePills(active) {
+    const on = (k) => (active === 'both' || active === k ? ' on' : '');
+    const gear = '<svg class="sp-ic" viewBox="-12 -12 24 24" width="24" height="24" aria-hidden="true"><path d="' + gearPath(11, 8.4, 8) + '"/><circle r="2.8"/></svg>';
+    const flag = '<svg class="sp-ic" viewBox="-12 -12 24 24" width="24" height="24" aria-hidden="true"><path class="pole" d="M-6,11 V-11"/><path d="M-5,-10 C0,-12 4,-8 10,-10 L10,-2 C4,0 0,-4 -5,-2 Z"/></svg>';
+    return '<span class="stage-pills">'
+      + '<span class="stage-pill transform' + on('transform') + '">' + gear + '<span>' + L('Transform', 'Dönüştür') + '</span></span>'
+      + '<i class="sp-next">›</i>'
+      + '<span class="stage-pill conquer' + on('conquer') + '">' + flag + '<span>' + L('Conquer', 'Fethet') + '</span></span></span>';
+  }
+
+  root.Viz = { ICONS, RICONS, ricon, real, whoText, svg, text, draw, undraw, hiddenPath, stamp, fade, Caption, TraceTable, legend, K, gearPath, stagePills };
 })(window);

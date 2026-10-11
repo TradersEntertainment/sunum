@@ -2,7 +2,7 @@
 
 CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Sunum, bölümün fikrini (önce dönüştür, sonra fethet; 3 yol) bir slaytta anlatır ve en önemli konusuna odaklanır: **Heaps & Heapsort**, toplam **8 slayt**. Bölümün geri kalanı (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) silinmedi; **yedek slayt** olarak sitede duruyor ve soru gelirse açılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
 
-- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 6 dakika (5:54). Sonunda yedek slaytların metinleri, olası sorular ve kısa cevaplar da var.
+- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 6,5 dakika (6:26). Dosyanın başında, heap'in Dönüştür ve Fethet ile bağlantısını anlatan "Mantık bir dakikada" kutusu var (sesli okumak için değil, anlamak için). Sonunda yedek slaytların metinleri, olası sorular ve kısa cevaplar da var.
 - **Gerçek hayatta kim kullanıyor?** Her tekniğin slaydı, kaynaklarla doğrulanmış bir "Gerçek hayatta · kim kullanıyor?" şeridiyle biter. Heap için ayrı bir slayt var: Linux çekirdeği, PostgreSQL, C++/.NET, Node.js/Go, internet yönlendiricileri, Elasticsearch, ZIP/PNG.
 - **Tek dosya sürümü:** `dist/transform-and-conquer.html`. Fontlar ve kodlar içine gömülüdür. USB belleğe atıp internetsiz açabilirsin.
 
@@ -20,6 +20,8 @@ Sunum 8 slayttır. Hangi slaytların sunumda olduğunu `js/config.js` içindeki 
 | 6 | Heapsort: en büyüğü tekrar tekrar çıkar | 4 | — |
 | 7 | Heapsort ne kadar hızlı? Θ(n), Θ(n log n), yerinde, kararlı değil | 4 | — |
 | 8 | **Gerçek hayatta heap'i kim kullanıyor?** | 3 | Linux `sort()`, PostgreSQL top-N heapsort, C++/.NET, Node.js/Go, OSPF, Elasticsearch, ZIP/PNG |
+
+**Heap ile Dönüştür ve Fethet'in bağlantısı:** heapsort tam olarak bu fikirdir. *Dönüştür* (aşama 1) = diziyi, en büyüğün tepede durduğu bir heap'e çevirmek (gösterimi değiştirme); *fethet* (aşama 2) = artık kolay olan problemi çözmek: en büyüğü tekrar tekrar çıkarmak. Heap slaytlarının başlığında, 2. slayttaki dişli ve bayrakla aynı **Dönüştür › Fethet** etiketleri o slaytın hangi aşama olduğunu gösterir.
 
 **Yedek slaytlar (A1–A16)** sunumun akışında yok; soru gelirse `O` tuşuyla açılır (ya da adrese `#slayt-id` yazılır). Metinleri konuşma dosyalarının sonunda.
 
@@ -76,12 +78,12 @@ Konuşma metni hem iki kişiye hem iki dile ayrılmış durumda (düz metin, UTF
 
 | Kişi | Slaytlar | İngilizce (söyleyeceğin) | Türkçe (anlamı) | Süre |
 |---|---|---|---|---|
-| 1. kişi | 1–5: başlık, fikir (dönüştür, fethet), heap nedir, heap bir dizidir, heap'i kurmak | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~3:20 |
-| 2. kişi | 6–8: heapsort, ne kadar hızlı, gerçek hayatta heap | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~2:34 |
+| 1. kişi | 1–4: başlık, fikir (dönüştür, fethet), heap nedir, heap bir dizidir | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~2:55 |
+| 2. kişi | 5–8: heap'i kurmak, heapsort, ne kadar hızlı, gerçek hayatta heap | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~3:31 |
 
 Her dosyada kendi zaman planı, devir teslim cümleleri, kendi konularına ait olası sorular ve yedek slaytların metinleri var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Yedek slaytlar konularına göre dağıtıldı: heap'ten önceki bölüm konuları (presorting, Gauss, ağaçlar, sıralama alt sınırı) ve heap bölüm kartı 1. kişide; sonrakiler (öncelik kuyruğu, Horner, üs alma, indirgeme, özet, teşekkür) ve oyun alanı 2. kişide. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
 
-Bölme noktası varsayılan olarak iki kişinin süresini eşitler (yukarıdaki tablo). Değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin 1. kişi sadece başlık ve fikir slaytını anlatsın (~1:02), 2. kişi heap'in tanımından itibaren devam etsin istersen:
+Bölme noktası varsayılan olarak iki kişinin süresini eşitler (yukarıdaki tablo). Değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin 1. kişi sadece başlık ve fikir slaytını anlatsın (~1:15), 2. kişi heap'in tanımından itibaren devam etsin istersen:
 
 ```bash
 NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-def

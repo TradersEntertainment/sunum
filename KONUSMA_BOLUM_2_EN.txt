@@ -1,10 +1,10 @@
 ==========================================================================================
 SPEECH SCRIPT - PART 2/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
 ==========================================================================================
-Slides      : 6-8  (Heapsort: remove the max, again and again  ...  Real world: who uses heaps?)
-Time        : about 2:34 (planned)  |  in the whole talk 3:20 -> 5:54
-Words       : 319 (English)
-Other part  : 1-5 (your friend)  - not in this file
+Slides      : 5-8  (Building a heap bottom-up  ...  Real world: who uses heaps?)
+Time        : about 3:31 (planned)  |  in the whole talk 2:55 -> 6:26
+Words       : 436 (English)
+Other part  : 1-4 (your friend)  - not in this file
 Companion   : KONUSMA_BOLUM_2_TR.txt = the same text in Turkish (what it means)
 
 HOW TO USE
@@ -18,29 +18,74 @@ HOW TO USE
   are backups for questions: see the end of this file.
 - The Turkish meaning of every paragraph is in KONUSMA_BOLUM_2_TR.txt, in the same order.
 
+------------------------------------------------------------------------------------------
+THE LOGIC IN ONE MINUTE (to understand it, not to read aloud)
+------------------------------------------------------------------------------------------
+1. Transform and conquer: do not attack a hard problem directly. First transform it into
+   an easier form, then conquer (solve) that easy form.
+2. Our problem: sort an array. The hard part is finding the biggest key again and again: a
+   full scan every time.
+3. TRANSFORM (stage 1, build the heap): same keys, different form. Read the array as a
+   tree (the children of cell j are 2j and 2j+1) and arrange it so that every parent is at
+   least as big as its children. Now the biggest key is always on top, so finding it costs
+   nothing. This is a representation change.
+4. CONQUER (stage 2, maximum deletions): the problem is easy now. Take the top key, put it
+   in its final place at the end, repair the heap (sift down, about log n steps), and
+   repeat n - 1 times. The array is sorted.
+5. So the heap is the "easier problem" of the pipeline on the idea slide: problem ->
+   TRANSFORM -> heap -> CONQUER -> sorted array. The heap slides show the same gear
+   (transform) and flag (conquer) in their header.
+6. Why it pays off: building the heap is linear and each removal costs only log n, so the
+   whole sort is n log n and needs no second array.
+7. It is not divide and conquer: we never split the problem into smaller copies of itself,
+   we change its form.
+
 TIME PLAN
  No  Slide                                         Clk  Time   Part time    Overall
- 6   Heapsort: remove the max, again and again      4   0:52   0:00         3:20
- 7   How fast is heapsort?                          4   0:42   0:52         4:12
- 8   Real world: who uses heaps?                    3   1:00   1:34         4:54
-     TOTAL                                              2:34  
+ 5   Building a heap bottom-up                      5   0:52   0:00         2:55
+ 6   Heapsort: remove the max, again and again      4   0:55   0:52         3:47
+ 7   How fast is heapsort?                          4   0:44   1:47         4:42
+ 8   Real world: who uses heaps?                    3   1:00   2:31         5:26
+     TOTAL                                              3:31  
 
 ******************************************************************************************
-START - when slide 6 is on the screen, first say:
+START - when slide 5 is on the screen, first say:
 ******************************************************************************************
 SAY: Thank you! I will continue from here.
 
 ------------------------------------------------------------------------------------------
+SLIDE 5 / 8  -  Building a heap bottom-up
+[Heaps & Heapsort]
+Time 0:52  |  part time 0:00 -> 0:52  |  5 clicks
+------------------------------------------------------------------------------------------
+Clicks: (1) Parent 7: swap with 8 (2) Parent 9: already OK ✓ (3) Root 2: swap with 9 (4) 2
+        keeps sinking: swap with 6 (5) Done: heap 9 6 8 2 5 7
+
+SAY (English):
+  This is stage one, the transformation: we turn the messy array into a heap. We go
+  bottom-up: start at the last parent, fix its subtree, and move back toward the root. Our
+  list: 2, 9, 7, 6, 5, 8.
+
+  [[CLICK]] The last parent is 7. Its bigger child is 8, so they swap. [[CLICK]] Next is
+  9. It is already bigger than its children: nothing to do.
+
+  [[CLICK]] Now the root, 2. Its bigger child is 9: swap. [[CLICK]] 2 is still too small,
+  so it keeps sinking: it swaps with 6 and reaches a leaf.
+
+  [[CLICK]] Done: a heap, with the maximum, 9, at the root. The table matches our lecture
+  slides.
+
+------------------------------------------------------------------------------------------
 SLIDE 6 / 8  -  Heapsort: remove the max, again and again
 [Heaps & Heapsort]
-Time 0:52  |  part time 0:00 -> 0:52  |  4 clicks
+Time 0:55  |  part time 0:52 -> 1:47  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Swap root 9 with last; lock 9 (2) Sift 7 down (swap with 8) (3) Autoplay the
         remaining removals (4) Sorted: 2 5 6 7 8 9
 
 SAY (English):
-  Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum
-  again and again.
+  Now stage two, the conquering. The heap is ready, so the biggest key is always on top.
+  We take it out, again and again.
 
   [[CLICK]] Swap the root with the last key. Now 9 is in its final place, so we lock it,
   and the heap shrinks by one.
@@ -57,17 +102,18 @@ SAY (English):
 ------------------------------------------------------------------------------------------
 SLIDE 7 / 8  -  How fast is heapsort?
 [Heaps & Heapsort]
-Time 0:42  |  part time 0:52 -> 1:34  |  4 clicks
+Time 0:44  |  part time 1:47 -> 2:31  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Build = Θ(n): work per level (2) Sort = Θ(n log n) (3) Total Θ(n log n),
         in-place ✓ (4) Not stable ✗ (1a 1b → 1b 1a)
 
 SAY (English):
-  How fast is it? [[CLICK]] Building the heap is linear. Most nodes are near the bottom
-  and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.
+  How fast is it? [[CLICK]] Stage one, building the heap, is linear. Most nodes are near
+  the bottom and can only sink a little. For 15 keys that is at most 22 comparisons, less
+  than 2n.
 
-  [[CLICK]] Sorting does n − 1 removals, and each costs at most about 2 log n comparisons.
-  So that part is n log n.
+  [[CLICK]] Stage two does n − 1 removals, and each costs at most about 2 log n
+  comparisons. So that part is n log n.
 
   [[CLICK]] In total, heapsort is n log n in the worst case and on average, and it works
   in place.
@@ -77,7 +123,7 @@ SAY (English):
 ------------------------------------------------------------------------------------------
 SLIDE 8 / 8  -  Real world: who uses heaps?
 [Heaps & Heapsort]
-Time 1:00  |  part time 1:34 -> 2:34  |  3 clicks
+Time 1:00  |  part time 2:31 -> 3:31  |  3 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Sorting: Linux, C++/.NET, PostgreSQL, std libraries (2) Priority queues:
         timers, routers, search, ZIP/PNG (3) Heaps are everywhere
@@ -105,14 +151,23 @@ LIKELY QUESTIONS (your topics)
    falls back to heapsort. PostgreSQL uses a top-N heapsort for ORDER BY with a small
    LIMIT.
 
-2) Heapsort, quicksort or mergesort?
+2) Why is building a heap only O(n), not O(n log n)?
+   Most nodes are leaves or near the leaves, and they can sink only a few levels. Only the
+   root can sink log n levels. If you add up the work level by level, it is less than 2n
+   comparisons.
+
+3) Heapsort, quicksort or mergesort?
    All three are n log n on average. Heapsort is in place and has no bad worst case, but
    quicksort is usually faster in practice. Mergesort is stable, but it needs an extra
    array.
 
-3) Why is heapsort not stable?
+4) Why is heapsort not stable?
    The root is swapped with the last key of the heap, which jumps over other keys. Two
    equal keys can end up in the opposite order, like 1a and 1b on the slide.
+
+5) Why build bottom-up instead of inserting the keys one by one?
+   Inserting n keys one by one (top-down) can cost n log n. Bottom-up construction costs
+   only O(n).
 
 ==========================================================================================
 BACKUP SLIDES (not in the talk; show one only if someone asks)
@@ -169,4 +224,4 @@ BACKUP A14  -  Try it: heapsort playground  (#playground, 0 clicks)
   build is still linear.
 
 ------------------------------------------------------------------------------------------
-Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heapsort).
+Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heap-build).

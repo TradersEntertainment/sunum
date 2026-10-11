@@ -1,10 +1,10 @@
 ==========================================================================================
 KONUŞMA METNİ - BÖLÜM 1/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
 ==========================================================================================
-Slaytlar    : 1-5  (Dönüştür ve Fethet  ...  Heap’i aşağıdan yukarı kurmak)
-Süre        : yaklaşık 3:20 (planlanan)  |  tüm sunumda 0:00 -> 3:20
-Kelime      : 412 (İngilizce metindeki)
-Diğer bölüm : 6-8 (arkadaşın)  - bu dosyada yok
+Slaytlar    : 1-4  (Dönüştür ve Fethet  ...  Heap aslında bir dizidir)
+Süre        : yaklaşık 2:55 (planlanan)  |  tüm sunumda 0:00 -> 2:55
+Kelime      : 362 (İngilizce metindeki)
+Diğer bölüm : 5-8 (arkadaşın)  - bu dosyada yok
 Eş dosya    : KONUSMA_BOLUM_1_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
 
 NASIL KULLANILIR
@@ -21,14 +21,35 @@ NASIL KULLANILIR
 - Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
   etme.
 
+------------------------------------------------------------------------------------------
+MANTIK BİR DAKİKADA (anlamak için, sesli okumak için değil)
+------------------------------------------------------------------------------------------
+1. Dönüştür ve fethet: zor bir problemin üstüne doğrudan gitme. Önce onu daha kolay bir
+   biçime dönüştür, sonra o kolay biçimi fethet (çöz).
+2. Bizim problemimiz: bir diziyi sırala. Zor kısım, en büyük anahtarı tekrar tekrar
+   bulmak: her seferinde tüm diziye bakmak gerekir.
+3. DÖNÜŞTÜR (aşama 1, heap kurma): aynı anahtarlar, başka bir biçim. Diziyi ağaç gibi
+   okuruz (j. hücrenin çocukları 2j ve 2j+1) ve her ebeveyn çocuklarından büyük ya da eşit
+   olacak şekilde düzenleriz. Artık en büyük anahtar hep tepede, onu bulmak bedava. Bu bir
+   gösterim değiştirmedir.
+4. FETHET (aşama 2, en büyüğü çıkarma): problem artık kolay. Tepedeki anahtarı al, sondaki
+   son yerine koy, heap’i onar (aşağı it, yaklaşık log n adım) ve n - 1 kez tekrarla. Dizi
+   sıralanır.
+5. Yani heap, fikir slaydındaki hattın "daha kolay problem" kutusudur: problem -> DÖNÜŞTÜR
+   -> heap -> FETHET -> sıralı dizi. Heap slaytlarının başlığında aynı dişli (dönüştür) ve
+   bayrak (fethet) görünür.
+6. Neden kârlı: heap kurmak doğrusal zamandır, her çıkarma sadece log n tutar; toplam n
+   log n ve ikinci bir diziye gerek yok.
+7. Böl ve fethet değil: problemi kendisinin küçük kopyalarına bölmüyoruz, biçimini
+   değiştiriyoruz.
+
 ZAMAN PLANI
  No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
  1   Dönüştür ve Fethet                             0   0:16   0:00         0:00
- 2   Fikir: önce dönüştür, sonra fethet             4   0:46   0:16         0:16
- 3   Heap nedir? İki kural                          4   0:50   1:02         1:02
- 4   Heap aslında bir dizidir                       4   0:40   1:52         1:52
- 5   Heap’i aşağıdan yukarı kurmak                  5   0:48   2:32         2:32
-     TOPLAM                                             3:20  
+ 2   Fikir: önce dönüştür, sonra fethet             4   0:59   0:16         0:16
+ 3   Heap nedir? İki kural                          4   0:54   1:15         1:15
+ 4   Heap aslında bir dizidir                       4   0:46   2:09         2:09
+     TOPLAM                                             2:55  
 
 ------------------------------------------------------------------------------------------
 SLAYT 1 / 8  -  Dönüştür ve Fethet
@@ -42,7 +63,7 @@ ANLAMI (Türkçe):
 ------------------------------------------------------------------------------------------
 SLAYT 2 / 8  -  Fikir: önce dönüştür, sonra fethet
 [Dönüştür ve Fethet]
-Süre 0:46  |  bölüm saati 0:16 -> 1:02  |  4 tıklama
+Süre 0:59  |  bölüm saati 0:16 -> 1:15  |  4 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
   [[TIKLA]] Dönüştür ve fethet iki aşamada çalışır. Önce dönüştürürüz: zor, karmaşık bir
@@ -51,19 +72,21 @@ ANLAMI (Türkçe):
 
   [[TIKLA]] Dönüştürmenin üç yolu var. Bir: örneği basitleştirme; aynı problem, daha basit
   bir örnek, mesela sıralı bir liste. [[TIKLA]] İki: gösterimi değiştirme; aynı veri,
-  farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Bugünkü konumuz tam burada: heap.
-  [[TIKLA]] Üç: probleme indirgeme; onu zaten çözebildiğimiz bir probleme çevirmek, mesela
-  gcd ile lcm hesaplamak.
+  farklı bir biçimde, mesela ağaç gibi okunan bir dizi. Heapsort tam olarak bunu yapar.
+  Diziyi, en büyük anahtarın tepede durduğu bir ağaca, yani bir heap’e dönüştürürüz. Sonra
+  fethederiz: o anahtarı tekrar tekrar çıkarırız ve dizi sıralı çıkar. [[TIKLA]] Üç:
+  probleme indirgeme; onu zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm
+  hesaplamak.
 
 ------------------------------------------------------------------------------------------
 SLAYT 3 / 8  -  Heap nedir? İki kural
 [Heap ve Heapsort]
-Süre 0:50  |  bölüm saati 1:02 -> 1:52  |  4 tıklama
+Süre 0:54  |  bölüm saati 1:15 -> 2:09  |  4 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
-  Peki heap nedir? Heap, iki kurala uyan bir ikili ağaçtır. [[TIKLA]] Birinci kural,
-  şekil: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir,
-  o da sadece sağda.
+  Peki heap nedir? Dizimizi dönüştüreceğimiz biçim bu. Heap, iki kurala uyan bir ikili
+  ağaçtır. [[TIKLA]] Birinci kural, şekil: ağacı seviye seviye, soldan sağa doldururuz.
+  Sadece son seviyede boşluk olabilir, o da sadece sağda.
 
   [[TIKLA]] İkinci kural, sıra: her ebeveyn çocuklarından büyük ya da eşittir. Buna
   max-heap denir.
@@ -77,7 +100,7 @@ ANLAMI (Türkçe):
 ------------------------------------------------------------------------------------------
 SLAYT 4 / 8  -  Heap aslında bir dizidir
 [Heap ve Heapsort]
-Süre 0:40  |  bölüm saati 1:52 -> 2:32  |  4 tıklama
+Süre 0:46  |  bölüm saati 2:09 -> 2:55  |  4 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
   İşin püf noktası şu. [[TIKLA]] Düğümleri yukarıdan aşağı, soldan sağa numaralandırıp
@@ -89,55 +112,28 @@ ANLAMI (Türkçe):
   [[TIKLA]] j’nin ebeveyni ise j bölü 2’nin aşağı yuvarlanmışıdır. 5 bölü 2, 2 eder.
 
   [[TIKLA]] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman
-  1. konumdadır.
-
-------------------------------------------------------------------------------------------
-SLAYT 5 / 8  -  Heap’i aşağıdan yukarı kurmak
-[Heap ve Heapsort]
-Süre 0:48  |  bölüm saati 2:32 -> 3:20  |  5 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
-  Heap’i kurmak için aşağıdan yukarı gideriz: son ebeveynden başla, alt ağacını düzelt ve
-  köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.
-
-  [[TIKLA]] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [[TIKLA]] Sırada 9
-  var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.
-
-  [[TIKLA]] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [[TIKLA]] 2 hâlâ çok küçük,
-  batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.
-
-  [[TIKLA]] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle
-  aynı.
+  1. konumdadır. Aynı anahtarlar, yeni biçim: artık en büyüğünü bulmak çok kolay.
 
 ******************************************************************************************
-DEVİR TESLİM - 5. slaytın son tıklamasından sonra söyle, sonra -> ile 6. slayta geç:
+DEVİR TESLİM - 4. slaytın son tıklamasından sonra söyle, sonra -> ile 5. slayta geç:
 ******************************************************************************************
-ANLAMI: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heapsort: en büyüğü
-        tekrar tekrar çıkar.
+ANLAMI: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heap’i aşağıdan yukarı
+        kurmak.
 
 ==========================================================================================
 OLASI SORULAR (senin konuların)
 ==========================================================================================
-1) Heap kurmak neden O(n log n) değil de O(n)?
-   Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir. Sadece
-   kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az karşılaştırma
-   çıkar.
-
-2) Min-heap nedir?
+1) Min-heap nedir?
    Aynı yapı, ters kuralla: her ebeveyn çocuklarından küçük ya da eşittir, bu yüzden en
    küçük eleman köktedir. Küçük sayının yüksek öncelik anlamına geldiği durumlarda
    kullanılır.
 
-3) Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?
-   n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı kurmak
-   sadece O(n) tutar.
-
-4) AVL ağacı mı, 2-3 ağacı mı?
+2) AVL ağacı mı, 2-3 ağacı mı?
    İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi döndürmelerle
    (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir ve taşmayı
    bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.
 
-5) Gauss eliminasyonu neden Θ(n³)?
+3) Gauss eliminasyonu neden Θ(n³)?
    İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da
    yaklaşık n³/3 çarpma eder.
 
@@ -205,4 +201,4 @@ YEDEK A16  -  Dört AVL döndürmesi  (#avl-rotations, 2 tıklama)
   n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).
 
 ------------------------------------------------------------------------------------------
-"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heapsort).
+"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-build).

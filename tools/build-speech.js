@@ -78,6 +78,11 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
   const main = data.slides.filter((s) => !s.extra);       // the talk (CONFIG.agenda)
   const extras = data.slides.filter((s) => s.extra);      // backup slides, for questions
   const qa = data.notes.__qa || [];
+  // The logic box ("how does the heap connect to transform and conquer"): printed at the top of every speech file.
+  const logic = data.notes.__logic;
+  const logicOk = !!(logic && logic.title && logic.title.en && logic.title.tr && Array.isArray(logic.en) && Array.isArray(logic.tr)
+    && logic.en.length > 0 && logic.en.length === logic.tr.length);
+  if (!logicOk) problems.push('js/notes.js: __logic needs a title {en, tr} and en / tr lists of the same length');
   let total = 0, totalWords = 0;
   const rows = [];
   for (const s of main) {
@@ -117,6 +122,11 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
   out += '- İki kişi sunuyorsanız her birinin kendi dosyaları var, dil dil ayrı: `KONUSMA_BOLUM_1_EN.txt` / `KONUSMA_BOLUM_1_TR.txt` ve `KONUSMA_BOLUM_2_EN.txt` / `KONUSMA_BOLUM_2_TR.txt` (devir teslim cümleleri ve kendi soruları dahil).\n';
   out += `- Sunum ${main.length} slayttır (\`js/config.js\` içindeki \`agenda\` listesi). Diğer ${extras.length} slayt yedekte durur ve soru gelirse \`O\` tuşuyla açılır; metinleri bu dosyanın sonunda.\n\n`;
 
+  if (logicOk) {
+    out += `## ${logic.title.tr}\n\n`;
+    logic.tr.forEach((t, i) => { out += `${i + 1}. ${t}  \n   *EN:* ${logic.en[i]}\n`; });
+    out += '\n';
+  }
   out += '## Zaman planı\n\n| # | Slayt | Tıklama | Süre | Başlangıç |\n|---|---|---|---|---|\n';
   for (const r of rows) out += `| ${r.s.label} | ${r.s.title.en} | ${r.s.steps} | ${fmt(r.n.time || 0)} | ${fmt(r.start)} |\n`;
   out += `| | **Toplam** | | **${fmt(total)}** | |\n\n`;
@@ -243,6 +253,13 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
         'Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele etme.',
       ]).forEach((t) => L.push(wrapHang(t, '- ', '  ')));
       L.push('');
+      if (logicOk) {
+        L.push(rule('-'));
+        L.push(logic.title[lang]);
+        L.push(rule('-'));
+        logic[lang].forEach((t, i) => L.push(wrapHang(t, `${i + 1}. `, '   ')));
+        L.push('');
+      }
 
       L.push(T('TIME PLAN', 'ZAMAN PLANI'));
       L.push(T(' No  ' + 'Slide'.padEnd(46) + 'Clk  Time   Part time    Overall',

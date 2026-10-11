@@ -106,6 +106,7 @@
   const DEF_VALUES = [10, 9, 4, 8, 5, 3];
   Deck.add({
     id: 'heap-def', act: 'heap', steps: 4,
+    stage: 'transform',            // which stage of transform-and-conquer this slide is (header pill)
     title: { en: 'What is a heap? Two rules', tr: 'Heap nedir? İki kural' },
     html: `
       <div class="hd-main" data-hide="4">
@@ -222,6 +223,7 @@
    * ==================================================================== */
   Deck.add({
     id: 'heap-array', act: 'heap', steps: 4,
+    stage: 'transform',            // which stage of transform-and-conquer this slide is (header pill)
     title: { en: 'A heap is secretly an array', tr: 'Heap aslında bir dizidir' },
     html: `
       <div class="ha-scene"></div>
@@ -374,6 +376,7 @@
 
   Deck.add({
     id: 'heap-build', act: 'heap', steps: BUILD_GROUPS.length - 1,
+    stage: 'transform',            // which stage of transform-and-conquer this slide is (header pill)
     title: { en: 'Building a heap bottom-up', tr: 'Heap’i aşağıdan yukarı kurmak' },
     html: `
       ${counters()}
@@ -445,6 +448,7 @@
 
   Deck.add({
     id: 'heapsort', act: 'heap', steps: 4,
+    stage: 'conquer',            // which stage of transform-and-conquer this slide is (header pill)
     title: { en: 'Heapsort: remove the max, again and again', tr: 'Heapsort: en büyüğü tekrar tekrar çıkar' },
     html: `
       ${counters()}
@@ -460,8 +464,8 @@
       d.say = sortSay;
       d.before = [null].concat(BUILD.ids);
       d.code.line(2);
-      d.caption.el.innerHTML = L('Stage 1 gave us the heap ' + K('9 6 8 2 5 7', 'star') + '. Now stage 2.',
-        'Aşama 1 bize ' + K('9 6 8 2 5 7', 'star') + ' heap’ini verdi. Şimdi aşama 2.');
+      d.caption.el.innerHTML = L('Transform done: heap ' + K('9 6 8 2 5 7', 'star') + '. Now conquer.',
+        'Dönüştürme bitti: heap ' + K('9 6 8 2 5 7', 'star') + '. Şimdi fethet.');
       d.caption.html = d.caption.el.innerHTML;
       d.table.add(BUILD.ids.map((id) => LIST[id]), null, { noDiff: true });
       d.scene.mark(1, 'max');
@@ -504,6 +508,7 @@
   ];
   Deck.add({
     id: 'heap-analysis', act: 'heap', steps: 4,
+    stage: 'both',            // which stage of transform-and-conquer this slide is (header pill)
     title: { en: 'How fast is heapsort?', tr: 'Heapsort ne kadar hızlı?' },
     html: `
       <div class="an-grid" style="height:420px; grid-template-rows: 1fr">

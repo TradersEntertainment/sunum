@@ -121,7 +121,8 @@
     const t = def.title || { en: '', tr: '' };
     return '<header class="slide-head">'
       + '<div class="eyebrow" data-in="left">' + (act.star ? '<span class="star-mark" aria-hidden="true">★</span>' : '')
-      + L(act.en, act.tr) + '</div>'
+      + L(act.en, act.tr)
+      + (def.stage && root.Viz && root.Viz.stagePills ? root.Viz.stagePills(def.stage) : '') + '</div>'
       + '<h1 class="slide-title" data-in="up">' + L(t.en, t.tr) + '</h1>'
       + '</header>';
   }

@@ -1,10 +1,10 @@
 ==========================================================================================
 SPEECH SCRIPT - PART 1/2 - ENGLISH (the words to say out loud)  |  Transform & Conquer (CMP3005, Chapter 6)
 ==========================================================================================
-Slides      : 1-5  (Transform & Conquer  ...  Building a heap bottom-up)
-Time        : about 3:20 (planned)  |  in the whole talk 0:00 -> 3:20
-Words       : 412 (English)
-Other part  : 6-8 (your friend)  - not in this file
+Slides      : 1-4  (Transform & Conquer  ...  A heap is secretly an array)
+Time        : about 2:55 (planned)  |  in the whole talk 0:00 -> 2:55
+Words       : 362 (English)
+Other part  : 5-8 (your friend)  - not in this file
 Companion   : KONUSMA_BOLUM_1_TR.txt = the same text in Turkish (what it means)
 
 HOW TO USE
@@ -18,14 +18,35 @@ HOW TO USE
   are backups for questions: see the end of this file.
 - The Turkish meaning of every paragraph is in KONUSMA_BOLUM_1_TR.txt, in the same order.
 
+------------------------------------------------------------------------------------------
+THE LOGIC IN ONE MINUTE (to understand it, not to read aloud)
+------------------------------------------------------------------------------------------
+1. Transform and conquer: do not attack a hard problem directly. First transform it into
+   an easier form, then conquer (solve) that easy form.
+2. Our problem: sort an array. The hard part is finding the biggest key again and again: a
+   full scan every time.
+3. TRANSFORM (stage 1, build the heap): same keys, different form. Read the array as a
+   tree (the children of cell j are 2j and 2j+1) and arrange it so that every parent is at
+   least as big as its children. Now the biggest key is always on top, so finding it costs
+   nothing. This is a representation change.
+4. CONQUER (stage 2, maximum deletions): the problem is easy now. Take the top key, put it
+   in its final place at the end, repair the heap (sift down, about log n steps), and
+   repeat n - 1 times. The array is sorted.
+5. So the heap is the "easier problem" of the pipeline on the idea slide: problem ->
+   TRANSFORM -> heap -> CONQUER -> sorted array. The heap slides show the same gear
+   (transform) and flag (conquer) in their header.
+6. Why it pays off: building the heap is linear and each removal costs only log n, so the
+   whole sort is n log n and needs no second array.
+7. It is not divide and conquer: we never split the problem into smaller copies of itself,
+   we change its form.
+
 TIME PLAN
  No  Slide                                         Clk  Time   Part time    Overall
  1   Transform & Conquer                            0   0:16   0:00         0:00
- 2   The idea: transform, then conquer              4   0:46   0:16         0:16
- 3   What is a heap? Two rules                      4   0:50   1:02         1:02
- 4   A heap is secretly an array                    4   0:40   1:52         1:52
- 5   Building a heap bottom-up                      5   0:48   2:32         2:32
-     TOTAL                                              3:20  
+ 2   The idea: transform, then conquer              4   0:59   0:16         0:16
+ 3   What is a heap? Two rules                      4   0:54   1:15         1:15
+ 4   A heap is secretly an array                    4   0:46   2:09         2:09
+     TOTAL                                              2:55  
 
 ------------------------------------------------------------------------------------------
 SLIDE 1 / 8  -  Transform & Conquer
@@ -40,10 +61,11 @@ SAY (English):
 ------------------------------------------------------------------------------------------
 SLIDE 2 / 8  -  The idea: transform, then conquer
 [Transform & Conquer]
-Time 0:46  |  part time 0:16 -> 1:02  |  4 clicks
+Time 0:59  |  part time 0:16 -> 1:15  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Pipeline: transform → conquer (2) Way 1: instance simplification (3) Way 2:
-        representation change (heaps live here) (4) Way 3: problem reduction
+        representation change → heapsort: array → heap, then take the max out (4) Way 3:
+        problem reduction
 
 SAY (English):
   [[CLICK]] Transform and conquer works in two stages. First we transform: a hard, tangled
@@ -52,22 +74,24 @@ SAY (English):
 
   [[CLICK]] There are three ways to transform. One: instance simplification, the same
   problem with a simpler instance, like a sorted list. [[CLICK]] Two: representation
-  change, the same data in a different form, like an array seen as a tree. This is where
-  our topic today lives: the heap. [[CLICK]] Three: problem reduction, turning it into a
-  problem we can already solve, like lcm through gcd.
+  change, the same data in a different form, like an array seen as a tree. Heapsort does
+  exactly this. We transform the array into a heap, a tree with the biggest key on top.
+  Then we conquer: we take that key out, again and again, and the array comes out sorted.
+  [[CLICK]] Three: problem reduction, turning it into a problem we can already solve, like
+  lcm through gcd.
 
 ------------------------------------------------------------------------------------------
 SLIDE 3 / 8  -  What is a heap? Two rules
 [Heaps & Heapsort]
-Time 0:50  |  part time 1:02 -> 1:52  |  4 clicks
+Time 0:54  |  part time 1:15 -> 2:09  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Rule 1: shape (slots fill in order) (2) Rule 2: parent ≥ children (3) Paths go
         down; no left-right order (4) Heap or not? ✓ ✗ ✗
 
 SAY (English):
-  So, what is a heap? A heap is a binary tree with two rules. [[CLICK]] Rule one, shape:
-  we fill the tree level by level, left to right. Only the last level can have gaps, and
-  only on the right.
+  So, what is a heap? It is the form we transform our array into. A heap is a binary tree
+  with two rules. [[CLICK]] Rule one, shape: we fill the tree level by level, left to
+  right. Only the last level can have gaps, and only on the right.
 
   [[CLICK]] Rule two, order: every parent is greater than or equal to its children. That
   is a max-heap.
@@ -81,7 +105,7 @@ SAY (English):
 ------------------------------------------------------------------------------------------
 SLIDE 4 / 8  -  A heap is secretly an array
 [Heaps & Heapsort]
-Time 0:40  |  part time 1:52 -> 2:32  |  4 clicks
+Time 0:46  |  part time 2:09 -> 2:55  |  4 clicks
 ------------------------------------------------------------------------------------------
 Clicks: (1) Number the nodes, fly them into the array (2) Children of j: 2j, 2j+1 (3)
         Parent of j: ⌊j/2⌋ (4) Parents first, max at H[1]
@@ -97,58 +121,27 @@ SAY (English):
   two.
 
   [[CLICK]] So the parents fill the first half of the array, and the maximum is always at
-  position one.
-
-------------------------------------------------------------------------------------------
-SLIDE 5 / 8  -  Building a heap bottom-up
-[Heaps & Heapsort]
-Time 0:48  |  part time 2:32 -> 3:20  |  5 clicks
-------------------------------------------------------------------------------------------
-Clicks: (1) Parent 7: swap with 8 (2) Parent 9: already OK ✓ (3) Root 2: swap with 9 (4) 2
-        keeps sinking: swap with 6 (5) Done: heap 9 6 8 2 5 7
-
-SAY (English):
-  To build a heap, we go bottom-up: start at the last parent, fix its subtree, and move
-  back toward the root. Our list: 2, 9, 7, 6, 5, 8.
-
-  [[CLICK]] The last parent is 7. Its bigger child is 8, so they swap. [[CLICK]] Next is
-  9. It is already bigger than its children: nothing to do.
-
-  [[CLICK]] Now the root, 2. Its bigger child is 9: swap. [[CLICK]] 2 is still too small,
-  so it keeps sinking: it swaps with 6 and reaches a leaf.
-
-  [[CLICK]] Done: a heap, with the maximum, 9, at the root. The table matches our lecture
-  slides.
+  position one. Same keys, new form: now the biggest one is easy to find.
 
 ******************************************************************************************
-HAND-OVER - after the last click of slide 5, say this, then press -> to go to slide 6:
+HAND-OVER - after the last click of slide 4, say this, then press -> to go to slide 5:
 ******************************************************************************************
-SAY: That was the first part. Now my friend continues with: Heapsort: remove the max,
-     again and again.
+SAY: That was the first part. Now my friend continues with: Building a heap bottom-up.
 
 ==========================================================================================
 LIKELY QUESTIONS (your topics)
 ==========================================================================================
-1) Why is building a heap only O(n), not O(n log n)?
-   Most nodes are leaves or near the leaves, and they can sink only a few levels. Only the
-   root can sink log n levels. If you add up the work level by level, it is less than 2n
-   comparisons.
-
-2) What is a min-heap?
+1) What is a min-heap?
    The same structure with the opposite rule: every parent is smaller than or equal to its
    children, so the minimum is at the root. It is used when a smaller number means a
    higher priority.
 
-3) Why build bottom-up instead of inserting the keys one by one?
-   Inserting n keys one by one (top-down) can cost n log n. Bottom-up construction costs
-   only O(n).
-
-4) AVL tree or 2-3 tree?
+2) AVL tree or 2-3 tree?
    Both keep the height at O(log n). AVL trees stay binary and fix the balance with
    rotations. 2-3 trees allow two keys in a node and fix overflows by splitting, so all
    leaves stay on the same level.
 
-5) Why is Gaussian elimination Θ(n³)?
+3) Why is Gaussian elimination Θ(n³)?
    There are three nested loops: one over the pivot rows, one over the rows below, and one
    over the columns. That gives about n³/3 multiplications.
 
@@ -214,4 +207,4 @@ BACKUP A16  -  The four AVL rotations  (#avl-rotations, 2 clicks)
   search, insert and delete are Θ(log n) in both.
 
 ------------------------------------------------------------------------------------------
-Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heapsort).
+Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=heap-build).

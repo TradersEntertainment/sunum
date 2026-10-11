@@ -1,10 +1,10 @@
 ==========================================================================================
 KONUŞMA METNİ - BÖLÜM 2/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
 ==========================================================================================
-Slaytlar    : 6-8  (Heapsort: en büyüğü tekrar tekrar çıkar  ...  Gerçek hayatta heap’i kim kullanıyor?)
-Süre        : yaklaşık 2:34 (planlanan)  |  tüm sunumda 3:20 -> 5:54
-Kelime      : 319 (İngilizce metindeki)
-Diğer bölüm : 1-5 (arkadaşın)  - bu dosyada yok
+Slaytlar    : 5-8  (Heap’i aşağıdan yukarı kurmak  ...  Gerçek hayatta heap’i kim kullanıyor?)
+Süre        : yaklaşık 3:31 (planlanan)  |  tüm sunumda 2:55 -> 6:26
+Kelime      : 436 (İngilizce metindeki)
+Diğer bölüm : 1-4 (arkadaşın)  - bu dosyada yok
 Eş dosya    : KONUSMA_BOLUM_2_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
 
 NASIL KULLANILIR
@@ -21,26 +21,68 @@ NASIL KULLANILIR
 - Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
   etme.
 
+------------------------------------------------------------------------------------------
+MANTIK BİR DAKİKADA (anlamak için, sesli okumak için değil)
+------------------------------------------------------------------------------------------
+1. Dönüştür ve fethet: zor bir problemin üstüne doğrudan gitme. Önce onu daha kolay bir
+   biçime dönüştür, sonra o kolay biçimi fethet (çöz).
+2. Bizim problemimiz: bir diziyi sırala. Zor kısım, en büyük anahtarı tekrar tekrar
+   bulmak: her seferinde tüm diziye bakmak gerekir.
+3. DÖNÜŞTÜR (aşama 1, heap kurma): aynı anahtarlar, başka bir biçim. Diziyi ağaç gibi
+   okuruz (j. hücrenin çocukları 2j ve 2j+1) ve her ebeveyn çocuklarından büyük ya da eşit
+   olacak şekilde düzenleriz. Artık en büyük anahtar hep tepede, onu bulmak bedava. Bu bir
+   gösterim değiştirmedir.
+4. FETHET (aşama 2, en büyüğü çıkarma): problem artık kolay. Tepedeki anahtarı al, sondaki
+   son yerine koy, heap’i onar (aşağı it, yaklaşık log n adım) ve n - 1 kez tekrarla. Dizi
+   sıralanır.
+5. Yani heap, fikir slaydındaki hattın "daha kolay problem" kutusudur: problem -> DÖNÜŞTÜR
+   -> heap -> FETHET -> sıralı dizi. Heap slaytlarının başlığında aynı dişli (dönüştür) ve
+   bayrak (fethet) görünür.
+6. Neden kârlı: heap kurmak doğrusal zamandır, her çıkarma sadece log n tutar; toplam n
+   log n ve ikinci bir diziye gerek yok.
+7. Böl ve fethet değil: problemi kendisinin küçük kopyalarına bölmüyoruz, biçimini
+   değiştiriyoruz.
+
 ZAMAN PLANI
  No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
- 6   Heapsort: en büyüğü tekrar tekrar çıkar        4   0:52   0:00         3:20
- 7   Heapsort ne kadar hızlı?                       4   0:42   0:52         4:12
- 8   Gerçek hayatta heap’i kim kullanıyor?          3   1:00   1:34         4:54
-     TOPLAM                                             2:34  
+ 5   Heap’i aşağıdan yukarı kurmak                  5   0:52   0:00         2:55
+ 6   Heapsort: en büyüğü tekrar tekrar çıkar        4   0:55   0:52         3:47
+ 7   Heapsort ne kadar hızlı?                       4   0:44   1:47         4:42
+ 8   Gerçek hayatta heap’i kim kullanıyor?          3   1:00   2:31         5:26
+     TOPLAM                                             3:31  
 
 ******************************************************************************************
-BAŞLANGIÇ - 6. slayt ekrana gelince önce şunu söyle:
+BAŞLANGIÇ - 5. slayt ekrana gelince önce şunu söyle:
 ******************************************************************************************
 ANLAMI: Teşekkürler! Buradan ben devam ediyorum.
 
 ------------------------------------------------------------------------------------------
-SLAYT 6 / 8  -  Heapsort: en büyüğü tekrar tekrar çıkar
+SLAYT 5 / 8  -  Heap’i aşağıdan yukarı kurmak
 [Heap ve Heapsort]
-Süre 0:52  |  bölüm saati 0:00 -> 0:52  |  4 tıklama
+Süre 0:52  |  bölüm saati 0:00 -> 0:52  |  5 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
-  Heapsort: birinci aşama heap’i kurar, bunu az önce yaptık. İkinci aşama en büyük elemanı
-  tekrar tekrar çıkarır.
+  Bu birinci aşama, yani dönüştürme: dağınık diziyi bir heap’e çeviriyoruz. Aşağıdan
+  yukarı gideriz: son ebeveynden başla, alt ağacını düzelt ve köke doğru geri gel.
+  Listemiz: 2, 9, 7, 6, 5, 8.
+
+  [[TIKLA]] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [[TIKLA]] Sırada 9
+  var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.
+
+  [[TIKLA]] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [[TIKLA]] 2 hâlâ çok küçük,
+  batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.
+
+  [[TIKLA]] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle
+  aynı.
+
+------------------------------------------------------------------------------------------
+SLAYT 6 / 8  -  Heapsort: en büyüğü tekrar tekrar çıkar
+[Heap ve Heapsort]
+Süre 0:55  |  bölüm saati 0:52 -> 1:47  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Şimdi ikinci aşama, yani fethetme. Heap hazır, yani en büyük anahtar hep tepede. Onu
+  tekrar tekrar çıkarıyoruz.
 
   [[TIKLA]] Kökü son anahtarla değiştir. Artık 9 son yerinde, onu kilitliyoruz ve heap bir
   eleman küçülüyor.
@@ -57,14 +99,14 @@ ANLAMI (Türkçe):
 ------------------------------------------------------------------------------------------
 SLAYT 7 / 8  -  Heapsort ne kadar hızlı?
 [Heap ve Heapsort]
-Süre 0:42  |  bölüm saati 0:52 -> 1:34  |  4 tıklama
+Süre 0:44  |  bölüm saati 1:47 -> 2:31  |  4 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
-  Peki ne kadar hızlı? [[TIKLA]] Heap’i kurmak doğrusal zaman alır. Düğümlerin çoğu en
-  altta ve sadece biraz batabilir. 15 anahtar için en fazla 22 karşılaştırma, yani 2n’den
-  az.
+  Peki ne kadar hızlı? [[TIKLA]] Birinci aşama, yani heap’i kurmak, doğrusal zaman alır.
+  Düğümlerin çoğu en altta ve sadece biraz batabilir. 15 anahtar için en fazla 22
+  karşılaştırma, yani 2n’den az.
 
-  [[TIKLA]] Sıralama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n
+  [[TIKLA]] İkinci aşama n − 1 kez kök çıkarır, her biri en fazla yaklaşık 2 log n
   karşılaştırma. Yani bu kısım n log n.
 
   [[TIKLA]] Toplamda heapsort hem en kötü hem ortalama durumda n log n’dir ve yerinde
@@ -76,7 +118,7 @@ ANLAMI (Türkçe):
 ------------------------------------------------------------------------------------------
 SLAYT 8 / 8  -  Gerçek hayatta heap’i kim kullanıyor?
 [Heap ve Heapsort]
-Süre 1:00  |  bölüm saati 1:34 -> 2:34  |  3 tıklama
+Süre 1:00  |  bölüm saati 2:31 -> 3:31  |  3 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
   Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [[TIKLA]] Sıralama: Linux
@@ -102,14 +144,23 @@ OLASI SORULAR (senin konuların)
    kullanır; introsort gerektiğinde heapsort’a geçer. PostgreSQL küçük bir LIMIT ile ORDER
    BY için top-N heapsort kullanır.
 
-2) Heapsort mu, quicksort mu, mergesort mu?
+2) Heap kurmak neden O(n log n) değil de O(n)?
+   Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir. Sadece
+   kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az karşılaştırma
+   çıkar.
+
+3) Heapsort mu, quicksort mu, mergesort mu?
    Üçü de ortalamada n log n. Heapsort yerinde çalışır ve kötü bir en kötü durumu yoktur,
    ama pratikte quicksort genelde daha hızlıdır. Mergesort kararlıdır ama ek bir dizi
    ister.
 
-3) Heapsort neden kararlı değil?
+4) Heapsort neden kararlı değil?
    Kök, heap’in son anahtarıyla yer değiştirir ve bu hamle diğer anahtarların üzerinden
    atlar. Slayttaki 1a ve 1b gibi iki eşit anahtar ters sırada kalabilir.
+
+5) Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?
+   n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı kurmak
+   sadece O(n) tutar.
 
 ==========================================================================================
 YEDEK SLAYTLAR (sunumda yok; sadece soru gelirse göster)
@@ -165,4 +216,4 @@ YEDEK A14  -  Deneyin: heapsort oyun alanı  (#playground, 0 tıklama)
   yine doğrusal olduğunu gösterebilirsiniz.
 
 ------------------------------------------------------------------------------------------
-"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heapsort).
+"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-build).

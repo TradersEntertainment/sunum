@@ -214,19 +214,6 @@
 
   const ptsD = (pts) => 'M' + pts.map((q) => q.x.toFixed(1) + ',' + q.y.toFixed(1)).join(' L');
 
-  function gearPath(R, r, teeth) {
-    let d = '';
-    const step = (Math.PI * 2) / teeth;
-    for (let k = 0; k < teeth; k++) {
-      const a = k * step;
-      const pts = [[r, a - step * 0.5], [r, a - step * 0.22], [R, a - step * 0.14], [R, a + step * 0.14], [r, a + step * 0.22]];
-      pts.forEach(([rad, ang], j) => {
-        d += (k === 0 && j === 0 ? 'M' : 'L') + (rad * Math.cos(ang)).toFixed(1) + ',' + (rad * Math.sin(ang)).toFixed(1) + ' ';
-      });
-    }
-    return d + 'Z';
-  }
-
   const CARDS = [
     {
       cls: 'bi-c1', color: '--simplify', num: 1,
@@ -397,7 +384,7 @@
       // station 2: the gear (wrapper pops in; the inner gear spins forever)
       d.gearWrap = U.s('g', { class: 'bi-gearwrap' });
       d.gear = U.s('g', { class: 'bi-gear', 'data-ambient': '' });
-      d.gear.innerHTML = '<path d="' + gearPath(54, 42, 9) + '"/><circle r="15"/>';
+      d.gear.innerHTML = '<path d="' + Viz.gearPath(54, 42, 9) + '"/><circle r="15"/>';
       d.gearWrap.appendChild(d.gear);
       Anim.set(d.gearWrap, { x: ST[1], y: SY, scale: 0.4, opacity: 0 });
       svg.appendChild(d.gearWrap);
