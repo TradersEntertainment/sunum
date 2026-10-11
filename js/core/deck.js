@@ -47,11 +47,32 @@
   function on(evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); }
   function emit(evt, data) { (listeners[evt] || []).forEach((fn) => fn(data)); }
 
-  /* ---------- slide label: "7 / 20", appendix "A2" ---------- */
-  function mainCount() { return slides.filter((s) => s.act !== 'appendix').length; }
+  /* ---------- the talk and the backup slides ----------
+   * CONFIG.agenda lists the ids of the slides that are presented, in order. Every other
+   * slide stays in the deck as an "extra" (backup slide): reachable from the overview or
+   * by #id, but never part of the flow. Extras always come last in the slides array, so
+   * the talk is slides[0 .. mainCount()-1]. No agenda: only act "appendix" is an extra. */
+  function arrange() {
+    const agenda = root.CONFIG && Array.isArray(root.CONFIG.agenda) ? root.CONFIG.agenda : null;
+    const picked = [];
+    (agenda || []).forEach((id) => {
+      const s = slides.find((d) => d.id === id);
+      if (!s) console.warn('agenda: no slide with id "' + id + '"');
+      else if (picked.includes(s)) console.warn('agenda: "' + id + '" is listed twice');
+      else picked.push(s);
+    });
+    const talk = picked.length ? picked : slides.filter((s) => s.act !== 'appendix');
+    const rest = slides.filter((s) => !talk.includes(s));
+    talk.forEach((s) => { s.extra = false; });
+    rest.forEach((s) => { s.extra = true; });
+    slides.splice(0, slides.length, ...talk, ...rest);
+  }
+
+  /* ---------- slide label: "7 / 8", backup slides "A2" ---------- */
+  function mainCount() { return slides.filter((s) => !s.extra).length; }
   function label(i) {
     const s = slides[i];
-    if (s.act === 'appendix') return 'A' + (i - mainCount() + 1);
+    if (s.extra) return 'A' + (i - mainCount() + 1);
     return String(i + 1);
   }
 
@@ -241,7 +262,10 @@
     if (!cur) return;
     if (kind === 'next') {
       if (cur.step < cur.def.steps) await runStep(cur.step + 1);
-      else if (idx < slides.length - 1) await show(idx + 1, 0, 1);
+      else if (idx === mainCount() - 1 && idx < slides.length - 1) {
+        // the end of the talk: one click too many must not wander into the backup slides
+        toast(L('End of the talk · <b>O</b> = backup slides', 'Sunumun sonu · <b>O</b> = yedek slaytlar'));
+      } else if (idx < slides.length - 1) await show(idx + 1, 0, 1);
     } else if (kind === 'prev') {
       if (cur.step > 0) await rebuild(cur.step - 1);
       else if (idx > 0) await show(idx - 1, slides[idx - 1].steps, -1, { noEntrance: true });
@@ -296,7 +320,7 @@
       index: idx, step: cur ? cur.step : 0, steps: slides[idx].steps,
       id: slides[idx].id, label: label(idx), total: mainCount(), count: slides.length,
       lang: I18n.lang, running: stepRunning,
-      slides: slides.map((s, i) => ({ id: s.id, act: s.act, title: s.title || null, steps: s.steps, label: label(i) })),
+      slides: slides.map((s, i) => ({ id: s.id, act: s.act, title: s.title || null, steps: s.steps, label: label(i), extra: !!s.extra })),
     };
   }
 
@@ -410,7 +434,7 @@
   function buildProgress() {
     dom.progress.innerHTML = '';
     slides.forEach((s, i) => {
-      if (s.act === 'appendix') return;
+      if (s.extra) return;
       const seg = U.h('span', { class: 'seg', 'data-act': s.act, style: { '--c': (ACTS[s.act] || ACTS.opening).color } },
         U.h('i'));
       seg.dataset.i = i;
@@ -425,8 +449,7 @@
     dom.chip.style.setProperty('--c', act.color);
     dom.chip.querySelector('.act-name').innerHTML = (act.star ? '★ ' : '') + L(act.en, act.tr);
     dom.chip.classList.toggle('hidden', !!def.bare && def.act === 'opening' && idx === 0);
-    const isApp = def.act === 'appendix';
-    dom.counter.innerHTML = isApp ? label(idx) : '<b>' + (idx + 1) + '</b><span>/' + mainCount() + '</span>';
+    dom.counter.innerHTML = def.extra ? label(idx) : '<b>' + (idx + 1) + '</b><span>/' + mainCount() + '</span>';
     U.$$('.seg', dom.progress).forEach((seg) => {
       const i = Number(seg.dataset.i);
       seg.classList.toggle('done', i < idx);
@@ -447,7 +470,9 @@
     ov.innerHTML = '<button type="button" class="ov-close" aria-label="Close"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button><div class="ov-grid">' + slides.map((s, i) => {
       const act = ACTS[s.act] || ACTS.opening;
       const t = s.title || { en: s.id, tr: s.id };
-      return '<button type="button" class="ov-card' + (i === idx ? ' cur' : '') + '" data-i="' + i + '" style="--c:' + act.color + '">'
+      const sep = s.extra && !(slides[i - 1] && slides[i - 1].extra)
+        ? '<div class="ov-sep">' + L('Backup slides · not part of the talk', 'Yedek slaytlar · sunuma dahil değil') + '</div>' : '';
+      return sep + '<button type="button" class="ov-card' + (s.extra ? ' extra' : '') + (i === idx ? ' cur' : '') + '" data-i="' + i + '" style="--c:' + act.color + '">'
         + '<span class="ov-num">' + label(i) + '</span>'
         + '<span class="ov-act">' + L(act.en, act.tr) + '</span>'
         + '<span class="ov-title">' + L(t.en, t.tr) + '</span></button>';
@@ -465,8 +490,8 @@
     const rows = [
       ['→ &nbsp;Space &nbsp;PgDn &nbsp;click', 'Next animation / slide', 'Sonraki animasyon / slayt'],
       ['← &nbsp;PgUp', 'Back one step', 'Bir adım geri'],
-      ['Home / End', 'First / last slide', 'İlk / son slayt'],
-      ['O', 'Overview of all slides', 'Tüm slaytlara genel bakış'],
+      ['Home / End', 'First / last slide of the talk', 'Sunumun ilk / son slaytı'],
+      ['O', 'Overview (backup slides too)', 'Genel bakış (yedek slaytlar da)'],
       ['L', 'English ⇄ Türkçe', 'English ⇄ Türkçe'],
       ['T', 'Dark ⇄ light theme', 'Koyu ⇄ açık tema'],
       ['F', 'Fullscreen', 'Tam ekran'],
@@ -556,7 +581,7 @@
         e.preventDefault(); next(); break;
       case 'Enter':
         e.preventDefault();
-        if (digits) { goto(Number(digits) - 1, 0); digits = ''; } else next();
+        if (digits) { goto(Math.min(Number(digits), mainCount()) - 1, 0); digits = ''; } else next();
         break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace':
         e.preventDefault(); prev(); break;
@@ -651,6 +676,7 @@
   async function start(opts) {
     const o = opts || {};
     const html = document.documentElement;
+    arrange();
     html.dataset.theme = U.store.get('theme', html.dataset.theme || 'dark');
     I18n.init();
     const params = new URLSearchParams(location.search);
@@ -677,7 +703,7 @@
   }
 
   root.Deck = {
-    ACTS, add, start, next, prev, goto, gotoId, on, snapshot,
+    ACTS, add, arrange, start, next, prev, goto, gotoId, on, snapshot,
     toggleNotes, toggleOverview, toggleTheme,
     get slides() { return slides; },
     get index() { return idx; },

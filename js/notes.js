@@ -2,19 +2,22 @@
  *   time  — speaking budget in seconds
  *   cues  — what each click shows (presenter window: "next click")
  *   en/tr — paragraphs; [click] marks the moment to press → (one per step)
+ *   about — backup slides only (not in CONFIG.agenda): the id of the talk slide whose presenter
+ *           also owns this text, so it lands in that person's speech file
  * KONUSMA_METNI.md is generated from this file: node tools/build-speech.js */
 window.NOTES = {
 
   /* ---------------- opening ---------------- */
 
   'title': {
-    time: 13,
+    time: 22,
     cues: [],
-    en: ['Hello everyone. Today’s topic is Chapter 6: <b>Transform and Conquer</b>. The idea: when a problem is hard, first change it into an easier one, then solve it.'],
-    tr: ['Herkese merhaba. Bugünkü konum Bölüm 6: <b>Dönüştür ve Fethet</b>. Fikir şu: bir problem zorsa önce onu daha kolay bir probleme dönüştür, sonra çöz.'],
+    en: ['Hello everyone. Today’s topic is Chapter 6: <b>Transform and Conquer</b>. The idea: when a problem is hard, first change it into an easier one, then solve it. Out of this chapter, we will go deep on its most important example: <b>heaps and heapsort</b>.'],
+    tr: ['Herkese merhaba. Bugünkü konum Bölüm 6: <b>Dönüştür ve Fethet</b>. Fikir şu: bir problem zorsa önce onu daha kolay bir probleme dönüştür, sonra çöz. Bu bölümün en önemli örneğine derinlemesine gireceğiz: <b>heap ve heapsort</b>.'],
   },
 
   'big-idea': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 30,
     cues: ['Pipeline: transform → conquer', 'Way 1: instance simplification', 'Way 2: representation change', 'Way 3: problem reduction'],
     en: [
@@ -30,6 +33,7 @@ window.NOTES = {
   /* ---------------- instance simplification ---------------- */
 
   'presorting': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 34,
     cues: ['Brute force: compare every pair', 'Presort, then compare neighbours', 'n = 1,000,000: 5·10¹¹ vs 2·10⁷', 'Real world: sort | uniq, databases'],
     en: [
@@ -45,6 +49,7 @@ window.NOTES = {
   },
 
   'gauss': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 34,
     cues: ['R₂ − 3/2·R₁', 'R₃ − 1/2·R₁', 'R₃ − 3/5·R₂ → triangle, Θ(n³)', 'Back substitution: x = 2, 1, 6', 'Check ✓', 'Real world: NumPy/MATLAB, TOP500'],
     en: [
@@ -62,6 +67,7 @@ window.NOTES = {
   /* ---------------- search trees ---------------- */
 
   'bst-problem': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 22,
     cues: ['A bushy BST: fast', 'Sorted keys → a stick, O(n)', 'Two fixes: balance (AVL) / more keys per node (2-3)'],
     en: [
@@ -75,6 +81,7 @@ window.NOTES = {
   },
 
   'avl': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 32,
     cues: ['Insert 5, 6, 8 → L(5)', 'Insert 3, 2 → R(5)', 'Insert 4 → LR(6)', 'Insert 7 → RL(6): balanced and sorted', 'Real world: Linux scheduler, TreeMap'],
     en: [
@@ -88,6 +95,7 @@ window.NOTES = {
   },
 
   'two-three': {
+    about: 'title',          // backup slide: its text belongs to whoever presents this slide
     time: 30,
     cues: ['9, 5, 8 → split, 8 moves up', 'Small nodes absorb keys', 'Splits climb to the root', 'All leaves on one level: Θ(log n)', 'Real world: database indexes, file systems'],
     en: [
@@ -103,6 +111,7 @@ window.NOTES = {
   /* ---------------- ★ Heaps & Heapsort ---------------- */
 
   'heap-intro': {
+    about: 'heap-def',          // backup slide: its text belongs to whoever presents this slide
     time: 12,
     cues: [],
     en: ['Now the star of this chapter: <b>heaps and heapsort</b>. We <b>think</b> of the keys as a tree, but <b>store</b> them in a simple array.'],
@@ -110,16 +119,16 @@ window.NOTES = {
   },
 
   'heap-def': {
-    time: 40,
+    time: 52,
     cues: ['Rule 1: shape (slots fill in order)', 'Rule 2: parent ≥ children', 'Paths go down; no left-right order', 'Heap or not? ✓ ✗ ✗'],
     en: [
-      'A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
+      'Here is the star of this chapter: the <b>heap</b>. A heap is a binary tree with two rules. [click] Rule one, <b>shape</b>: we fill the tree level by level, left to right. Only the last level can have gaps, and only on the right.',
       '[click] Rule two, <b>order</b>: every parent is greater than or equal to its children. That is a max-heap.',
       '[click] So keys decrease along every path down. But there is no left-to-right order: 8 is lower, yet bigger than 4.',
       '[click] Quick check: the first tree is a heap. The second has a hole in its shape. The third breaks the order: 6 is bigger than its parent 5.',
     ],
     tr: [
-      'Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
+      'İşte bu bölümün yıldızı: <b>heap</b>. Heap, iki kurala uyan bir ikili ağaçtır. [click] Birinci kural, <b>şekil</b>: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede boşluk olabilir, o da sadece sağda.',
       '[click] İkinci kural, <b>sıra</b>: her ebeveyn çocuklarından büyük ya da eşittir. Buna max-heap denir.',
       '[click] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra yoktur: 8 daha aşağıda, ama 4’ten büyük.',
       '[click] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü sırayı bozuyor: 6, ebeveyni 5’ten büyük.',
@@ -127,7 +136,7 @@ window.NOTES = {
   },
 
   'heap-array': {
-    time: 36,
+    time: 40,
     cues: ['Number the nodes, fly them into the array', 'Children of j: 2j, 2j+1', 'Parent of j: ⌊j/2⌋', 'Parents first, max at H[1]'],
     en: [
       'Here is the trick. [click] We number the nodes top-down, left to right, and simply put them into an array. No pointers at all.',
@@ -144,7 +153,7 @@ window.NOTES = {
   },
 
   'heap-build': {
-    time: 50,
+    time: 48,
     cues: ['Parent 7: swap with 8', 'Parent 9: already OK ✓', 'Root 2: swap with 9', '2 keeps sinking: swap with 6', 'Done: heap 9 6 8 2 5 7'],
     en: [
       'To build a heap, we go <b>bottom-up</b>: start at the last parent, fix its subtree, and move back toward the root. Our list: 2, 9, 7, 6, 5, 8.',
@@ -161,7 +170,7 @@ window.NOTES = {
   },
 
   'heapsort': {
-    time: 50,
+    time: 52,
     cues: ['Swap root 9 with last; lock 9', 'Sift 7 down (swap with 8)', 'Autoplay the remaining removals', 'Sorted: 2 5 6 7 8 9'],
     en: [
       'Heapsort: stage one builds the heap, which we just did. Stage two removes the maximum again and again.',
@@ -180,7 +189,7 @@ window.NOTES = {
   },
 
   'heap-analysis': {
-    time: 36,
+    time: 42,
     cues: ['Build = Θ(n): work per level', 'Sort = Θ(n log n)', 'Total Θ(n log n), in-place ✓', 'Not stable ✗ (1a 1b → 1b 1a)'],
     en: [
       'How fast is it? [click] Building the heap is <b>linear</b>. Most nodes are near the bottom and can only sink a little. For 15 keys that is at most 22 comparisons, less than 2n.',
@@ -197,7 +206,7 @@ window.NOTES = {
   },
 
   'priority-queue': {
-    time: 28,
+    time: 31,
     cues: ['Priority queue operations', 'Insert 10 at the end', '10 bubbles up to the root'],
     en: [
       'Heaps are not only for sorting. [click] They are perfect for <b>priority queues</b>: find the max in constant time, insert or delete in log n. Like an emergency room: the most urgent patient goes first.',
@@ -210,23 +219,24 @@ window.NOTES = {
   },
 
   'heap-real': {
-    time: 45,
+    time: 60,
     cues: ['Sorting: Linux, C++/.NET, PostgreSQL, std libraries', 'Priority queues: timers, routers, search, ZIP/PNG', 'Heaps are everywhere'],
     en: [
       'Who uses this in real life? Almost everyone. [click] Sorting: the Linux kernel’s <code>sort()</code> <b>is</b> heapsort, because it guarantees n log n with no extra memory. C++ and .NET switch to heapsort when quicksort gets unlucky. PostgreSQL runs a “top-N heapsort” for <code>ORDER BY</code> with <code>LIMIT</code>.',
       '[click] Priority queues: Node.js and Go keep their timers in a heap, routers run Dijkstra with a priority queue, Elasticsearch collects its top results in one, and ZIP and PNG build their Huffman codes with a heap.',
-      '[click] Kernels, databases, servers, networks, compression: heaps are everywhere.',
+      '[click] Kernels, databases, servers, networks, compression: heaps are everywhere. That is the idea of this chapter: change the problem, here by seeing an array as a tree, and then conquer it. Thank you for listening, and I am happy to take your questions.',
     ],
     tr: [
       'Bunu gerçek hayatta kim kullanıyor? Neredeyse herkes. [click] Sıralama: Linux çekirdeğinin <code>sort()</code> fonksiyonu doğrudan heapsort’tur, çünkü ek bellek olmadan n log n garanti eder. C++ ve .NET, quicksort’un şansı kötü giderse heapsort’a geçer. PostgreSQL, <code>LIMIT</code>’li <code>ORDER BY</code> için “top-N heapsort” çalıştırır.',
       '[click] Öncelik kuyrukları: Node.js ve Go zamanlayıcılarını bir heap’te tutar, yönlendiriciler Dijkstra’yı öncelik kuyruğuyla çalıştırır, Elasticsearch en iyi sonuçları bir öncelik kuyruğunda toplar, ZIP ve PNG de Huffman kodlarını bir heap ile kurar.',
-      '[click] Çekirdekler, veritabanları, sunucular, ağlar, sıkıştırma: heap her yerde.',
+      '[click] Çekirdekler, veritabanları, sunucular, ağlar, sıkıştırma: heap her yerde. Bu bölümün fikri de tam olarak bu: problemi değiştir, burada bir diziye ağaç gibi bakarak, sonra fethet. Dinlediğiniz için teşekkürler, sorularınızı memnuniyetle cevaplarım.',
     ],
   },
 
   /* ---------------- representation change: Horner & powers ---------------- */
 
   'horner': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 28,
     cues: ['Factor out x again and again', 'Table at x = 3: 2, 5, 18, 55, 160', 'n multiplications instead of ~n²/2', 'Real world: hashCode, parseInt'],
     en: [
@@ -240,6 +250,7 @@ window.NOTES = {
   },
 
   'binexp': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 26,
     cues: ['Left to right: square, multiply on 1', 'Right to left: a · a⁴ · a⁸', 'Real world: HTTPS / RSA'],
     en: [
@@ -255,6 +266,7 @@ window.NOTES = {
   /* ---------------- problem reduction ---------------- */
 
   'reduction': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 28,
     cues: ['Idea: A → B (already solvable) → answer', 'lcm(24, 60) via gcd = 12 → 120', 'max f = −min(−f); LP, graph search', 'Real world: machine learning, airlines'],
     en: [
@@ -270,6 +282,7 @@ window.NOTES = {
   },
 
   'paths': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 25,
     cues: ['Graph → adjacency matrix A', 'A² = A · A', '(2, 4) = 2: the two paths', 'Real world: social networks, PageRank'],
     en: [
@@ -285,6 +298,7 @@ window.NOTES = {
   /* ---------------- closing ---------------- */
 
   'summary': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 20,
     cues: ['Three buckets, with where each is used', 'Change the problem, then conquer it'],
     en: [
@@ -298,6 +312,7 @@ window.NOTES = {
   },
 
   'thanks': {
+    about: 'heap-real',          // backup slide: its text belongs to whoever presents this slide
     time: 5,
     cues: [],
     en: ['Thank you for listening. I’m happy to take your questions.'],
@@ -307,19 +322,19 @@ window.NOTES = {
   /* ---------------- appendix ---------------- */
 
   'sort-bound': {
-    about: 'presorting',          // extra for Q&A: belongs to whoever presents this slide
+    about: 'title',          // extra for Q&A: belongs to whoever presents this slide
     en: ['If someone asks how fast sorting can be: every comparison sort needs about n log₂ n comparisons in the worst case (a decision tree with n! leaves has height ⌈log₂ n!⌉), and mergesort reaches that bound. [click] Presorting pays off when you search many times: after about log₂ n searches, sorting once and using binary search wins. [click]'],
     tr: ['Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [click] Önceden sıralama çok sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp ikili arama yapmak kazanır. [click]'],
   },
 
   'avl-rotations': {
-    about: 'avl',          // extra for Q&A: belongs to whoever presents this slide
+    about: 'title',          // extra for Q&A: belongs to whoever presents this slide
     en: ['For questions about balanced trees: [click] an AVL tree’s height is at most about 1.44 log₂ n, and one insertion needs at most one single or double rotation, which only re-links a few pointers. [click] A 2-3 tree’s height is between log₃ n and log₂ n; search, insert and delete are Θ(log n) in both.'],
     tr: ['Dengeli ağaçlarla ilgili sorular için: [click] bir AVL ağacının yüksekliği en fazla yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme ister; döndürme sadece birkaç işaretçiyi yeniden bağlar. [click] 2-3 ağacının yüksekliği log₃ n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).'],
   },
 
   'playground': {
-    about: 'heap-intro',          // extra for Q&A: belongs to whoever presents this slide
+    about: 'heapsort',          // extra for Q&A: belongs to whoever presents this slide
     en: ['For questions: type your own numbers (up to 15), press Play or Step, and watch both stages with live comparison and swap counters. Try "Already sorted" to see that the build is still linear.'],
     tr: ['Soru-cevap için: kendi sayılarınızı yazın (en fazla 15), Oynat ya da Adım’a basın ve iki aşamayı canlı karşılaştırma ve takas sayaçlarıyla izleyin. "Zaten sıralı" ile kurmanın yine doğrusal olduğunu gösterebilirsiniz.'],
   },

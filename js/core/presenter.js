@@ -6,7 +6,13 @@
 
   let state = null;
   let t0 = null, elapsed = 0, ticking = false;
-  const TARGET = 10 * 60;   // seconds
+  let TARGET = 10 * 60;   // seconds: the planned length of the talk, from the notes' time budgets
+
+  function plannedSeconds() {
+    const notes = root.NOTES || {};
+    const sum = (state ? state.slides : []).filter((s) => !s.extra).reduce((a, s) => a + ((notes[s.id] || {}).time || 0), 0);
+    return sum ? Math.ceil(sum / 30) * 30 : 10 * 60;
+  }
 
   function send(cmd, extra) {
     if (!root.opener) return;
@@ -28,11 +34,12 @@
       return;
     }
     const s = state.slides[state.index];
-    const nx = state.slides[state.index + 1];
+    const nx = (s.extra || state.index + 1 < state.total) ? state.slides[state.index + 1] : null;   // the talk ends at its last slide
     const notes = (root.NOTES || {})[s.id] || {};
+    TARGET = plannedSeconds();
     const cues = notes.cues || [];
     const title = (s.title && (s.title[state.lang] || s.title.en)) || s.id;
-    app.querySelector('.pv-where').innerHTML = '<b>' + s.label + '</b> / ' + state.total
+    app.querySelector('.pv-where').innerHTML = '<b>' + s.label + '</b>' + (s.extra ? ' · backup' : ' / ' + state.total)
       + ' · ' + title + ' · <span>' + (state.steps ? 'click ' + state.step + ' / ' + state.steps : 'no clicks') + '</span>';
     app.querySelector('.pv-main').innerHTML =
       '<div class="pv-notes"><div class="pv-en" lang="en">' + (Deck.notesHtml(notes.en, state.step) || '—') + '</div>'

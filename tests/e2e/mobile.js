@@ -132,8 +132,9 @@ async function checkDevice(browser, name) {
   await page.waitForFunction(() => document.querySelector('.overview').hidden);
   await page.tap('.mbtn[data-cmd="overview"]');
   await page.waitForSelector('.overview:not([hidden]) .ov-card');
+  const wantId = await page.evaluate(() => Deck.slides[2].id);          // the third card, whatever the agenda is
   await page.tap('.ov-card[data-i="2"]'); await idle(page);
-  ok((await page.evaluate(() => Deck.snapshot().id)) === 'presorting', 'overview card did not open its slide');
+  ok((await page.evaluate(() => Deck.snapshot().id)) === wantId, 'overview card did not open its slide');
 
   // 7. the tip can be dismissed and stays dismissed
   if (portraitPhone) {

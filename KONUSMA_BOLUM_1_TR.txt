@@ -1,10 +1,10 @@
 ==========================================================================================
 KONUŞMA METNİ - BÖLÜM 1/2 - TÜRKÇE (İngilizce metnin anlamı)  |  Transform & Conquer (CMP3005, Bölüm 6)
 ==========================================================================================
-Slaytlar    : 1-7  (Dönüştür ve Fethet  ...  2-3 ağaçları: dolan düğüm ikiye bölünür)
-Süre        : yaklaşık 3:15 (planlanan)  |  tüm sunumda 0:00 -> 3:15
-Kelime      : 417 (İngilizce metindeki)
-Diğer bölüm : 8-21 (arkadaşın)  - bu dosyada yok
+Slaytlar    : 1-4  (Dönüştür ve Fethet  ...  Heap’i aşağıdan yukarı kurmak)
+Süre        : yaklaşık 2:42 (planlanan)  |  tüm sunumda 0:00 -> 2:42
+Kelime      : 333 (İngilizce metindeki)
+Diğer bölüm : 5-8 (arkadaşın)  - bu dosyada yok
 Eş dosya    : KONUSMA_BOLUM_1_EN.txt = aynı metnin İngilizcesi (sesli söyleyeceğin)
 
 NASIL KULLANILIR
@@ -16,146 +16,184 @@ NASIL KULLANILIR
   bir adım geri dön.
 - Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre
   sayacı), L = dil.
+- Sunum 8 slayttır; sonuncudan sonra -> hiçbir şey yapmaz. Diğer slaytlar (A1, A2, ...)
+  soru gelirse kullanacağın yedeklerdir: bu dosyanın sonuna bak.
 - Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele
   etme.
 
 ZAMAN PLANI
  No  Slayt                                         Tık  Süre   Bölüm saati  Genel saat
- 1   Dönüştür ve Fethet                             0   0:13   0:00         0:00
- 2   Fikir: önce dönüştür, sonra fethet             4   0:30   0:13         0:13
- 3   Ön sıralama: tüm elemanlar farklı mı?          4   0:34   0:43         0:43
- 4   Gauss eliminasyonu: üçgen hâline getir         6   0:34   1:17         1:17
- 5   İkili arama ağacı: hızı şekil belirler         3   0:22   1:51         1:51
- 6   AVL ağaçları: dengede kalmak için döndür       5   0:32   2:13         2:13
- 7   2-3 ağaçları: dolan düğüm ikiye bölünür        5   0:30   2:45         2:45
-     TOPLAM                                             3:15  
+ 1   Dönüştür ve Fethet                             0   0:22   0:00         0:00
+ 2   Heap nedir? İki kural                          4   0:52   0:22         0:22
+ 3   Heap aslında bir dizidir                       4   0:40   1:14         1:14
+ 4   Heap’i aşağıdan yukarı kurmak                  5   0:48   1:54         1:54
+     TOPLAM                                             2:42  
 
 ------------------------------------------------------------------------------------------
-SLAYT 1 / 21  -  Dönüştür ve Fethet
+SLAYT 1 / 8  -  Dönüştür ve Fethet
 [Dönüştür ve Fethet]
-Süre 0:13  |  bölüm saati 0:00 -> 0:13  |  0 tıklama
+Süre 0:22  |  bölüm saati 0:00 -> 0:22  |  0 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
   Herkese merhaba. Bugünkü konum Bölüm 6: Dönüştür ve Fethet. Fikir şu: bir problem zorsa
-  önce onu daha kolay bir probleme dönüştür, sonra çöz.
+  önce onu daha kolay bir probleme dönüştür, sonra çöz. Bu bölümün en önemli örneğine
+  derinlemesine gireceğiz: heap ve heapsort.
 
 ------------------------------------------------------------------------------------------
-SLAYT 2 / 21  -  Fikir: önce dönüştür, sonra fethet
-[Dönüştür ve Fethet]
-Süre 0:30  |  bölüm saati 0:13 -> 0:43  |  4 tıklama
+SLAYT 2 / 8  -  Heap nedir? İki kural
+[Heap ve Heapsort]
+Süre 0:52  |  bölüm saati 0:22 -> 1:14  |  4 tıklama
 ------------------------------------------------------------------------------------------
 ANLAMI (Türkçe):
-  [[TIKLA]] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.
+  İşte bu bölümün yıldızı: heap. Heap, iki kurala uyan bir ikili ağaçtır. [[TIKLA]]
+  Birinci kural, şekil: ağacı seviye seviye, soldan sağa doldururuz. Sadece son seviyede
+  boşluk olabilir, o da sadece sağda.
 
+  [[TIKLA]] İkinci kural, sıra: her ebeveyn çocuklarından büyük ya da eşittir. Buna
+  max-heap denir.
+
+  [[TIKLA]] Yani kökten aşağı her yolda anahtarlar azalır. Ama soldan sağa bir sıra
+  yoktur: 8 daha aşağıda, ama 4’ten büyük.
+
+  [[TIKLA]] Hızlı kontrol: ilk ağaç bir heap. İkincisinin şeklinde boşluk var. Üçüncüsü
+  sırayı bozuyor: 6, ebeveyni 5’ten büyük.
+
+------------------------------------------------------------------------------------------
+SLAYT 3 / 8  -  Heap aslında bir dizidir
+[Heap ve Heapsort]
+Süre 0:40  |  bölüm saati 1:14 -> 1:54  |  4 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  İşin püf noktası şu. [[TIKLA]] Düğümleri yukarıdan aşağı, soldan sağa numaralandırıp
+  doğrudan bir diziye koyuyoruz. Hiç işaretçi (pointer) yok.
+
+  [[TIKLA]] j konumundaki düğümün çocukları 2j ve 2j + 1 konumlarındadır. j = 2 için
+  bunlar 4 ve 5.
+
+  [[TIKLA]] j’nin ebeveyni ise j bölü 2’nin aşağı yuvarlanmışıdır. 5 bölü 2, 2 eder.
+
+  [[TIKLA]] Böylece ebeveynler dizinin ilk yarısını doldurur ve en büyük eleman her zaman
+  1. konumdadır.
+
+------------------------------------------------------------------------------------------
+SLAYT 4 / 8  -  Heap’i aşağıdan yukarı kurmak
+[Heap ve Heapsort]
+Süre 0:48  |  bölüm saati 1:54 -> 2:42  |  5 tıklama
+------------------------------------------------------------------------------------------
+ANLAMI (Türkçe):
+  Heap’i kurmak için aşağıdan yukarı gideriz: son ebeveynden başla, alt ağacını düzelt ve
+  köke doğru geri gel. Listemiz: 2, 9, 7, 6, 5, 8.
+
+  [[TIKLA]] Son ebeveyn 7. Büyük çocuğu 8, o yüzden yer değiştirirler. [[TIKLA]] Sırada 9
+  var. Zaten çocuklarından büyük: bir şey yapmaya gerek yok.
+
+  [[TIKLA]] Şimdi kök, yani 2. Büyük çocuğu 9: yer değiştir. [[TIKLA]] 2 hâlâ çok küçük,
+  batmaya devam ediyor: 6 ile yer değiştirip bir yaprağa ulaşıyor.
+
+  [[TIKLA]] Bitti: bir heap, en büyük eleman 9 kökte. Tablo, ders slaytlarımızdakiyle
+  aynı.
+
+******************************************************************************************
+DEVİR TESLİM - 4. slaytın son tıklamasından sonra söyle, sonra -> ile 5. slayta geç:
+******************************************************************************************
+ANLAMI: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heapsort: en büyüğü
+        tekrar tekrar çıkar.
+
+==========================================================================================
+OLASI SORULAR (senin konuların)
+==========================================================================================
+1) Heap kurmak neden O(n log n) değil de O(n)?
+   Düğümlerin çoğu yaprak ya da yaprağa yakın ve sadece birkaç seviye batabilir. Sadece
+   kök log n seviye batabilir. İşi seviye seviye toplarsanız 2n’den az karşılaştırma
+   çıkar.
+
+2) Min-heap nedir?
+   Aynı yapı, ters kuralla: her ebeveyn çocuklarından küçük ya da eşittir, bu yüzden en
+   küçük eleman köktedir. Küçük sayının yüksek öncelik anlamına geldiği durumlarda
+   kullanılır.
+
+3) Neden anahtarları tek tek eklemek yerine aşağıdan yukarı kuruyoruz?
+   n anahtarı tek tek eklemek (yukarıdan aşağı) n log n tutabilir. Aşağıdan yukarı kurmak
+   sadece O(n) tutar.
+
+4) AVL ağacı mı, 2-3 ağacı mı?
+   İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi döndürmelerle
+   (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir ve taşmayı
+   bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.
+
+5) Gauss eliminasyonu neden Θ(n³)?
+   İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da
+   yaklaşık n³/3 çarpma eder.
+
+==========================================================================================
+YEDEK SLAYTLAR (sunumda yok; sadece soru gelirse göster)
+==========================================================================================
+Nasıl açılır: O (genel bakış) tuşuna bas ve kartına tıkla, ya da adrese #id ekle, örneğin
+index.html#avl.
+
+YEDEK A1  -  Fikir: önce dönüştür, sonra fethet  (#big-idea, 4 tıklama)
+  [[TIKLA]] Problemi daha kolay bir probleme dönüştürür, sonra onu fethederiz.
   [[TIKLA]] Bunun üç yolu var. Bir: örneği basitleştirme; aynı problem, daha basit bir
   örnek, mesela sıralı bir liste. [[TIKLA]] İki: gösterimi değiştirme; aynı veri, farklı
   bir biçimde, mesela ağaç gibi okunan bir dizi. [[TIKLA]] Üç: probleme indirgeme; onu
   zaten çözebildiğimiz bir probleme çevirmek, mesela gcd ile lcm hesaplamak.
 
-------------------------------------------------------------------------------------------
-SLAYT 3 / 21  -  Ön sıralama: tüm elemanlar farklı mı?
-[Örneği basitleştirme]
-Süre 0:34  |  bölüm saati 0:43 -> 1:17  |  4 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
+YEDEK A2  -  Ön sıralama: tüm elemanlar farklı mı?  (#presorting, 4 tıklama)
   Birinci örnek: tüm elemanlar farklı mı? [[TIKLA]] Kaba kuvvet her çifti karşılaştırır,
   n²/2’ye kadar karşılaştırma. [[TIKLA]] Önceden sıralama: önce sırala, sonra sadece
   komşuları karşılaştır, çünkü tekrarlar yan yana gelir. Bu n log n.
-
   [[TIKLA]] Bir milyon eleman için: 500 milyar karşılaştırmaya karşı 20 milyon. Dakikalar
   ve göz açıp kapayıncaya kadar.
-
   [[TIKLA]] Gerçek hayatta Unix’teki sort | uniq tam olarak böyle çalışır; veritabanları
   da DISTINCT ve GROUP BY için aynısını yapar.
 
-------------------------------------------------------------------------------------------
-SLAYT 4 / 21  -  Gauss eliminasyonu: üçgen hâline getir
-[Örneği basitleştirme]
-Süre 0:34  |  bölüm saati 1:17 -> 1:51  |  6 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
+YEDEK A3  -  Gauss eliminasyonu: üçgen hâline getir  (#gauss, 6 tıklama)
   İkinci örnek: Gauss eliminasyonu bir denklem sistemini üçgene çevirir. [[TIKLA]] İkinci
   satırdan birinci satırın 3/2’si çıkar: bir sıfır. [[TIKLA]] Üçüncü satıra da aynısı.
   [[TIKLA]] Bir adım daha ve matris üst üçgen oldu. Bunun maliyeti n³.
-
   [[TIKLA]] Şimdi aşağıdan yukarı çözüyoruz: x₃ = 6, x₂ = 1, x₁ = 2. [[TIKLA]] Yerine
   koyunca hepsi tutuyor.
-
   [[TIKLA]] Gerçek hayatta NumPy ve MATLAB sistemleri böyle çözer; TOP500 listesindeki
   süper bilgisayarlar da bunu ne kadar hızlı yaptıklarına göre sıralanır.
 
-------------------------------------------------------------------------------------------
-SLAYT 5 / 21  -  İkili arama ağacı: hızı şekil belirler
-[Örneği basitleştirme]
-Süre 0:22  |  bölüm saati 1:51 -> 2:13  |  3 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
+YEDEK A4  -  İkili arama ağacı: hızı şekil belirler  (#bst-problem, 3 tıklama)
   Şimdi arama ağaçları. [[TIKLA]] İkili arama ağacı gür olduğunda hızlıdır. [[TIKLA]] Ama
   anahtarlar zaten sıralı gelirse bir çubuğa dönüşür: arama O(n) olur.
-
   [[TIKLA]] İki çözüm var: ağacı dengeli tutmak, AVL ağaçları gibi, ya da bir düğüme daha
   çok anahtar koymak, 2-3 ağaçları gibi.
 
-------------------------------------------------------------------------------------------
-SLAYT 6 / 21  -  AVL ağaçları: dengede kalmak için döndür
-[Örneği basitleştirme]
-Süre 0:32  |  bölüm saati 2:13 -> 2:45  |  5 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
+YEDEK A5  -  AVL ağaçları: dengede kalmak için döndür  (#avl, 5 tıklama)
   AVL ağacı her düğümün denge faktörünü −1, 0 veya 1’de tutar. 5, 6, 8, 3, 2, 4, 7
   ekliyoruz. [[TIKLA]] 8’den sonra 5 dengesini kaybediyor: bir sola döndürme. [[TIKLA]]
   2’den sonra: sağa döndürme. [[TIKLA]] 4’ten sonra: çift döndürme. [[TIKLA]] 7’den sonra
   bir çift döndürme daha. Dengeli ve hâlâ sıralı.
-
   [[TIKLA]] Gerçek hayatta Linux’un işlemci zamanlayıcısı ve Java’nın TreeMap’i, AVL’nin
   kuzeni olan red-black ağaçlarını kullanır.
 
-------------------------------------------------------------------------------------------
-SLAYT 7 / 21  -  2-3 ağaçları: dolan düğüm ikiye bölünür
-[Gösterimi değiştirme]
-Süre 0:30  |  bölüm saati 2:45 -> 3:15  |  5 tıklama
-------------------------------------------------------------------------------------------
-ANLAMI (Türkçe):
+YEDEK A6  -  2-3 ağaçları: dolan düğüm ikiye bölünür  (#two-three, 5 tıklama)
   2-3 ağaçları diğer yolu seçer: bir düğüm bir ya da iki anahtar tutar. [[TIKLA]] Üç
   anahtar mı oldu? Düğüm bölünür, ortadaki anahtar yukarı çıkar. [[TIKLA]] Küçük düğümler
   anahtarları kolayca alır. [[TIKLA]] Bölünmeler köke kadar tırmanabilir: ağaç sadece
   tepeden büyür. [[TIKLA]] Böylece tüm yapraklar aynı seviyede kalır: log n.
-
   [[TIKLA]] Gerçek hayatta MySQL, PostgreSQL ve SQLite’taki her indeks bir B-ağacıdır:
   düğüm başına yüzlerce anahtar tutan bir 2-3 ağacı.
 
-******************************************************************************************
-DEVİR TESLİM - 7. slaytın son tıklamasından sonra söyle, sonra -> ile 8. slayta geç:
-******************************************************************************************
-ANLAMI: İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: Heap ve Heapsort.
+YEDEK A7  -  Heap ve Heapsort  (#heap-intro, 0 tıklama)
+  Şimdi bölümün yıldızı: heap ve heapsort. Anahtarları bir ağaç gibi düşünüyor, ama basit
+  bir dizide saklıyoruz.
 
-==========================================================================================
-OLASI SORULAR (senin konuların)
-==========================================================================================
-1) AVL ağacı mı, 2-3 ağacı mı?
-   İkisi de yüksekliği O(log n) tutar. AVL ağaçları ikili kalır ve dengeyi döndürmelerle
-   (rotation) düzeltir. 2-3 ağaçları bir düğümde iki anahtara izin verir ve taşmayı
-   bölünmeyle düzeltir, böylece tüm yapraklar aynı seviyede kalır.
-
-2) Gauss eliminasyonu neden Θ(n³)?
-   İç içe üç döngü var: pivot satırları, alttaki satırlar ve sütunlar üzerinde. Bu da
-   yaklaşık n³/3 çarpma eder.
-
-==========================================================================================
-EK SLAYTLAR (sadece soru gelirse göster)
-==========================================================================================
-EK A2  -  Ne kadar hızlı sıralayabiliriz?
+YEDEK A15  -  Ne kadar hızlı sıralayabiliriz?  (#sort-bound, 2 tıklama)
   Sıralamanın ne kadar hızlı olabileceği sorulursa: karşılaştırmaya dayalı her sıralama en
   kötü durumda yaklaşık n log₂ n karşılaştırma ister (n! yapraklı bir karar ağacının
   yüksekliği ⌈log₂ n!⌉’dir) ve mergesort bu sınıra ulaşır. [[TIKLA]] Önceden sıralama çok
   sayıda arama yapıldığında kazandırır: yaklaşık log₂ n aramadan sonra bir kez sıralayıp
   ikili arama yapmak kazanır. [[TIKLA]]
 
-EK A3  -  Dört AVL döndürmesi
+YEDEK A16  -  Dört AVL döndürmesi  (#avl-rotations, 2 tıklama)
   Dengeli ağaçlarla ilgili sorular için: [[TIKLA]] bir AVL ağacının yüksekliği en fazla
   yaklaşık 1,44 log₂ n’dir ve bir ekleme en fazla bir tekli ya da çift döndürme ister;
   döndürme sadece birkaç işaretçiyi yeniden bağlar. [[TIKLA]] 2-3 ağacının yüksekliği log₃
   n ile log₂ n arasındadır; arama, ekleme ve silme ikisinde de Θ(log n).
 
 ------------------------------------------------------------------------------------------
-"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heap-intro).
+"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=heapsort).

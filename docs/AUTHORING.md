@@ -47,6 +47,7 @@ Deck.add({
   leave(ctx) { … },            // optional
 });
 ```
+- **The talk and the backup slides.** A slide is part of the talk only when its id is listed in `CONFIG.agenda` (`js/config.js`; `agenda: null` = every slide except `act: 'appendix'`). Every other slide stays in the deck as a *backup slide*: it comes after the talk, is labelled `A1…` and is reachable from the overview (`O`) or `#id`, but the forward key never walks into it. A new slide therefore needs two more things: a note in `js/notes.js` with one `[click]` per step and, if it is a backup slide, `about: '<id of a talk slide>'` (whose presenter gets its text in their speech file). `node tools/build-speech.js` checks both.
 - **`ctx`** holds:
 
   | Field | What it is |
@@ -145,12 +146,14 @@ enter(ctx) { ctx.loop(async (A) => { await A.to(el, {rot: 360}, {dur: 4000}); An
 - **No emoji.** Use the SVG icons and stamps instead.
 - **Motion:**
   - A single move takes 400–800 ms; one click plays at most about 3 s of animation.
-  - The talk is about 10 minutes, so keep each slide to 2–5 clicks.
+  - The default talk is 8 slides and about 6 minutes (the whole chapter, 21 slides, about 10), so keep each slide to 2–5 clicks.
   - The animation must explain the idea to someone who can't read the English.
 
 ## Testing your slides
 ```
 node --test tests/*.test.js               # unit tests for js/algo
+NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js [--only=gauss]   # every slide (backup slides too), EN/TR, dark/light
+NODE_PATH=/opt/node-tools/node_modules node tests/e2e/agenda.js                  # the talk = CONFIG.agenda, backup slides, end of the talk
 NODE_PATH=/opt/node-tools/node_modules node tools/shots.js --ids=gauss,presorting --steps=all --out=<dir> [--lang=tr] [--theme=light] [--w=1280 --h=720]
 ```
 - `shots.js` jumps straight to each step (instant rebuild) and takes a screenshot. It prints any console errors.

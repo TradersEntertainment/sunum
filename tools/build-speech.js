@@ -3,16 +3,20 @@
 //
 //   NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js [--split=<slide id>]
 //
+// The talk is the slides listed in CONFIG.agenda (js/config.js); every other slide is a
+// backup slide for questions.
+//
 // Writes
-//   KONUSMA_METNI.md            the whole talk, both languages (Markdown)
-//   KONUSMA_BOLUM_1_EN.txt      first presenter  (every slide before --split), English only: what to say
+//   KONUSMA_METNI.md            the whole talk + the backup slides, both languages (Markdown)
+//   KONUSMA_BOLUM_1_EN.txt      first presenter  (every slide before the split), English only: what to say
 //   KONUSMA_BOLUM_1_TR.txt      first presenter, Turkish only: what it means
-//   KONUSMA_BOLUM_2_EN.txt      second presenter (--split and everything after), English only
+//   KONUSMA_BOLUM_2_EN.txt      second presenter (the split slide and everything after), English only
 //   KONUSMA_BOLUM_2_TR.txt      second presenter, Turkish only
-// (plain UTF-8 text; default split: heap-intro, the heap section). The EN and TR files
-// of a part have the same slides, the same order and the same click markers.
-// Q&A items and appendix slides go to whoever presents the slide they belong to
-// ("slide" on a Q&A item, "about" on an appendix note in js/notes.js).
+// (plain UTF-8 text). The split is --split=<id of the first slide of part 2>; without it, the
+// point that makes the two parts' planned times closest. The EN and TR files of a part have the
+// same slides, the same order and the same click markers.
+// Q&A items and backup slides go to whoever presents the talk slide they belong to
+// ("slide" on a Q&A item, "about" on a backup slide's note in js/notes.js).
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +27,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((a) => {
   const m = a.match(/^--([^=]+)=?(.*)$/);
   return m ? [m[1], m[2] || true] : [a, true];
 }));
-const SPLIT = String(args.split || 'heap-intro');
+const SPLIT_ARG = args.split && args.split !== true ? String(args.split) : '';
 
 const fmt = (sec) => Math.floor(sec / 60) + ':' + String(Math.round(sec % 60)).padStart(2, '0');
 const paras = (v) => (Array.isArray(v) ? v : v ? [v] : []);
@@ -64,15 +68,15 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
   await page.goto('file://' + path.join(ROOT, 'index.html'));
   await page.waitForFunction(() => window.Deck && Deck.current, null, { timeout: 20000 });
   const data = await page.evaluate(() => ({
-    slides: Deck.slides.map((s, i) => ({ id: s.id, act: s.act, steps: s.steps, title: s.title || { en: s.id, tr: s.id }, label: Deck.label(i) })),
+    slides: Deck.slides.map((s, i) => ({ id: s.id, act: s.act, steps: s.steps, extra: !!s.extra, title: s.title || { en: s.id, tr: s.id }, label: Deck.label(i) })),
     acts: Object.fromEntries(Object.entries(Deck.ACTS).map(([k, v]) => [k, { en: v.en, tr: v.tr }])),
     notes: window.NOTES || {},
   }));
   await browser.close();
 
   const problems = [];
-  const main = data.slides.filter((s) => s.act !== 'appendix');
-  const appendix = data.slides.filter((s) => s.act === 'appendix');
+  const main = data.slides.filter((s) => !s.extra);       // the talk (CONFIG.agenda)
+  const extras = data.slides.filter((s) => s.extra);      // backup slides, for questions
   const qa = data.notes.__qa || [];
   let total = 0, totalWords = 0;
   const rows = [];
@@ -90,6 +94,13 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
     total += n.time || Math.round(speak);
     totalWords += w;
   }
+  // Backup slides: their notes must match their clicks too.
+  for (const s of extras) {
+    const n = data.notes[s.id];
+    if (!n) { problems.push(`${s.id}: backup slide without notes`); continue; }
+    if (clicks(paras(n.en).join(' ')) !== s.steps) problems.push(`${s.id}: EN has ${clicks(paras(n.en).join(' '))} [click] markers, slide has ${s.steps} steps`);
+    if (clicks(paras(n.tr).join(' ')) !== s.steps) problems.push(`${s.id}: TR has ${clicks(paras(n.tr).join(' '))} [click] markers, slide has ${s.steps} steps`);
+  }
 
   /* ================= KONUSMA_METNI.md (whole talk, both languages) ================= */
   let out = '';
@@ -103,7 +114,8 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
   out += '- `S`: sunucu penceresi. Bu metin, süre sayacı ve "sonraki tıklama" ipucu orada görünür; ikinci ekranda (laptop) aç, sunum projeksiyonda kalsın. Tek ekranda `N` notları altta gösterir.\n';
   out += '- `L`: ekrandaki yazıları Türkçe ⇄ İngilizce yapar. Soru-cevapta Türkçe açıklamak istersen kullan.\n';
   out += '- Konuşma yavaş ve net olsun: dakikada ~120 kelime. Animasyonlar zaten anlatıyor, acele etme.\n';
-  out += '- İki kişi sunuyorsanız her birinin kendi dosyaları var, dil dil ayrı: `KONUSMA_BOLUM_1_EN.txt` / `KONUSMA_BOLUM_1_TR.txt` ve `KONUSMA_BOLUM_2_EN.txt` / `KONUSMA_BOLUM_2_TR.txt` (devir teslim cümleleri ve kendi soruları dahil).\n\n';
+  out += '- İki kişi sunuyorsanız her birinin kendi dosyaları var, dil dil ayrı: `KONUSMA_BOLUM_1_EN.txt` / `KONUSMA_BOLUM_1_TR.txt` ve `KONUSMA_BOLUM_2_EN.txt` / `KONUSMA_BOLUM_2_TR.txt` (devir teslim cümleleri ve kendi soruları dahil).\n';
+  out += `- Sunum ${main.length} slayttır (\`js/config.js\` içindeki \`agenda\` listesi). Diğer ${extras.length} slayt yedekte durur ve soru gelirse \`O\` tuşuyla açılır; metinleri bu dosyanın sonunda.\n\n`;
 
   out += '## Zaman planı\n\n| # | Slayt | Tıklama | Süre | Başlangıç |\n|---|---|---|---|---|\n';
   for (const r of rows) out += `| ${r.s.label} | ${r.s.title.en} | ${r.s.steps} | ${fmt(r.n.time || 0)} | ${fmt(r.start)} |\n`;
@@ -121,11 +133,12 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
     out += '**TR — anlamı:**\n\n' + paras(r.n.tr).map((p) => '> ' + md(p, 'TIKLA')).join('\n>\n') + '\n\n';
   }
 
-  if (appendix.length) {
-    out += '---\n\n## Ek slaytlar (soru-cevap için)\n\n';
-    for (const s of appendix) {
+  if (extras.length) {
+    out += '---\n\n## Yedek slaytlar (soru gelirse)\n\n';
+    out += 'Bu slaytlar sunumun akışında yok: sunum son slaytta biter, `→` yedek slaytlara geçmez. Soru gelirse `O` tuşuna basıp kartı seç ya da adrese `#slayt-id` ekle (ör. `index.html#avl`).\n\n';
+    for (const s of extras) {
       const n = data.notes[s.id];
-      out += `### ${s.label} · ${s.title.en} — *${s.title.tr}*\n\n`;
+      out += `### ${s.label} · ${s.title.en} — *${s.title.tr}*  (\`#${s.id}\`)\n\n`;
       if (n) {
         out += paras(n.en).map((p) => md(p, 'CLICK')).join('\n\n') + '\n\n';
         if (n.tr) out += paras(n.tr).map((p) => '> ' + md(p, 'TIKLA')).join('\n>\n') + '\n\n';
@@ -144,32 +157,48 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
 
   /* ================= two presenters x two languages ================= */
   const mainIds = main.map((s) => s.id);
-  const splitAt = mainIds.indexOf(SPLIT);
+  // Without --split: the first slide of part 2 that makes the two parts' planned times closest.
+  let split = SPLIT_ARG;
+  if (!split) {
+    let best = null;
+    rows.slice(1).forEach((r) => {
+      const diff = Math.abs(r.start - (total - r.start));
+      if (!best || diff < best.diff) best = { id: r.s.id, diff };
+    });
+    split = best ? best.id : '';
+  }
+  const splitAt = mainIds.indexOf(split);
   if (splitAt < 1) {
-    problems.push(`--split=${SPLIT}: must be the id of a main slide after the first one (${mainIds.slice(1).join(', ')})`);
+    problems.push(`--split=${split}: must be the id of a talk slide after the first one (${mainIds.slice(1).join(', ')})`);
   } else {
     const owner = (id) => (mainIds.indexOf(id) < splitAt ? 0 : 1);        // 0 = part 1, 1 = part 2
-    const parts = [0, 1].map((p) => ({ rows: rows.filter((r) => owner(r.s.id) === p), qa: [], appendix: [] }));
+    // A backup slide or a question belongs to the talk slide named in "about" / "slide" (a chain of backup slides is followed).
+    const topic = (id, seen) => {
+      if (mainIds.includes(id)) return id;
+      const a = (data.notes[id] || {}).about;
+      return a && !(seen || []).includes(a) ? topic(a, (seen || []).concat(id)) : null;
+    };
+    const parts = [0, 1].map((p) => ({ rows: rows.filter((r) => owner(r.s.id) === p), qa: [], extras: [] }));
     qa.forEach((q, i) => {
-      if (!q.slide || !mainIds.includes(q.slide)) problems.push(`Q&A #${i + 1} ("${q.q}") has no valid "slide" owner`);
-      else parts[owner(q.slide)].qa.push(q);
+      const t = q.slide && topic(q.slide);
+      if (!t) problems.push(`Q&A #${i + 1} ("${q.q}") has no valid "slide" owner`);
+      else parts[owner(t)].qa.push(q);
     });
-    appendix.forEach((s) => {
-      const a = (data.notes[s.id] || {}).about;
-      if (!a || !mainIds.includes(a)) problems.push(`appendix slide ${s.id} has no valid "about" slide in js/notes.js`);
-      else parts[owner(a)].appendix.push(s);
+    extras.forEach((s) => {
+      const t = topic(s.id);
+      if (!t) problems.push(`backup slide ${s.id} has no valid "about" talk slide in js/notes.js`);
+      else parts[owner(t)].extras.push(s);
     });
-    // Every main slide is in exactly one part, and nothing is lost on the way.
+    // Every talk slide is in exactly one part, and nothing is lost on the way.
     const seen = parts.flatMap((p) => p.rows.map((r) => r.s.id));
     if (seen.length !== rows.length || new Set(seen).size !== seen.length) problems.push('the two parts do not cover every slide exactly once');
     if (parts[0].qa.length + parts[1].qa.length !== qa.length) problems.push('a Q&A item was not assigned to a part');
-    if (parts[0].appendix.length + parts[1].appendix.length !== appendix.length) problems.push('an appendix slide was not assigned to a part');
+    if (parts[0].extras.length + parts[1].extras.length !== extras.length) problems.push('a backup slide was not assigned to a part');
     if (!parts[0].rows.length || !parts[1].rows.length) problems.push('one of the parts has no slides');
 
-    const nextAct = data.acts[rows[splitAt].s.act] || { en: '', tr: '' };
     const handOver = {
-      en: `That was the first part. Now my friend continues with: ${nextAct.en}.`,
-      tr: `İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: ${nextAct.tr}.`,
+      en: `That was the first part. Now my friend continues with: ${rows[splitAt].s.title.en}.`,
+      tr: `İlk bölüm bu kadardı. Şimdi arkadaşım devam edecek, konusu: ${rows[splitAt].s.title.tr}.`,
     };
     const takeOver = { en: 'Thank you! I will continue from here.', tr: 'Teşekkürler! Buradan ben devam ediyorum.' };
     const fileName = (p, lang) => `KONUSMA_BOLUM_${p + 1}_${lang.toUpperCase()}.txt`;
@@ -203,12 +232,14 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
         'When you see [[CLICK]], press the forward key (->) once. An animation plays on screen.',
         'If you press again while it plays, it finishes at once. Press <- to go back one step.',
         'Presentation: double-click index.html. F = full screen, S = presenter window (notes + timer), L = language.',
+        `The talk has ${main.length} slides; after the last one, -> does nothing. Other slides (A1, A2, ...) are backups for questions: see the end of this file.`,
         `The Turkish meaning of every paragraph is in ${fileName(p, 'tr')}, in the same order.`,
       ] : [
         'Bu dosya, İngilizce metnin Türkçe anlamıdır: slayt sırası ve tıklama işaretleri İngilizce dosyayla aynı. Sesli söyleyeceğin metin İngilizce dosyada.',
         '[[TIKLA]] işareti, İngilizce metindeki [[CLICK]] anıdır: o noktada ileri tuşuna (->) bir kez bas. Ekranda bir animasyon oynar.',
         'Animasyon oynarken tekrar basarsan hemen tamamlanır. Yanlışlıkla ileri gittiysen <- ile bir adım geri dön.',
         'Sunum: index.html dosyasına çift tıkla. F = tam ekran, S = sunucu penceresi (not + süre sayacı), L = dil.',
+        `Sunum ${main.length} slayttır; sonuncudan sonra -> hiçbir şey yapmaz. Diğer slaytlar (A1, A2, ...) soru gelirse kullanacağın yedeklerdir: bu dosyanın sonuna bak.`,
         'Yavaş ve net konuş: dakikada yaklaşık 125 kelime. Animasyonlar zaten anlatıyor, acele etme.',
       ]).forEach((t) => L.push(wrapHang(t, '- ', '  ')));
       L.push('');
@@ -263,20 +294,23 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
           L.push('');
         });
       }
-      if (part.appendix.length) {
+      if (part.extras.length) {
         L.push(rule('='));
-        L.push(T('EXTRA SLIDES (show them only if someone asks)', 'EK SLAYTLAR (sadece soru gelirse göster)'));
+        L.push(T('BACKUP SLIDES (not in the talk; show one only if someone asks)', 'YEDEK SLAYTLAR (sunumda yok; sadece soru gelirse göster)'));
         L.push(rule('='));
-        part.appendix.forEach((s) => {
+        L.push(wrapHang(T('How to open one: press O (overview) and click its card, or add #id to the address, e.g. index.html#avl.',
+          'Nasıl açılır: O (genel bakış) tuşuna bas ve kartına tıkla, ya da adrese #id ekle, örneğin index.html#avl.'), '', ''));
+        L.push('');
+        part.extras.forEach((s) => {
           const n = data.notes[s.id] || {};
-          L.push(`${T('EXTRA', 'EK')} ${s.label}  -  ${title(s)}`);
+          L.push(`${T('BACKUP', 'YEDEK')} ${s.label}  -  ${title(s)}  (#${s.id}, ${s.steps} ${T(s.steps === 1 ? 'click' : 'clicks', 'tıklama')})`);
           paras(en ? n.en : n.tr).forEach((t) => L.push(wrapHang(plain(t, marker), '  ', '  ')));
           L.push('');
         });
       }
       L.push(rule('-'));
-      L.push(T(`Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=${SPLIT}).`,
-        `"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=${SPLIT}).`));
+      L.push(T(`Generated by "node tools/build-speech.js" from js/notes.js (split point: --split=${split}).`,
+        `"node tools/build-speech.js" ile js/notes.js dosyasından üretildi (bölme noktası: --split=${split}).`));
       return L.join('\n') + '\n';
     };
 
@@ -286,7 +320,7 @@ const cut = (s, n) => (s.length > n ? s.slice(0, n - 3) + '...' : s);
         const t1 = lastRow.start + (lastRow.n.time || 0);
         for (const lang of ['en', 'tr']) {
           fs.writeFileSync(path.join(ROOT, fileName(p, lang)), partText(p, lang));
-          console.log(`${fileName(p, lang)}: slides ${part.rows[0].s.label}-${lastRow.s.label} (${part.rows.length}), planned ${fmt(t1 - part.rows[0].start)}, Q&A ${part.qa.length}, appendix ${part.appendix.length}`);
+          console.log(`${fileName(p, lang)}: slides ${part.rows[0].s.label}-${lastRow.s.label} (${part.rows.length}), planned ${fmt(t1 - part.rows[0].start)}, Q&A ${part.qa.length}, backup slides ${part.extras.length}`);
         }
       });
     }

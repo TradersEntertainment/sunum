@@ -526,6 +526,15 @@ kbd {
 .ov-num { font-family: var(--font-mono); font-size: 14px; color: var(--muted); }
 .ov-act { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); }
 .ov-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; line-height: 1.15; }
+/* backup slides (not part of the talk) come after a divider, with dashed cards */
+.ov-sep {
+  grid-column: 1 / -1;
+  margin-top: 10px; padding-top: 16px;
+  border-top: 1.5px dashed var(--panel-border);
+  font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ov-card.extra { border-style: dashed; border-top-style: solid; background: transparent; }
 
 .help-card {
   background: var(--panel-solid);

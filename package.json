@@ -8,6 +8,8 @@
     "shots": "node tools/shots.js",
     "sweep": "node tests/e2e/sweep.js",
     "speech": "node tools/build-speech.js",
-    "bundle": "node tools/bundle.js"
+    "bundle": "node tools/bundle.js",
+    "agenda": "node tests/e2e/agenda.js",
+    "mobile": "node tests/e2e/mobile.js"
   }
 }

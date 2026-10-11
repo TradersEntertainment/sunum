@@ -1,24 +1,41 @@
 # Transform & Conquer — animasyonlu sunum sitesi
 
-CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Ana konu **Heaps & Heapsort**. Bölümün geri kalanı da (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) kısa ve görsel olarak anlatılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
+CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorithms*) için hazırlanmış, animasyonlu bir sunum sitesi. Sunum bölümün en önemli konusuna odaklanır: **Heaps & Heapsort**, **8 slayt**. Bölümün geri kalanı (presorting, Gauss eliminasyonu, AVL ve 2-3 ağaçları, Horner kuralı, ikili üs alma, probleme indirgeme) silinmedi; **yedek slayt** olarak sitede duruyor ve soru gelirse açılıyor. Animasyonlar, İngilizce bilmeyen biri bile fikri takip edebilsin diye tasarlandı. Ekrandaki tüm yazılar tek tuşla **Türkçe ⇄ İngilizce** değişir.
 
-- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 10,5 dakika. Sonunda olası sorular ve kısa cevaplar da var.
+- **Konuşma metni:** [`KONUSMA_METNI.md`](KONUSMA_METNI.md). İngilizce metin ve altında Türkçe çevirisi var; `[▶ CLICK]` işaretleri ne zaman tıklayacağını gösterir. Süre yaklaşık 6 dakika (5:47). Sonunda yedek slaytların metinleri, olası sorular ve kısa cevaplar da var.
 - **Gerçek hayatta kim kullanıyor?** Her tekniğin slaydı, kaynaklarla doğrulanmış bir "Gerçek hayatta · kim kullanıyor?" şeridiyle biter. Heap için ayrı bir slayt var: Linux çekirdeği, PostgreSQL, C++/.NET, Node.js/Go, internet yönlendiricileri, Elasticsearch, ZIP/PNG.
 - **Tek dosya sürümü:** `dist/transform-and-conquer.html`. Fontlar ve kodlar içine gömülüdür. USB belleğe atıp internetsiz açabilirsin.
 
 ## Slaytlar
 
-| # | Slayt | Gerçek hayatta |
+Sunum 8 slayttır. Hangi slaytların sunumda olduğunu `js/config.js` içindeki `agenda` listesi belirler.
+
+| # | Slayt | Tıklama | Gerçek hayatta |
+|---|---|---|---|
+| 1 | Başlık: Transform & Conquer, ★ Heap ve Heapsort | 0 | — |
+| 2 | Heap nedir? İki kural (şekil, sıra) | 4 | — |
+| 3 | Heap aslında bir dizidir (2j, 2j+1, ⌊j/2⌋) | 4 | — |
+| 4 | Heap'i aşağıdan yukarı kurmak | 5 | — |
+| 5 | Heapsort: en büyüğü tekrar tekrar çıkar | 4 | — |
+| 6 | Heapsort ne kadar hızlı? Θ(n), Θ(n log n), yerinde, kararlı değil | 4 | — |
+| 7 | Öncelik kuyruğu: ekleme yukarı kabarır | 3 | — |
+| 8 | **Gerçek hayatta heap'i kim kullanıyor?** | 3 | Linux `sort()`, PostgreSQL top-N heapsort, C++/.NET, Node.js/Go, OSPF, Elasticsearch, ZIP/PNG |
+
+**Yedek slaytlar (A1–A16)** sunumun akışında yok; soru gelirse `O` tuşuyla açılır (ya da adrese `#slayt-id` yazılır). Metinleri konuşma dosyalarının sonunda.
+
+| Yedek | Slayt (id) | Gerçek hayatta |
 |---|---|---|
-| 1–2 | Başlık, ana fikir (dönüştürmenin 3 yolu) | — |
-| 3 | Presorting: tüm elemanlar farklı mı? | `sort \| uniq`, PostgreSQL/MySQL `DISTINCT` |
-| 4 | Gauss eliminasyonu | TOP500 süper bilgisayarları, NumPy/MATLAB |
-| 5–7 | İkili arama ağacı, AVL, 2-3 ağacı | Linux zamanlayıcısı, Java TreeMap; MySQL/PostgreSQL/SQLite indeksleri (B-ağacı) |
-| 8–15 | **★ Heap & Heapsort:** tanım, ağaç ⇄ dizi, aşağıdan yukarı kurma, heapsort, analiz, öncelik kuyruğu, **heap'i kim kullanıyor?** | Linux `sort()`, PostgreSQL top-N heapsort, Node.js, OSPF, ZIP/PNG… |
-| 16–17 | Horner kuralı, ikili üs alma | Java `hashCode`, `parseInt`; HTTPS/RSA |
-| 18–19 | Probleme indirgeme, matris kuvvetiyle yol sayma | makine öğrenmesi, havayolları; sosyal ağlar, PageRank |
-| 20–21 | Özet, teşekkürler | — |
-| A1–A3 | Ek: heapsort oyun alanı, sıralama alt sınırı, AVL döndürmeleri | — |
+| A1 | Ana fikir: dönüştürmenin 3 yolu (`big-idea`) | — |
+| A2 | Presorting: tüm elemanlar farklı mı? (`presorting`) | `sort \| uniq`, PostgreSQL/MySQL `DISTINCT` |
+| A3 | Gauss eliminasyonu (`gauss`) | TOP500 süper bilgisayarları, NumPy/MATLAB |
+| A4–A6 | İkili arama ağacı, AVL, 2-3 ağacı (`bst-problem`, `avl`, `two-three`) | Linux zamanlayıcısı, Java TreeMap; MySQL/PostgreSQL/SQLite indeksleri (B-ağacı) |
+| A7 | Heap bölüm kartı (`heap-intro`) | — |
+| A8–A9 | Horner kuralı, ikili üs alma (`horner`, `binexp`) | Java `hashCode`, `parseInt`; HTTPS/RSA |
+| A10–A11 | Probleme indirgeme, matris kuvvetiyle yol sayma (`reduction`, `paths`) | makine öğrenmesi, havayolları; sosyal ağlar, PageRank |
+| A12–A13 | Özet, teşekkürler (`summary`, `thanks`) | — |
+| A14–A16 | Heapsort oyun alanı, sıralama alt sınırı, AVL döndürmeleri (`playground`, `sort-bound`, `avl-rotations`) | — |
+
+**Sunumdaki slaytları değiştirmek:** `js/config.js` içindeki `agenda` listesini düzenle (tüm id'ler dosyada yazıyor). Yedek bir slaytı sunuma almak için id'sini listeye ekle, çıkarmak için sil; `agenda: null` bölümün tamamını açar (21 slayt, ~10 dakika). Sonra konuşma dosyalarını yeniden üret: `NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js`. Sunumun son slaytından sonra `→` yedek slaytlara geçmez, yanlışlıkla yedeğe düşmezsin.
 
 ## Açmak
 
@@ -31,8 +48,8 @@ CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorit
 |---|---|
 | `→` `Space` `PageDown`, tıklama | Sonraki animasyon / slayt |
 | `←` `PageUp` | Bir adım geri (o adımın durumu birebir geri gelir) |
-| `Home` / `End` | İlk / son slayt |
-| `O` | Tüm slaytlara genel bakış (tıkla, git) |
+| `Home` / `End` | Sunumun ilk / son slaytı |
+| `O` | Tüm slaytlara genel bakış (tıkla, git); yedek slaytlar altta ayrı bölümde |
 | `L` | İngilizce ⇄ Türkçe |
 | `T` | Koyu ⇄ açık tema (ışıklı sınıfta açık tema daha okunaklı olabilir) |
 | `F` | Tam ekran |
@@ -40,7 +57,7 @@ CMP3005 · Bölüm 6 (Levitin, *Introduction to the Design & Analysis of Algorit
 | `S` | **Sunucu penceresi**: notlar, süre sayacı, "sonraki tıklama" ipucu |
 | `B` veya `.` | Ekranı karart |
 | `-` / `+` | Animasyon hızını azalt / artır |
-| sayı + `Enter` | O numaralı slayta git (ör. `1` `2` `Enter`) |
+| sayı + `Enter` | O numaralı slayta git (ör. `5` `Enter`) |
 | `?` | Yardım |
 
 Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki basış ilerler; PowerPoint'teki gibi.
@@ -50,7 +67,7 @@ Animasyon oynarken `→`'ye basarsan animasyon hemen tamamlanır, sonraki bası�
 - **İki ekranla:** Projeksiyonu "genişlet" (extend) moduna al. Sunumu projeksiyon ekranında `F` ile tam ekran yap, sonra `S` ile açılan sunucu penceresini laptop ekranına taşı. Kumanda veya ok tuşları hangi pencere seçiliyse onu yönetir, sunucu penceresi de sunumu ilerletir.
 - **Tek ekranla:** Prova ederken `N` notları gösterir. Sunumda kapat.
 - Yanlışlıkla sayfayı yenilersen (F5) sunum aynı slayt ve adımda açılır.
-- Sondaki **Ek** slaytlarında, soru gelirse kullanabileceğin interaktif bir **heapsort oyun alanı** var: kendi sayılarını yazıp adım adım izleyebilirsin.
+- Soru gelirse **yedek slaytlar** var: `O` tuşuna bas, kartı seç. Örneğin `heapsort oyun alanı` (A14) interaktif: kendi sayılarını yazıp adım adım izleyebilirsin.
 - Başlık slaytında adının görünmesi için `js/config.js` içindeki `presenter: ''` satırına adını yaz.
 
 ## İki kişi sunuyorsanız
@@ -59,18 +76,18 @@ Konuşma metni hem iki kişiye hem iki dile ayrılmış durumda (düz metin, UTF
 
 | Kişi | Slaytlar | İngilizce (söyleyeceğin) | Türkçe (anlamı) | Süre |
 |---|---|---|---|---|
-| 1. kişi | 1–7: başlık, ana fikir, presorting, Gauss, ikili arama ağacı, AVL, 2-3 ağacı | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~3:15 |
-| 2. kişi | 8–21: heap ve heapsort, Horner, üs alma, indirgeme, özet, teşekkür | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~7:09 |
+| 1. kişi | 1–4: başlık, heap nedir, heap bir dizidir, heap'i kurmak | `KONUSMA_BOLUM_1_EN.txt` | `KONUSMA_BOLUM_1_TR.txt` | ~2:42 |
+| 2. kişi | 5–8: heapsort, ne kadar hızlı, öncelik kuyruğu, gerçek hayatta heap | `KONUSMA_BOLUM_2_EN.txt` | `KONUSMA_BOLUM_2_TR.txt` | ~3:05 |
 
-Her dosyada kendi zaman planı, devir teslim cümleleri ve kendi konularına ait olası sorular ile ek slaytlar var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
+Her dosyada kendi zaman planı, devir teslim cümleleri, kendi konularına ait olası sorular ve yedek slaytların metinleri var. Bölüm 1 devir teslim cümlesiyle biter, Bölüm 2 "Teşekkürler, buradan ben devam ediyorum" cümlesiyle başlar. Yedek slaytlar konularına göre dağıtıldı: sunum öncesi konular (ana fikir, presorting, Gauss, ağaçlar) 1. kişide, sonrası (Horner, üs alma, indirgeme, özet) ve oyun alanı 2. kişide. Tüm konuşma iki dilde tek dosyada da var: `KONUSMA_METNI.md`.
 
-Bölme noktasını değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin ilk 9 slaytı birinci kişiye vermek için:
+Bölme noktası varsayılan olarak iki kişinin süresini eşitler (yukarıdaki tablo). Değiştirmek için ikinci kişinin ilk slaytının id'sini verin. Örneğin 2. kişi "heap'i kurmak" slaytından (4. slayt) başlasın istersen:
 
 ```bash
-NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-array
+NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js --split=heap-build
 ```
 
-Slayt id'leri: `title, big-idea, presorting, gauss, bst-problem, avl, two-three, heap-intro, heap-def, heap-array, heap-build, heapsort, heap-analysis, priority-queue, heap-real, horner, binexp, reduction, paths, summary, thanks`.
+Sunumdaki slayt id'leri: `title, heap-def, heap-array, heap-build, heapsort, heap-analysis, priority-queue, heap-real`.
 
 ## Telefon ve tablet
 
@@ -104,7 +121,9 @@ Not: Yayınlanan sitede `js/notes.js` (konuşma metni) de herkese açık olur; k
 
 ```bash
 node --test tests/*.test.js            # algoritma testleri (slaytlardaki tablolarla birebir) + sunucu testleri
-NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js   # tüm slayt ve adımlar: hata, taşma, ileri/geri tutarlılığı
+NODE_PATH=/opt/node-tools/node_modules node tests/e2e/sweep.js   # tüm slayt ve adımlar (yedekler dahil): hata, taşma, ileri/geri tutarlılığı
+NODE_PATH=/opt/node-tools/node_modules node tests/e2e/agenda.js  # sunum = agenda, yedek slaytlar, son slaytta durma
+NODE_PATH=/opt/node-tools/node_modules node tests/e2e/mobile.js  # telefon ve tablet ölçüleri, dokunma, kaydırma
 NODE_PATH=/opt/node-tools/node_modules node tools/shots.js --ids=heap-build --steps=all --out=artifacts/shots
 NODE_PATH=/opt/node-tools/node_modules node tools/build-speech.js  # KONUSMA_METNI.md'yi js/notes.js'ten üretir
 node tools/bundle.js                   # dist/ altına tek dosyalık sürüm
@@ -117,7 +136,8 @@ Yapı:
 - `js/core/`: animasyon motoru (`anim.js`), slayt motoru (`deck.js`), dil, efektler, sunucu penceresi.
 - `js/algo/`: algoritmalar. Saf fonksiyonlardır ve olay listesi üretirler. `tests/` ile test edilir.
 - `js/viz/`: görsel bileşenler (heap sahnesi, ağaçlar, matris, sözde kod paneli).
-- `js/slides/`: slaytlar, sunum sırasıyla.
+- `js/config.js`: adın, ders bilgisi ve `agenda` (sunumdaki slaytlar).
+- `js/slides/`: tüm slaytlar (sunuma `agenda` ile seçilir).
 - `js/notes.js`: konuşma metni.
 - `docs/AUTHORING.md`: yeni slayt yazma kuralları.
 - `server.js`, `railway.json`: yayın (Railway) için statik sunucu ve ayarı.

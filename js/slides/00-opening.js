@@ -100,6 +100,7 @@
         <h1 class="op-title" data-in="up" style="--d:120ms"><span>Transform&nbsp;&amp;</span><em>Conquer</em></h1>
         <div class="op-sub" data-in="up" style="--d:300ms">Dönüştür ve Fethet</div>
         <div class="op-course" data-in="up" style="--d:460ms">${esc(C.course || '')}${presenter ? '<span class="op-dot"></span><b>' + esc(presenter) + '</b>' : ''}</div>
+        <div class="op-focus" data-in="up" style="--d:580ms"><span class="op-focus-k">${L('Deep dive', 'Derinlemesine')}</span><b>★ ${L('Heaps &amp; Heapsort', 'Heap ve Heapsort')}</b></div>
         <div class="op-source" data-in="fade" style="--d:700ms">${esc(C.source || '')}</div>
         <div class="op-scene" data-ambient data-in="fade" style="--d:200ms"></div>
         <div class="op-phases" data-ambient data-in="up" style="--d:600ms">
